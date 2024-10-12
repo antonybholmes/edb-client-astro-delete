@@ -4,7 +4,7 @@ import { type IFieldMap } from "@interfaces/field-map"
 import { cellStr } from "@lib/dataframe/cell"
 
 import type { ILim } from "@components/plot/axis"
-import { IDim } from "@interfaces/dim"
+import type { IDim } from "@interfaces/dim"
 import { type IElementProps } from "@interfaces/element-props"
 import { getColIdxFromGroup, type IClusterGroup } from "@lib/cluster-group"
 import { BWR_CMAP, ColorMap } from "@lib/colormap"

@@ -66,7 +66,7 @@ function colGraphs(
       <g>
         {pileups.map((pileup, pi) => {
           return pileup.map((entry, ei) => {
-            const [mutType, sample] = entry.split(":")
+            const [mutType, _] = entry.split(":")
             const y1 = yax.domainToRange(ei)
 
             return (

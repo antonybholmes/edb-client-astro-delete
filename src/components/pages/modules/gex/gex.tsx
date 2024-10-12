@@ -19,7 +19,7 @@ import { ClockRotateLeftIcon } from "@icons/clock-rotate-left-icon"
 import { getDataFrameInfo } from "@lib/dataframe/dataframe-utils"
 import { HistoryContext, HistoryProvider } from "@providers/history-provider"
 
-import { useContext, useEffect, useMemo, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 
 import {
   AlertsContext,
@@ -128,8 +128,6 @@ export function GexPage() {
 
   const [outputMode, setOutputMode] = useState<OutputMode>("Data")
 
-  const outputTabs = [{ name: "Data" }, { name: "Violin" }, { name: "Heatmap" }]
-
   const [platform, setPlatform] = useState<IGexPlatform | null>(null)
   const [platforms, setPlatforms] = useState<IGexPlatform[]>([])
 
@@ -185,11 +183,6 @@ export function GexPage() {
   const [stats, setStats] = useState<IGexStats[][]>([])
 
   const [history, historyDispatch] = useContext(HistoryContext)
-
-  const platformTabs = useMemo(
-    () => platforms.map(platform => ({ name: platform.name })),
-    [platforms],
-  )
 
   const [displayProps, setDisplayProps] = useGexStore()
   const { gexPlotSettings, updateGexPlotSettings } = useGexPlotStore()
@@ -758,10 +751,9 @@ export function GexPage() {
 
       content: (
         <GexPropsPanel
-          datasets={datasets}
-          setGenes={setGenes}
-          //displayProps={displayProps}
-          //onDisplayPropsChange={props => setDisplayProps(props)}
+
+        //displayProps={displayProps}
+        //onDisplayPropsChange={props => setDisplayProps(props)}
         />
       ),
     },
@@ -972,12 +964,6 @@ export function GexPage() {
                     //     : dataframes
                     // }
                     dataFrames={history.currentStep.sheets}
-                    onTabChange={selectedTab => {
-                      // historyDispatch({
-                      //   type: 'goto_sheet',
-                      //   sheetId: selectedTab.index,
-                      // })
-                    }}
                   />
                   {/* </BaseRow> */}
                 </ResizablePanel>

@@ -8,7 +8,7 @@ import {
 } from "./oncoplot-utils"
 
 import { COLOR_REGEX } from "@lib/color"
-import { SeriesType } from "@lib/dataframe/dataframe-types"
+import type { SeriesType } from "@lib/dataframe/dataframe-types"
 import { range } from "@lib/math/range"
 
 const NUMERICAL_DIST_REGEX = /^\d+([\/\|]\d+)*$/

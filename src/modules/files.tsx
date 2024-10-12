@@ -5,7 +5,7 @@ import {
   DataFrameReader,
 } from "@lib/dataframe/dataframe-reader"
 import { LoadButton } from "@modules/load-button"
-import { IFileDispatch } from "@providers/file-reducer"
+import type { IFileDispatch } from "@providers/file-reducer"
 import { useRef, type ChangeEvent } from "react"
 
 function getFileTypes(fileTypes: string[]) {

@@ -93,14 +93,14 @@ function LollipopPage() {
     id: nanoid(),
     icon: <TableIcon />,
     name: "Table 1",
-    content: <DataPanel panelId="Table 1" />,
+    content: <DataPanel />,
     isOpen: true,
   }
 
   const [foldersTab, setFoldersTab] = useState<ITab>(dataTab)
   const [tab, setTab] = useState<ITab | undefined>(dataTab)
   const [foldersIsOpen, setFoldersIsOpen] = useState(true)
-  const [tabName, setTabName] = useState("Table 1")
+  const [tabName] = useState("Table 1")
 
   const [toolbarTab, setToolbarTab] = useState("Home")
 
@@ -120,8 +120,6 @@ function LollipopPage() {
   const [showDialog, setShowDialog] = useState<IDialogParams>(NO_DIALOG)
 
   //const [showLoadingDialog, setShowLoadingDialog] = useState(false)
-
-  const [filesToOpen, setFilesToOpen] = useState<IFileOpen[]>([])
 
   const [plotState, plotDispatch] = useContext(PlotsContext)
 
@@ -342,8 +340,6 @@ function LollipopPage() {
     filesToDataFrames(files, historyDispatch, options)
 
     setShowFileMenu(false)
-
-    setFilesToOpen([])
   }
 
   function lollipopPlot() {
@@ -583,7 +579,7 @@ function LollipopPage() {
   useEffect(() => {
     const plotChildren: ITab[] = []
 
-    plotState.plots.forEach((plot, pi) => {
+    plotState.plots.forEach(plot => {
       plotChildren.push({
         id: nanoid(),
         name: plot.name,

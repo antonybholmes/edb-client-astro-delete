@@ -25,6 +25,7 @@ import { useAuth0 } from "@auth0/auth0-react"
 import { ButtonLink } from "@components/link/button-link"
 import { AuthProvider } from "@providers/auth-provider"
 
+import { CoreProviders } from "@providers/core-providers"
 import { useEdbAuth } from "@providers/edb-auth-provider"
 import { useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
@@ -99,8 +100,10 @@ export function SignOutQueryPage() {
   }
 
   return (
-    <AuthProvider callbackUrl={url}>
-      <SignOutPage />
-    </AuthProvider>
+    <CoreProviders>
+      <AuthProvider callbackUrl={url}>
+        <SignOutPage />
+      </AuthProvider>
+    </CoreProviders>
   )
 }

@@ -23,10 +23,9 @@ export const GeneConvertPropsPanel = forwardRef(function GeneConvertPropsPanel(
   {
     fromSpecies,
     toSpecies,
-    exact,
+
     setFromSpecies,
     setToSpecies,
-    setExact,
   }: IProps,
   ref: ForwardedRef<HTMLDivElement>,
 ) {

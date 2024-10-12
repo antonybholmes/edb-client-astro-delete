@@ -21,7 +21,6 @@ export function getSizeStr(size: [number, number]): string {
 }
 
 export function getSrcSet(
-  src: string,
   name: string,
   dir: string,
   ext: string = "avif",
@@ -33,7 +32,6 @@ export function getSrcSet(
 }
 
 export function getSrc(
-  src: string,
   name: string,
   dir: string,
   ext: string = "avif",
@@ -43,7 +41,6 @@ export function getSrc(
 }
 
 export function getPlaceholderSrc(
-  src: string,
   name: string,
   dir: string,
   ext: string = "avif",
@@ -72,13 +69,13 @@ export function BaseImage({
   const name = p.name
   const ext = p.ext
 
-  const srcset = getSrcSet(src, name, dir, ext, sizes)
+  const srcset = getSrcSet(name, dir, ext, sizes)
   //const _sizes = sizes.map(s => `(min-width: ${s}px) ${s}px`).join(", ") //+ `, ${sizes[sizes.length - 1]}px`
 
   return (
     <picture style={pictureStyle}>
       <img
-        src={getSrc(src, name, dir, ext, size)}
+        src={getSrc(name, dir, ext, size)}
         srcSet={srcset}
         sizes={getSizeStr(size)}
         width={size[0]}

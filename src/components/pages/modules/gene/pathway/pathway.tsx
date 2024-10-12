@@ -34,11 +34,7 @@ import { ClockRotateLeftIcon } from "@icons/clock-rotate-left-icon"
 import { FileLinesIcon } from "@icons/file-lines-icon"
 import { OpenIcon } from "@icons/open-icon"
 import { SaveIcon } from "@icons/save-icon"
-import {
-  PATHWAY_TABLE_COLS,
-  type IDataset,
-  type IGeneSet,
-} from "@modules/gene/pathway/pathway"
+import { type IDataset, type IGeneSet } from "@modules/gene/pathway/pathway"
 import { HistoryContext, HistoryProvider } from "@providers/history-provider"
 
 import { UploadIcon } from "@components/icons/upload-icon"
@@ -64,7 +60,6 @@ import {
   API_PATHWAY_DATASET_URL,
   API_PATHWAY_DATASETS_URL,
   API_PATHWAY_GENES_URL,
-  API_PATHWAY_OVERLAP_URL,
   JSON_HEADERS,
 } from "@modules/edb"
 import { AccountSettingsProvider } from "@providers/account-settings-provider"
@@ -104,13 +99,9 @@ import LoadingSpinner from "@components/alerts/loading-spinner"
 import { Checkbox } from "@components/shadcn/ui/themed/check-box"
 import { ToolbarIconButton } from "@components/toolbar/toolbar-icon-button"
 import { UndoShortcuts } from "@components/toolbar/undo-shortcuts"
-import type { SeriesType } from "@lib/dataframe/dataframe-types"
+
 import { sum } from "@lib/math/sum"
 import MODULE_INFO from "./module.json"
-
-const HELP_URL = "/help/modules/pathway"
-
-const TIMEOUT_MS = 120000
 
 interface IDatasetInfo {
   organization: string
@@ -311,7 +302,7 @@ export function PathwayPage() {
     const genes = await getValidGenes()
 
     // only keep genes in approved list
-    const genesets: IGeneSet[] = range(0, df.shape[1]).map(col => {
+    const genesets: IGeneSet[] = range(0, df.shape[1]).map(_ => {
       return {
         name: df.col(0).name.toString(),
         genes: df
@@ -485,111 +476,111 @@ export function PathwayPage() {
   //   "Genes in overlap",
   // ]
 
-  async function run() {
-    const queryDatasets = datasetInfos
-      .map(org =>
-        org.datasets.filter(dataset =>
-          datasetsForUse.get(makeDatasetId(dataset)),
-        ),
-      )
-      .flat()
-      .map(dataset => makeDatasetId(dataset))
+  // async function run() {
+  //   const queryDatasets = datasetInfos
+  //     .map(org =>
+  //       org.datasets.filter(dataset =>
+  //         datasetsForUse.get(makeDatasetId(dataset)),
+  //       ),
+  //     )
+  //     .flat()
+  //     .map(dataset => makeDatasetId(dataset))
 
-    console.log(queryDatasets)
+  //   console.log(queryDatasets)
 
-    if (queryDatasets.length === 0) {
-      setShowDialog({
-        name: "alert",
-        params: {
-          message: "You must select at least 1 dataset to test.",
-        },
-      })
+  //   if (queryDatasets.length === 0) {
+  //     setShowDialog({
+  //       name: "alert",
+  //       params: {
+  //         message: "You must select at least 1 dataset to test.",
+  //       },
+  //     })
 
-      return
-    }
+  //     return
+  //   }
 
-    const df = historyState.currentStep.currentSheet
+  //   const df = historyState.currentStep.currentSheet
 
-    if (df.size === 0 || df.name === DEFAULT_SHEET_NAME) {
-      setShowDialog({
-        name: "alert",
-        params: {
-          message: "You must load at least 1 geneset to test.",
-        },
-      })
+  //   if (df.size === 0 || df.name === DEFAULT_SHEET_NAME) {
+  //     setShowDialog({
+  //       name: "alert",
+  //       params: {
+  //         message: "You must load at least 1 geneset to test.",
+  //       },
+  //     })
 
-      return
-    }
+  //     return
+  //   }
 
-    try {
-      const out: SeriesType[][] = []
+  //   try {
+  //     const out: SeriesType[][] = []
 
-      for (const col of range(0, df.shape[1])) {
-        const geneset = {
-          name: df.col(col).name,
-          genes: df.col(col).strs.filter(v => v !== ""),
-        }
+  //     for (const col of range(0, df.shape[1])) {
+  //       const geneset = {
+  //         name: df.col(col).name,
+  //         genes: df.col(col).strs.filter(v => v !== ""),
+  //       }
 
-        const res = await queryClient.fetchQuery({
-          queryKey: ["pathway"],
-          queryFn: () =>
-            axios.post(
-              API_PATHWAY_OVERLAP_URL,
-              {
-                geneset,
-                datasets: queryDatasets,
-              },
-              { timeout: TIMEOUT_MS },
-              // {
-              //   headers: {
-              //     //Authorization: bearerTokenHeader(token),
-              //     "Content-Type": "application/json",
-              //   },
-              // },
-            ),
-        })
+  //       const res = await queryClient.fetchQuery({
+  //         queryKey: ["pathway"],
+  //         queryFn: () =>
+  //           axios.post(
+  //             API_PATHWAY_OVERLAP_URL,
+  //             {
+  //               geneset,
+  //               datasets: queryDatasets,
+  //             },
+  //             { timeout: TIMEOUT_MS },
+  //             // {
+  //             //   headers: {
+  //             //     //Authorization: bearerTokenHeader(token),
+  //             //     "Content-Type": "application/json",
+  //             //   },
+  //             // },
+  //           ),
+  //       })
 
-        console.log(res.data)
+  //       console.log(res.data)
 
-        const data = res.data.data
+  //       const data = res.data.data
 
-        const datasets = data.datasets
+  //       const datasets = data.datasets
 
-        data.pathway.forEach((pathway: string, pi: number) => {
-          const di = data.datasetIdx[pi]
+  //       data.pathway.forEach((pathway: string, pi: number) => {
+  //         const di = data.datasetIdx[pi]
 
-          const row: SeriesType[] = new Array(PATHWAY_TABLE_COLS.length).fill(0)
+  //         const row: SeriesType[] = new Array(PATHWAY_TABLE_COLS.length).fill(0)
 
-          row[0] = geneset.name
-          row[1] = datasets[di]
-          row[2] = pathway
-          row[3] = pi === 0 ? data.validGenes.join(",") : ""
-          row[4] = data.validGenes.length
-          row[5] = data.pathwayGeneCounts[pi]
-          row[6] = data.overlapGeneCounts[pi]
-          row[7] = data.genesInUniverseCount
-          row[8] = data.pvalues[pi]
-          row[9] = data.qvalues[pi]
-          //row[9] = -Math.log10(row[8] as number)
-          row[10] = data.kdivK[pi]
-          row[11] = data.overlapGeneList[pi]
-          out.push(row)
-        })
-      }
+  //         row[0] = geneset.name
+  //         row[1] = datasets[di]
+  //         row[2] = pathway
+  //         row[3] = pi === 0 ? data.validGenes.join(",") : ""
+  //         row[4] = data.validGenes.length
+  //         row[5] = data.pathwayGeneCounts[pi]
+  //         row[6] = data.overlapGeneCounts[pi]
+  //         row[7] = data.genesInUniverseCount
+  //         row[8] = data.pvalues[pi]
+  //         row[9] = data.qvalues[pi]
+  //         //row[9] = -Math.log10(row[8] as number)
+  //         row[10] = data.kdivK[pi]
+  //         row[11] = data.overlapGeneList[pi]
+  //         out.push(row)
+  //       })
+  //     }
 
-      const ret = new DataFrame({ data: out, columns: PATHWAY_TABLE_COLS })
+  //     const ret = new DataFrame({ data: out, columns: PATHWAY_TABLE_COLS })
 
-      // console.log(ret)
+  //     // console.log(ret)
 
-      historyDispatch({
-        type: "replace_sheet",
-        sheetId: `Pathways`,
-        sheet: ret.setName("Pathways"),
-      })
-    } catch (e) {
-      console.log(e)
-    }
-  }
+  //     historyDispatch({
+  //       type: "replace_sheet",
+  //       sheetId: `Pathways`,
+  //       sheet: ret.setName("Pathways"),
+  //     })
+  //   } catch (e) {
+  //     console.log(e)
+  //   }
+  // }
 
   function save(format: "txt" | "csv") {
     const df = historyState.currentStep.currentSheet

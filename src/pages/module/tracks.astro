@@ -1,8 +1,0 @@
----
-import { TracksPage, MODULE_INFO } from "@components/pages/tracks"
-import ModuleLayout from "@layouts/ModuleLayout.astro"
----
-
-<ModuleLayout info={MODULE_INFO}>
-  <TracksPage client:only="react" slot="main" />
-</ModuleLayout>

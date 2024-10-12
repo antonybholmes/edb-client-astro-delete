@@ -35,7 +35,6 @@ export const DoubleInput = forwardRef<HTMLDivElement, InputProps>(
   ) => {
     const [_text1, setText1] = useState(text1)
     const [_text2, setText2] = useState(text2)
-    const [focus, setFocus] = useState(false)
 
     if (!children) {
       children = <CloseIcon className="fill-foreground/75" w="w-2" />
@@ -53,8 +52,6 @@ export const DoubleInput = forwardRef<HTMLDivElement, InputProps>(
             onKeyDown1?.(e)
           }}
           onChange={e => setText1(e.currentTarget.value)}
-          onFocus={() => setFocus(true)}
-          onBlur={() => setFocus(false)}
           style={{
             width: `${Math.max(MIN_CH, _text1.toString().length + 1)}ch`,
           }}
@@ -71,8 +68,6 @@ export const DoubleInput = forwardRef<HTMLDivElement, InputProps>(
             onKeyDown2?.(e)
           }
           onChange={e => setText2(e.currentTarget.value)}
-          onFocus={() => setFocus(true)}
-          onBlur={() => setFocus(false)}
           style={{
             width: `${Math.max(MIN_CH, _text2.toString().length + 1)}ch`,
           }}

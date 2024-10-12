@@ -15,7 +15,7 @@ import {
   RIPPLE_CLS,
   type IButtonVariantProps,
 } from "@components/shadcn/ui/themed/button"
-import { IPos } from "@interfaces/pos"
+import type { IPos } from "@interfaces/pos"
 import gsap from "gsap"
 
 export interface IButtonLinkProps extends ILinkProps, IButtonVariantProps {}

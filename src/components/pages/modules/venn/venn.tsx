@@ -19,7 +19,6 @@ import { VCenterRow } from "@components/v-center-row"
 
 import { LayersIcon } from "@components/icons/layers-icon"
 import { TableIcon } from "@components/icons/table-icon"
-import { ClockRotateLeftIcon } from "@icons/clock-rotate-left-icon"
 import { FileImageIcon } from "@icons/file-image-icon"
 import { FileLinesIcon } from "@icons/file-lines-icon"
 import { SaveIcon } from "@icons/save-icon"
@@ -89,7 +88,6 @@ import { HistoryContext, HistoryProvider } from "@providers/history-provider"
 
 import { BaseRow } from "@components/base-row"
 import { ListIcon } from "@components/icons/list-icon"
-import { HistoryPanel } from "@components/pages/history-panel"
 import { ColorPickerButton } from "@components/pages/plot/color-picker-button"
 import { SaveImageDialog } from "@components/pages/save-image-dialog"
 import { PropRow } from "@components/prop-row"
@@ -182,7 +180,7 @@ function VennPage() {
 
   useWindowScrollListener((e: unknown) => console.log(e))
 
-  function onFileChange(message: string, files: FileList | null) {
+  function onFileChange(_message: string, files: FileList | null) {
     if (!files) {
       return
     }
@@ -592,7 +590,7 @@ function VennPage() {
     // add listeners to all the groups to display tooltip on mouseover
     div
       .selectAll("g")
-      .on("mouseover", function (e, d) {
+      .on("mouseover", function (_e, d) {
         sortAreas(div, d)
 
         const selection = d3.select(this)
@@ -621,7 +619,7 @@ function VennPage() {
         }
       })
 
-      .on("mousedown", function (e, d) {
+      .on("mousedown", function (_e, d) {
         // sort all the areas relative to the current item
         sortAreas(div, d)
 
@@ -1077,15 +1075,6 @@ function VennPage() {
           </ScrollAccordion>
         </PropsPanel>
       ),
-    },
-  ]
-
-  const rightTabs: ITab[] = [
-    {
-      //id: nanoid(),
-      icon: <ClockRotateLeftIcon />,
-      name: "History",
-      content: <HistoryPanel />,
     },
   ]
 

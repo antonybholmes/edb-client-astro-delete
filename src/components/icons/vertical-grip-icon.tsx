@@ -5,13 +5,6 @@ import type { CSSProperties } from "react"
 
 const LINE_CLS = "h-full rounded-full w-px"
 
-const R = 3
-const X1 = 4
-const X2 = 14
-const Y1 = 6
-const Y2 = 34
-const YM = 20
-
 interface IProps extends IIconProps {
   lineClassName?: string
   lineStyle?: CSSProperties

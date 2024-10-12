@@ -23,7 +23,7 @@ import { useMemo, useRef, useState } from "react"
 import { HSplitPane } from "@components/split-pane/h-split-pane"
 
 import type { ITab } from "@components/tab-provider"
-import { IDialogParams, NO_DIALOG } from "@consts"
+import { type IDialogParams, NO_DIALOG } from "@consts"
 import { makeRandId, nanoid } from "@lib/utils"
 
 export const MODULE_INFO: IModuleInfo = {
@@ -59,7 +59,7 @@ export function SeqViewPage() {
 
   const [seqFiles, setSeqFiles] = useState<ISeq[]>([])
 
-  async function onFileChange(message: string, files: FileList | null) {
+  async function onFileChange(_message: string, files: FileList | null) {
     if (!files) {
       return
     }

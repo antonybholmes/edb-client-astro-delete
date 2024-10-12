@@ -23,13 +23,11 @@ import {
 import { ButtonLink } from "@components/link/button-link"
 
 import { useEdbAuth } from "@providers/edb-auth-provider"
-import { useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 import Cookies from "js-cookie"
 import { useEffect } from "react"
 
 function SignOutPage() {
-  const queryClient = useQueryClient()
   const { resetUser } = useEdbAuth()
 
   useEffect(() => {

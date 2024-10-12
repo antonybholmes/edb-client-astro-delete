@@ -1,5 +1,3 @@
-import { AlertsContext } from "@components/alerts/alerts-provider"
-
 import { type IChildrenProps } from "@interfaces/children-props"
 import { range } from "@lib/math/range"
 import { API_MOTIF_SEARCH_URL, JSON_HEADERS } from "@modules/edb"
@@ -8,7 +6,6 @@ import { useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 import {
   createContext,
-  useContext,
   useEffect,
   useReducer,
   useState,
@@ -151,7 +148,7 @@ export function MotifsProvider({ children }: IChildrenProps) {
   )
 
   const { state, dispatch } = useMotifState()
-  const [, alertDispatch] = useContext(AlertsContext)
+
   //const [orderedMotifSearchIds, orderedMotifSearchIdsDispatch] =
   // useMotifSearchIds()
 

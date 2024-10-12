@@ -95,7 +95,7 @@ function RevCompPage() {
   const [text, setText] = useState("")
 
   const [output, setOutput] = useState("")
-  const [outputMode, setOutputMode] = useState("FASTA")
+  const [outputMode] = useState("FASTA")
   const [outputSeqs, setOutputSeqs] = useState<IRevCompSeq[]>([])
 
   const [modeRev, setModeRev] = useState(true)

@@ -19,7 +19,7 @@ export class InfDataFrame extends BaseDataFrame {
     return [this._rows, this._cols]
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //@ts-ignore
   get(row: number, col: number): IndexType {
     return ""
   }

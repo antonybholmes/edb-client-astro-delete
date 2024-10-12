@@ -58,7 +58,7 @@ interface IHeatMapPanelProps {
 
 export const HeatMapPanel = forwardRef(function HeatMapPanel(
   { plot, groups, canvasRef, downloadRef }: IHeatMapPanelProps,
-  ref: ForwardedRef<HTMLDivElement>,
+  _ref: ForwardedRef<HTMLDivElement>,
 ) {
   const [plotProps, plotPropsDispatch] = useContext(PlotPropsContext)
 

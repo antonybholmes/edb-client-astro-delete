@@ -30,7 +30,7 @@ export const SwarmPlotSvg = forwardRef<SVGElement, IProps>(
       stroke = "none",
       fillOpacity = 1,
     }: IProps,
-    svgRef,
+    _svgRef,
   ) {
     const svg = useMemo(() => {
       const hist = histogram(data)

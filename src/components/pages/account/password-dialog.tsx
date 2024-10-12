@@ -15,19 +15,12 @@ import {
   API_RESET_PASSWORD_URL,
   APP_RESET_PASSWORD_URL,
   bearerHeaders,
-  IUser,
+  type IUser,
 } from "@modules/edb"
 
 //import { AccountSettingsContext } from "@context/account-settings-context"
 
-import {
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-  type BaseSyntheticEvent,
-} from "react"
-import { useForm } from "react-hook-form"
+import { useContext, useEffect, useState, type BaseSyntheticEvent } from "react"
 
 import { AccountSettingsContext } from "@providers/account-settings-provider"
 import { useEdbAuth } from "@providers/edb-auth-provider"
@@ -115,22 +108,13 @@ export function PasswordDialog({
 
       setUser(await getCachedUser(token))
     }
+
+    fetch()
   }, [])
 
   if (!user || !accessToken) {
     return null
   }
-
-  const form = useForm<IFormInput>({
-    defaultValues: {
-      password: "",
-      password1: "",
-      password2: "",
-      passwordless: settings.passwordless,
-    },
-  })
-
-  const btnRef = useRef<HTMLButtonElement>(null)
 
   function _resp(resp: string) {
     onReponse?.(resp)

@@ -1,6 +1,5 @@
 // 'use client'
 
-import { AlertsProvider } from "@components/alerts/alerts-provider"
 import { SignInLayout } from "@layouts/signin-layout"
 import {
   bearerHeaders,
@@ -30,6 +29,7 @@ import { useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 
 import { redirect } from "@lib/urls"
+import { CoreProviders } from "@providers/core-providers"
 import { useEffect, useState } from "react"
 
 // async function signIn(jwt: string): Promise<AxiosResponse> {
@@ -182,12 +182,12 @@ export function SignInQueryPage() {
   }
 
   return (
-    <AuthProvider callbackUrl={url}>
-      <AlertsProvider>
+    <CoreProviders>
+      <AuthProvider callbackUrl={url}>
         <AccountSettingsProvider>
           <SignInPage />
         </AccountSettingsProvider>
-      </AlertsProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </CoreProviders>
   )
 }

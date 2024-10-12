@@ -6,7 +6,7 @@ import { BaseDataFrame } from "@lib/dataframe/base-dataframe"
 import { cellStr, makeCell, makeCells } from "@lib/dataframe/cell"
 import { DataFrame } from "@lib/dataframe/dataframe"
 
-import { SeriesType } from "@lib/dataframe/dataframe-types"
+import type { SeriesType } from "@lib/dataframe/dataframe-types"
 import { range } from "@lib/math/range"
 import {
   GenomicLocation,

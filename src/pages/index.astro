@@ -1,8 +1,8 @@
 ---
-import { ModulePage } from "@components/pages/module"
+import { ModuleQueryPage } from "@components/pages/module"
 import BaseLayout from "@layouts/BaseLayout.astro"
 ---
 
 <BaseLayout title="Index">
-  <ModulePage client:only="react" slot="main" />
+  <ModuleQueryPage client:only="react" slot="main" />
 </BaseLayout>

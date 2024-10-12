@@ -15,11 +15,7 @@ export interface IAlertDialogProps extends IModalProps {
   alert: IAlert
 }
 
-export function AlertDialog({
-  alert,
-  onOpenChange,
-  onReponse,
-}: IAlertDialogProps) {
+export function AlertDialog({ alert, onOpenChange }: IAlertDialogProps) {
   // const [passwords, passwordDispatch] = useReducer(passwordReducer, {
   //   password: "",
   //   password1: "",

@@ -133,7 +133,7 @@ export interface IProps {
 
 export const GroupPropsPanel = forwardRef(function GroupPropsPanel(
   { df, downloadRef }: IProps,
-  ref: ForwardedRef<HTMLDivElement>,
+  _ref: ForwardedRef<HTMLDivElement>,
 ) {
   const [open, setOpen] = useState("")
   const [confirmClear, setConfirmClear] = useState(false)
@@ -147,7 +147,6 @@ export const GroupPropsPanel = forwardRef(function GroupPropsPanel(
     IGroupCallback | undefined
   >(undefined)
 
-  const [groupValues, setGroupValues] = useState<string[]>([])
   const [order, setOrder] = useState<number[]>([])
   const [items, setItems] = useState<ReactElement[]>([])
 
@@ -230,7 +229,6 @@ export const GroupPropsPanel = forwardRef(function GroupPropsPanel(
   }
 
   useEffect(() => {
-    setGroupValues(groups.map(g => g.name))
     setOrder(range(0, groups.length))
     setItems(
       groups.map((group, gi) => {
@@ -245,7 +243,7 @@ export const GroupPropsPanel = forwardRef(function GroupPropsPanel(
   //   setGroups([])
   // }, [df])
 
-  function onFileChange(message: string, files: FileList | null) {
+  function onFileChange(_message: string, files: FileList | null) {
     if (!files) {
       return
     }

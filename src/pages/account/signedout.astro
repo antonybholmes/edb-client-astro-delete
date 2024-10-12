@@ -1,0 +1,8 @@
+---
+import { SignedOutQueryPage } from "@components/pages/account/signedout"
+import BaseLayout from "@layouts/BaseLayout.astro"
+---
+
+<BaseLayout title="Signed Out">
+  <SignedOutQueryPage client:only="react" slot="main" />
+</BaseLayout>

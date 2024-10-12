@@ -21,7 +21,7 @@ interface IProps extends IElementProps {
 export function DraggableListFramer({
   order,
   onOrderChange,
-  h = 50,
+
   itemClassName,
   className,
   children,

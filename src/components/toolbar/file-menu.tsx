@@ -31,7 +31,7 @@ import { Button, type IButtonProps } from "@components/shadcn/ui/themed/button"
 import type { IModuleInfo } from "@interfaces/module-info"
 import { nanoid } from "@lib/utils"
 
-import { ITab, TabChange } from "@components/tab-provider"
+import type { ITab, TabChange } from "@components/tab-provider"
 import { ToolbarTabButton } from "./toolbar-tab-button"
 
 export const SIDE_OVERLAY_CLS = cn(

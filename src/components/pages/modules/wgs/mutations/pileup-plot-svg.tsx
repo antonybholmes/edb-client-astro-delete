@@ -2,7 +2,6 @@ import { forwardRef, useMemo, useRef, useState } from "react"
 
 import { type IElementProps } from "@interfaces/element-props"
 
-import { Axis } from "@components/plot/axis"
 import type { IPos } from "@interfaces/pos"
 import { range } from "@lib/math/range"
 import type { IDNA } from "@modules/genomic/dna"
@@ -196,11 +195,6 @@ export const PileupPlotSvg = forwardRef<SVGElement, IProps>(
       })
 
       //console.log(maxHeightMap)
-
-      const xax = new Axis()
-        //.autoDomain([Math.min(...xdata), Math.max(...xdata)])
-        .setDomain([0, plot.dna.seq.length])
-        .setRange([0, plot.dna.seq.length])
 
       const innerWidth = plot.dna.seq.length * BASE_W
       const innerHeight = (1 + maxH) * BASE_H

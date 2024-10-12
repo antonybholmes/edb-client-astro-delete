@@ -29,7 +29,7 @@ export interface IProps {
   displayProps: IPileupProps
   onDisplayPropsChange: (props: IPileupProps) => void
   onMotifPatternsChange: (patterns: IMotifPattern[]) => void
-  onDBChange: (index: number) => void
+  onDBChange?: (index: number) => void
 }
 
 export const PileupPropsPanel = forwardRef(function PileupPropsPanel(
@@ -39,7 +39,6 @@ export const PileupPropsPanel = forwardRef(function PileupPropsPanel(
     displayProps,
     onDisplayPropsChange,
     onMotifPatternsChange,
-    onDBChange,
   }: IProps,
   ref: ForwardedRef<HTMLDivElement>,
 ) {

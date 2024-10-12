@@ -1,5 +1,5 @@
 import { cn } from "@lib/class-names"
-import { ComponentProps, useState } from "react"
+import { type ComponentProps, useState } from "react"
 import { PanelResizeHandle } from "react-resizable-panels"
 
 const CLS =

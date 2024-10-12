@@ -36,7 +36,7 @@ export const ViolinPlotSvg = forwardRef<SVGElement, IProps>(
       fillOpacity = 0.5,
       r = 5,
     }: IProps,
-    svgRef,
+    _svgRef,
   ) {
     const svg = useMemo(() => {
       // duplicate to mirror violin

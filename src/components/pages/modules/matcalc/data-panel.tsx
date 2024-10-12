@@ -47,7 +47,7 @@ export interface IDataPanelProps {
 
 export const DataPanel = forwardRef(function DataPanel(
   { panelId = DEFAULT_PANEL_ID }: IDataPanelProps,
-  ref: ForwardedRef<HTMLDivElement>,
+  _ref: ForwardedRef<HTMLDivElement>,
 ) {
   const [history, historyDispatch] = useContext(HistoryContext)
 

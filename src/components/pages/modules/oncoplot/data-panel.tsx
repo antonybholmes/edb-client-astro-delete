@@ -33,7 +33,7 @@ import { type IDataPanelProps } from "../matcalc/data-panel"
 
 export const DataPanel = forwardRef(function DataPanel(
   { panelId = "Data" }: IDataPanelProps,
-  ref: ForwardedRef<HTMLDivElement>,
+  _ref: ForwardedRef<HTMLDivElement>,
 ) {
   const [history, historyDispatch] = useContext(HistoryContext)
 

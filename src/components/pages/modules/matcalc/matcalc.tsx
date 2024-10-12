@@ -46,14 +46,7 @@ import { ToolbarTabButton } from "@components/toolbar/toolbar-tab-button"
 import { MAIN_CLUSTER_FRAME, type ClusterFrame } from "@lib/math/hcluster"
 import { HistoryContext } from "@providers/history-provider"
 
-import {
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type ReactElement,
-} from "react"
+import { useContext, useEffect, useMemo, useRef, useState } from "react"
 
 import { OpenDialog } from "@components/pages/open-dialog"
 import { ShortcutLayout } from "@layouts/shortcut-layout"
@@ -65,7 +58,6 @@ import { NumericalFilterDialog } from "./numerical-filter-dialog"
 import { SortRowDialog } from "./sort-row-dialog"
 import { VolcanoDialog } from "./volcano-dialog"
 
-import { AlertsProvider } from "@components/alerts/alerts-provider"
 import { CollapseTree, makeFoldersRootNode } from "@components/collapse-tree"
 import { ChartIcon } from "@components/icons/chart-icon"
 import { FolderIcon } from "@components/icons/folder-icon"
@@ -126,12 +118,6 @@ export const NO_CF: IClusterFrameProps = {
   cf: null,
   type: "Heatmap",
   //
-}
-
-interface IContentTab {
-  id: string
-  name: string
-  content: ReactElement
 }
 
 export const HIGHLIGHT_PANEL_CLS = "bg-muted grow p-3 mb-2 rounded-lg"
@@ -213,10 +199,6 @@ function MatcalcPage() {
   const [groups, groupsDispatch] = useContext(GroupsContext)
 
   const [, messageDispatch] = useContext(MessageContext)
-
-  const [slidebarSide, setSlidebarSide] = useState<ReactElement | undefined>(
-    undefined,
-  )
 
   async function loadZTestData() {
     let res = await queryClient.fetchQuery({
@@ -365,7 +347,7 @@ function MatcalcPage() {
     }
   }, [foldersTab])
 
-  function onFileChange(message: string, files: FileList | null) {
+  function onFileChange(_message: string, files: FileList | null) {
     if (!files) {
       return
     }
@@ -1053,23 +1035,21 @@ function MatcalcPage() {
 export function MatcalcQueryPage() {
   return (
     <CoreProviders>
-      <AlertsProvider>
-        <AccountSettingsProvider>
-          <MatcalcSettingsProvider>
-            <SelectionRangeProvider>
-              <PlotsProvider>
-                <PlotPropsProvider>
-                  <GroupsProvider>
-                    <MessagesProvider>
-                      <MatcalcPage />
-                    </MessagesProvider>
-                  </GroupsProvider>
-                </PlotPropsProvider>
-              </PlotsProvider>
-            </SelectionRangeProvider>
-          </MatcalcSettingsProvider>
-        </AccountSettingsProvider>
-      </AlertsProvider>
+      <AccountSettingsProvider>
+        <MatcalcSettingsProvider>
+          <SelectionRangeProvider>
+            <PlotsProvider>
+              <PlotPropsProvider>
+                <GroupsProvider>
+                  <MessagesProvider>
+                    <MatcalcPage />
+                  </MessagesProvider>
+                </GroupsProvider>
+              </PlotPropsProvider>
+            </PlotsProvider>
+          </SelectionRangeProvider>
+        </MatcalcSettingsProvider>
+      </AccountSettingsProvider>
     </CoreProviders>
   )
 }

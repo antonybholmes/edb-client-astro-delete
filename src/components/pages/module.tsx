@@ -5,11 +5,12 @@ import { BaseLink } from "@components/link/base-link"
 import { ContentLayout } from "@layouts/content-layout"
 import { cn } from "@lib/class-names"
 import { HEADER_LINKS } from "@menus"
+import { CoreProviders } from "@providers/core-providers"
 import { FOCUS_RING_CLS } from "@theme"
 
-function ModulePage({ name = "Index" }: { name?: string }) {
+function ModulePage({ title = "Index" }: { title?: string }) {
   return (
-    <ContentLayout title={name}>
+    <ContentLayout title={title}>
       <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 py-8">
         {HEADER_LINKS.map(section => {
           return section.modules.filter(
@@ -60,6 +61,10 @@ function ModulePage({ name = "Index" }: { name?: string }) {
   )
 }
 
-export function ModuleQueryPage() {
-  return <ModulePage />
+export function ModuleQueryPage({ title = "Index" }: { title?: string }) {
+  return (
+    <CoreProviders>
+      <ModulePage title={title} />
+    </CoreProviders>
+  )
 }

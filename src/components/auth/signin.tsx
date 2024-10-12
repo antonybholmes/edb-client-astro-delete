@@ -119,12 +119,7 @@ export interface ISignInProps extends IElementProps {
   visitUrl?: string
 }
 
-export function SignIn({
-  allowPassword = true,
-  visitUrl,
-  className,
-  children,
-}: ISignInProps) {
+export function SignIn({ allowPassword = true, visitUrl }: ISignInProps) {
   const queryClient = useQueryClient()
 
   const [, alertDispatch] = useContext(AlertsContext)
@@ -133,7 +128,7 @@ export function SignIn({
   // the details have been loaded
   //const [account, setAccount] = useState<IAccount>({...DEFAULT_ACCOUNT})
 
-  const { getCachedUser, refreshAccessToken } = useEdbAuth()
+  const { getCachedUser } = useEdbAuth()
 
   useEffect(() => {
     // the sign in callback includes this url so that the app can signin and

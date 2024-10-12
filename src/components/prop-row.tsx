@@ -17,7 +17,6 @@ export const PropRow = forwardRef(function PropRow(
     items = "items-center",
     className,
     children,
-    ...props
   }: IDivProps & {
     title: string
     justify?: string

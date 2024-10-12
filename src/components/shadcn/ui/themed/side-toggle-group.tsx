@@ -5,7 +5,6 @@ import { motion } from "framer-motion"
 import {
   forwardRef,
   useEffect,
-  useRef,
   useState,
   type ComponentPropsWithoutRef,
   type ElementRef,
@@ -29,8 +28,6 @@ const SideToggleGroup = forwardRef<
     //const tabLineRef1 = useRef<HTMLSpanElement>(null)
     //const tabLineRef2 = useRef<HTMLSpanElement>(null)
     const [at, setAt] = useState<number>(0)
-    const lineRef = useRef<SVGLineElement>(null)
-    const currentStep = useRef<number>(-1)
 
     const itemHeight = h + 2 * padding
 

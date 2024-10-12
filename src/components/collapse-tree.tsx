@@ -248,7 +248,7 @@ function CollapseTreeNode({ tab, level, className }: ICollapseTreeNodeProps) {
             <button
               data-open={isOpen}
               className={EXPAND_CLS}
-              onClick={e => {
+              onClick={() => {
                 if (closable && tab.children) {
                   setIsOpen(!isOpen)
                 }

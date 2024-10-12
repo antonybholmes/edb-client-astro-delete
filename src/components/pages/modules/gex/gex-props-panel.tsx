@@ -29,7 +29,7 @@ export interface IProps {
 }
 
 export const GexPropsPanel = forwardRef(function GexPropsPanel(
-  { datasets, setGenes }: IProps,
+  {},
   ref: ForwardedRef<HTMLDivElement>,
 ) {
   const [displayProps, setDisplayProps] = useGexStore()

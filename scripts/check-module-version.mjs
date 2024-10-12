@@ -24,8 +24,7 @@ function walk(dir) {
   // prioritize dirs
   dirs.forEach(d => walk(d))
 
-  let module = path.basename(dir) //.replace(/^.+module\//, "")
-
+ 
   let moduleFile = files.filter(f => f.includes("module.json"))
 
   if (moduleFile.length === 0) {
@@ -39,7 +38,7 @@ function walk(dir) {
 
   // find largest mod time
 
-  const [modFile, modDate] = files
+  const [, modDate] = files
     .filter(f => f.match(/(\.ts|\.tsx)/))
     .map(f => {
       const stats = fs.lstatSync(f)

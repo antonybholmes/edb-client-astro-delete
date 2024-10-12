@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@components/shadcn/ui/themed/select"
-import { MultiMode } from "../oncoplot/oncoplot-utils"
+import type { MultiMode } from "../oncoplot/oncoplot-utils"
 
 export type OncoplotType = "loconcoplot" | "oncoplot"
 

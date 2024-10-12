@@ -3,7 +3,7 @@ import { BaseDataFrame, type LocType } from "./base-dataframe"
 
 import { BaseSeries } from "./base-series"
 import { DataFrame, _t, type IDataFrameOptions } from "./dataframe"
-import { IndexType, SeriesType, Shape } from "./dataframe-types"
+import type { IndexType, SeriesType, Shape } from "./dataframe-types"
 import { Index, type IndexFromType } from "./index"
 
 export class AnnotationDataFrame extends BaseDataFrame {

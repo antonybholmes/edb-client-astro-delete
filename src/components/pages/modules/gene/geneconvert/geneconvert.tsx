@@ -83,7 +83,7 @@ function GeneConvPage() {
 
   const [fromSpecies, setFromSpecies] = useState("Human")
   const [toSpecies, setToSpecies] = useState("Mouse")
-  const [exact, setExact] = useState(true)
+  const [exact] = useState(true)
 
   const [rightTab, setRightTab] = useState("Options")
   const [showSideBar, setShowSideBar] = useState(true)

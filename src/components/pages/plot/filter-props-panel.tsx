@@ -28,7 +28,7 @@ export interface IProps {
 
 export const FilterPropsPanel = forwardRef(function FilterPropsPanel(
   { df }: IProps,
-  ref: ForwardedRef<HTMLDivElement>,
+  _ref: ForwardedRef<HTMLDivElement>,
 ) {
   const [open, setOpen] = useState(false)
   const [, historyDispatch] = useContext(HistoryContext)

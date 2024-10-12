@@ -30,7 +30,6 @@ import {
 } from "./slide-bar-provider"
 import { VCenterRow } from "./v-center-row"
 
-const ANIMATION_DURATION_S = 0.4
 const KEY_STEP = 5
 
 const H_DIV_BOX_CLS =
@@ -88,11 +87,9 @@ export const SlideBar = forwardRef(function SlideBar(
     limits = [5, 85],
     mainContent,
     sideContent,
-    className,
     children,
-    ...props
   }: ISlideBarProps,
-  ref: ForwardedRef<HTMLDivElement>,
+  _ref: ForwardedRef<HTMLDivElement>,
 ) {
   //const c = Children.toArray(children)
 
@@ -572,7 +569,6 @@ export const SlideBarContent = forwardRef(function SlideBarContent(
   const [flexPos, setFlexPos] = useState(
     open ? position : side === "right" ? 100 : 0,
   )
-  const [duration, setDuration] = useState(0.8)
 
   function onMouseHoldDown(e: MouseEvent | React.MouseEvent, dir: DIR_TYPE) {
     setIsDragging(dir)
@@ -603,9 +599,9 @@ export const SlideBarContent = forwardRef(function SlideBarContent(
     setDivPos(p)
   }
 
-  useEffect(() => {
-    setDuration(isDragging !== "" ? 0 : 0.8)
-  }, [isDragging])
+  // useEffect(() => {
+  //   setDuration(isDragging !== "" ? 0 : 0.8)
+  // }, [isDragging])
 
   // set initial position
   useEffect(() => {

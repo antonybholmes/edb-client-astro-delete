@@ -122,8 +122,6 @@ function OncoplotPage() {
 
   //const [showLoadingDialog, setShowLoadingDialog] = useState(false)
 
-  const [filesToOpen, setFilesToOpen] = useState<IFileOpen[]>([])
-
   const [plotState, plotDispatch] = useContext(PlotsContext)
 
   const [, messageDispatch] = useContext(MessageContext)
@@ -431,8 +429,6 @@ function OncoplotPage() {
     filesToDataFrames(files, historyDispatch, options)
 
     setShowFileMenu(false)
-
-    setFilesToOpen([])
   }
 
   function locationOncoplot(
@@ -742,7 +738,7 @@ function OncoplotPage() {
   useEffect(() => {
     const plotChildren: ITab[] = []
 
-    plotState.plots.forEach((plot, pi) => {
+    plotState.plots.forEach(plot => {
       plotChildren.push({
         id: nanoid(),
         name: plot.name,

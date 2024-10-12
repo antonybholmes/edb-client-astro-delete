@@ -35,7 +35,7 @@ export const BoxWhiskerPlotSvg = forwardRef<SVGElement, IProps>(
       fill = "none",
       fillOpacity = 1,
     }: IProps,
-    svgRef,
+    _svgRef,
   ) {
     const svg = useMemo(() => {
       const iqr = q3 - q1

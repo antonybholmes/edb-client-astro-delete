@@ -10,6 +10,7 @@ import mdx from '@astrojs/mdx';
 
 import partytown from '@astrojs/partytown';
 
+// @ts-ignore
 import remarkSectionize from "remark-sectionize"
 
 // https://astro.build/config

@@ -43,7 +43,7 @@ interface IOncoplotPanelProps {
 
 const OncoplotPanel = forwardRef(function OncoplotPanel(
   { panelId, oncoProps, canvasRef, downloadRef }: IOncoplotPanelProps,
-  ref: ForwardedRef<HTMLDivElement>,
+  _ref: ForwardedRef<HTMLDivElement>,
 ) {
   const svgRef = useRef<SVGSVGElement>(null)
 

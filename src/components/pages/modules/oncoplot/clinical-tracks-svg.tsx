@@ -322,14 +322,6 @@ export function clinicalLegendSvg(
   blockSize: IBlock,
   displayProps: IOncoplotDisplayProps,
 ): ReactNode {
-  const categories = track.categories
-  // const colorMap: Map<string, string> = new Map<string, string>(
-  //   categories.map((category, ci) => [
-  //     category,
-  //     COLOR_PALETTE[ci % COLOR_PALETTE.length],
-  //   ]),
-  // )
-
   return (
     <g id={`legend-clinical-${track.name}`}>
       <g

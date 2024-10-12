@@ -69,7 +69,7 @@ export function DataSetsSideList({
       onKeyDown={onKeyDown}
       onKeyUp={onKeyUp}
     >
-      {dataSets.map((set: IDataSetExt, seti: number) => {
+      {dataSets.map((set: IDataSetExt) => {
         return (
           <li
             key={set.name}

@@ -8,7 +8,7 @@ export const X2 = 18
 
 export function MenuButtonIcon({
   w = "w-5",
-  fill = "fill-foreground/90",
+
   className,
 }: IIconProps) {
   return (

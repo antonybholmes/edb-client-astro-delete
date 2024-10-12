@@ -104,7 +104,7 @@ export const VolcanoPropsPanel = forwardRef(function HeatmapPropsPanel(
     )
 
     const values = df.index.values
-      .filter((v, i) => idx.has(i))
+      .filter((_v, i) => idx.has(i))
       .map(l => l.toString())
 
     setText(values.join("\n"))

@@ -5,7 +5,7 @@ import { BWR_CMAP, ColorMap } from "@lib/colormap"
 import { BaseDataFrame } from "@lib/dataframe/base-dataframe"
 import { findCol, getNumCol } from "@lib/dataframe/dataframe-utils"
 
-import { IndexType } from "@lib/dataframe/dataframe-types"
+import type { IndexType } from "@lib/dataframe/dataframe-types"
 import { range } from "@lib/math/range"
 import { Axis, YAxis, type ILim, type TickLabel } from "./axis"
 import { AxisBottomSvg, AxisLeftSvg } from "./axis-svg"

@@ -17,9 +17,9 @@ import { useGexPlotStore } from "./gex-plot-store"
 import { useGexStore } from "./gex-store"
 import {
   DEFAULT_GEX_PLOT_DISPLAY_PROPS,
-  IGexSearchResults,
   type GexPlotPropMap,
   type IGexDataset,
+  type IGexSearchResults,
   type IGexStats,
   type IGexValueType,
 } from "./gex-utils"

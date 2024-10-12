@@ -8,8 +8,6 @@ export const CONTAINER_CLS = cn(
   "flex flex-row  gap-x-2 justify-between disabled:cursor-not-allowed disabled:opacity-50",
 )
 
-const MIN_CH = 3
-
 export const INPUT_CLS = cn(
   "h-full shrink-0 disabled:cursor-not-allowed disabled:opacity-50 read-only:opacity-50",
 )

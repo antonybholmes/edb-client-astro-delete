@@ -1,6 +1,6 @@
 import {
   BASE_IDS,
-  DNABase,
+  type DNABase,
   type IDisplayProps,
 } from "@components/pages/modules/gene/motifs/motif-svg"
 import { ColorPickerButton } from "@components/pages/plot/color-picker-button"

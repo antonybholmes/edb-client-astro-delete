@@ -115,7 +115,6 @@ export function MutationsPage() {
 
   const [rightTab, setRightTab] = useState("Search")
 
-  const [dbIndex, setDbIndex] = useState(0)
   //const [colorMapName, setColorMap] = useState("Lymphgen")
   const [sampleColorMap, setSampleColorMap] = useState<
     Map<string, string> | undefined
@@ -602,7 +601,6 @@ export function MutationsPage() {
           motifPatterns={motifPatterns}
           onDisplayPropsChange={props => setDisplayProps(props)}
           onMotifPatternsChange={patterns => setMotifPatterns(patterns)}
-          onDBChange={index => setDbIndex(index)}
         />
       ),
     },

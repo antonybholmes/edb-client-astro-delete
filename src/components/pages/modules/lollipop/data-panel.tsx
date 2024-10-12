@@ -23,12 +23,11 @@ import { HistoryPanel } from "@components/pages/history-panel"
 import type { ISaveAsFormat } from "@components/pages/save-as-dialog"
 import { SaveTxtDialog } from "@components/pages/save-txt-dialog"
 import type { ITab } from "@components/tab-provider"
-import { type IDataPanelProps } from "../matcalc/data-panel"
 import { ProteinPropsPanel } from "./protein-props-panel"
 
 export const DataPanel = forwardRef(function DataPanel(
-  { panelId = "Data" }: IDataPanelProps,
-  ref: ForwardedRef<HTMLDivElement>,
+  {},
+  _ref: ForwardedRef<HTMLDivElement>,
 ) {
   const [history, historyDispatch] = useContext(HistoryContext)
 
@@ -70,10 +69,6 @@ export const DataPanel = forwardRef(function DataPanel(
   }
 
   useEffect(() => {
-    const messages = messageState.queue.filter(
-      message => message.target === panelId,
-    )
-
     messageState.queue.forEach(message => {
       console.log(message)
 

@@ -377,12 +377,12 @@ export function userIsSignedInWithSession(): boolean {
 //   }
 // }
 
-interface IUseAccountReturnType {
-  account: IUser
-  refreshAccount: () => void
-  isLoading: boolean
-  error: Error | null
-}
+// interface IUseAccountReturnType {
+//   account: IUser
+//   refreshAccount: () => void
+//   isLoading: boolean
+//   error: Error | null
+// }
 
 // export function useAccount(): IUseAccountReturnType {
 //   const [account, setAccount] = useState<IAccount>({ ...DEFAULT_ACCOUNT })

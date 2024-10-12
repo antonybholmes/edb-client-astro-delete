@@ -14,6 +14,7 @@ import { HeaderLayout } from "@layouts/header-layout"
 import { SIGN_IN_ROUTE, TEXT_SIGN_IN } from "@modules/edb"
 
 import { ButtonLink } from "@components/link/button-link"
+import { CoreProviders } from "@providers/core-providers"
 
 function SignedOutPage() {
   return (
@@ -46,5 +47,9 @@ function SignedOutPage() {
 }
 
 export function SignedOutQueryPage() {
-  return <SignedOutPage />
+  return (
+    <CoreProviders>
+      <SignedOutPage />
+    </CoreProviders>
+  )
 }

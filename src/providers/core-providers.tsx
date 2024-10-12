@@ -1,5 +1,6 @@
 //'use client'
 
+import { AlertsProvider } from "@components/alerts/alerts-provider"
 import type { IChildrenProps } from "@interfaces/children-props"
 import { EdbAuthProvider } from "@providers/edb-auth-provider"
 import { QCP } from "@query"
@@ -10,7 +11,9 @@ export function CoreProviders({ children }: IChildrenProps) {
   return (
     <QCP>
       <EdbAuthProvider>
-        <HistoryProvider>{children}</HistoryProvider>
+        <HistoryProvider>
+          <AlertsProvider> {children}</AlertsProvider>
+        </HistoryProvider>
       </EdbAuthProvider>
     </QCP>
   )

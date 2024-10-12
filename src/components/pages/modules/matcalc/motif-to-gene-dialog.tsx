@@ -43,7 +43,7 @@ export function MotifToGeneDialog({
 
   const [useIndex, setUseIndex] = useState(false)
   const [useColumns, setUseColumns] = useState(false)
-  const [db, setDb] = useState<IMotifToGeneDb | null>(null)
+
   const [, historyDispatch] = useContext(HistoryContext)
 
   useEffect(() => {

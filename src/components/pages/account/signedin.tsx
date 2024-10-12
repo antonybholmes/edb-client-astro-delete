@@ -20,13 +20,9 @@ import {
 } from "@modules/edb"
 import { useEdbAuth } from "@providers/edb-auth-provider"
 
-import { useQueryClient } from "@tanstack/react-query"
-
 import { useEffect, useState } from "react"
 
 function SignedInPage() {
-  const queryClient = useQueryClient()
-
   const { getCachedUser } = useEdbAuth()
 
   const [user, setUser] = useState<IUser | null>(null)

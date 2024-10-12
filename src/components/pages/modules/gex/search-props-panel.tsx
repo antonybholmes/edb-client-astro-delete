@@ -14,9 +14,9 @@ import {
   ResizablePanelGroup,
 } from "@components/shadcn/ui/themed/resizable"
 import { ThinVResizeHandle } from "@components/split-pane/thin-v-resize-handle"
-import { getTabId, ITab } from "@components/tab-provider"
+import { getTabId, type ITab } from "@components/tab-provider"
 import { forwardRef, useState, type ForwardedRef } from "react"
-import { IGexDataset } from "./gex-utils"
+import type { IGexDataset } from "./gex-utils"
 
 export interface IProps {
   foldersTab: ITab

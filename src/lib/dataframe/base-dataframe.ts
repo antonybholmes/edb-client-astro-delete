@@ -87,6 +87,7 @@ export class BaseDataFrame {
     return this
   }
 
+  // @ts-ignore
   setIndex(index: IndexFromType, inplace: boolean = false): BaseDataFrame {
     return this
   }
