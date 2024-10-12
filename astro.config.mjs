@@ -8,7 +8,7 @@ import sitemap from '@astrojs/sitemap'
 
 import mdx from '@astrojs/mdx'
 
-import partytown from '@astrojs/partytown'
+//import partytown from '@astrojs/partytown'
 
 // @ts-ignore
 import remarkSectionize from 'remark-sectionize'
@@ -42,6 +42,11 @@ export default defineConfig({
     react(),
     sitemap(),
     mdx(),
-    partytown(),
+    //partytown(),
   ],
+  // vite: {
+  //   css: {
+  //     transformer: "lightningcss",
+  //   },
+  // },
 })

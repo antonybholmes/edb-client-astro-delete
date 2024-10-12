@@ -92,6 +92,7 @@ export default {
         },
         accent: {
           DEFAULT: "rgb(var(--accent) / <alpha-value>)",
+          dark: "rgb(var(--accent-dark) / <alpha-value>)",
           foreground: "rgb(var(--accent-foreground) / <alpha-value>)",
         },
         popover: {

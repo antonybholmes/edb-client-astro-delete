@@ -3,11 +3,11 @@ import { BottomBar } from '@components/toolbar/bottom-bar'
 import { BaseDataFrame } from '@lib/dataframe/base-dataframe'
 
 import { getTabId, type ITab, type ITabChange } from '@components/tab-provider'
+import { cn } from '@lib/class-names'
 import { truncate } from '@lib/text/text'
 import type { TabsProps } from '@radix-ui/react-tabs'
 import { forwardRef, useState, type ForwardedRef } from 'react'
 import { DataFrameSimpleCanvasUI } from './dataframe-simple-canvas-ui'
-import { cn } from '@lib/class-names'
 
 const MAX_NAME_CHARS = 15
 
@@ -89,7 +89,7 @@ export const TabbedDataFrames = forwardRef(function TabbedDataFrames(
       }}
       //onTabIdChange={onTabIdChange}
       defaultWidth={4.5}
-      className={cn("gap-y-0.5",className)}
+      className={cn('gap-y-0.5', className)}
     />
 
     // <Tabs

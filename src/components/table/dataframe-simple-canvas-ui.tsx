@@ -53,7 +53,7 @@ import {
 const GAP = 4
 const GAP2 = GAP * 2
 const GRID_COLOR = 'rgb(203 213 225)'
-const INDEX_BG_COLOR = 'rgb(241 245 249)'
+//const INDEX_BG_COLOR = 'rgb(241 245 249)'
 const SELECTION_STROKE_COLOR = 'rgb(59, 130, 246)'
 //const SELECTED_INDEX_FILL = "rgb(231 229 228)"
 const SELECTION_STROKE_WIDTH = 2
@@ -1442,14 +1442,14 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       const x = e.nativeEvent.offsetX
       const y = e.nativeEvent.offsetY
 
-      if (x <= dfProps.scaledRowIndexW) {
-        if (y > dfProps.scaledCellSize[1]) {
-          d.scrollBy(0, e.deltaY)
-        }
+      console.log(x, y, e.nativeEvent)
+
+      if (y <= dfProps.scaledCellSize[1]) {
+        // wheel scrolls left and right
+        bottomScrollRef.current?.scrollBy(e.deltaY, 0)
       } else {
-        if (y <= dfProps.scaledCellSize[1]) {
-          d.scrollBy(e.deltaY, 0)
-        }
+        // wheel scrolls up and down
+        rightScrollRef.current?.scrollBy(0, e.deltaY)
       }
     }
 
@@ -1875,7 +1875,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
                   //scrollTargetRef(e)
                 }}
                 //className="relative z-50 overflow-scroll border border-orange-400"
-                className="custom-scrollbar relative z-50 grow"
+                className="custom-scrollbar relative z-50 grow overflow-hidden"
                 //onMouseMove={onMouseMove}
                 onClick={onClick}
                 onScroll={(e: UIEvent<HTMLDivElement>) => {
@@ -1890,7 +1890,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
                 //onMouseMove={scrollOnEdgesMouseMove}
               >
                 {/* Used to create scroll bars */}
-                {/* <div
+                <div
                   className="invisible absolute left-0 top-0"
                   style={{
                     width: dfProps.maxScaledDim[0],
@@ -1904,7 +1904,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
                     width: 1,
                     height: dfProps.maxScaledDim[1],
                   }}
-                /> */}
+                />
 
                 {editable && editCell.r !== -1 && (
                   <VCenterRow
@@ -1949,7 +1949,8 @@ export const DataFrameSimpleCanvasUI = forwardRef(
             </BaseCol>
 
             <div
-              className="w-3 shrink-0 h-full"
+              id="dataframe-scrollbar-right"
+              className="w-2 shrink-0 h-full"
               style={{
                 //paddingLeft: dfProps.scaledRowIndexW,
                 paddingTop: dfProps.scaledCellSize[1],
@@ -1974,14 +1975,15 @@ export const DataFrameSimpleCanvasUI = forwardRef(
           </BaseRow>
 
           <div
-            className="h-3 shrink-0 w-full pr-3"
+            id="dataframe-scrollbar-bottom"
+            className="h-2 shrink-0 w-full pr-2"
             style={{
               paddingLeft: dfProps.scaledRowIndexW,
               //paddingTop: dfProps.scaledCellSize[1],
             }}
           >
             <div
-              className=" shrink-0 relative w-full h-full custom-scrollbar overflow-x-scroll overflow-y-hidden"
+              className="shrink-0 relative w-full h-full custom-scrollbar overflow-x-scroll overflow-y-hidden"
               ref={bottomScrollRef}
               onScroll={(e: UIEvent<HTMLDivElement>) => {
                 onScroll(e)
