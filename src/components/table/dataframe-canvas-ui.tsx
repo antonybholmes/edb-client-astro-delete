@@ -52,17 +52,17 @@ import {
 
 const GAP = 4
 const GAP2 = GAP * 2
-const GRID_COLOR = 'rgb(203 213 225)'
+const GRID_COLOR = 'rgb(226 232 240)'
 //const INDEX_BG_COLOR = 'rgb(241 245 249)'
 const SELECTION_STROKE_COLOR = 'rgb(59, 130, 246)'
 //const SELECTED_INDEX_FILL = "rgb(231 229 228)"
 const SELECTION_STROKE_WIDTH = 2
 const SELECTION_FILL = 'rgba(147, 197, 253, 0.3)'
-const BOLD_FONT = "normal 600 12px 'Plus Jakarta Sans',Arial,sans-serif"
-const NORMAL_FONT = "normal normal 12px 'Plus Jakarta Sans',Arial,sans-serif"
+const BOLD_FONT = 'normal normal bold 12px Arial'
+const NORMAL_FONT = 'normal normal normal 14px Arial'
 const LINE_THICKNESS = 1
 
-const DEFAULT_CELL_SIZE: Shape = [100, 25]
+const DEFAULT_CELL_SIZE: Shape = [100, 28]
 const COL_DRAG_SIZE = 5
 
 // limit size of scrollbars in pixels because browsers have limits on the max div size of an element,
@@ -115,7 +115,7 @@ interface IProps extends IElementProps {
   editable?: boolean
 }
 
-export const DataFrameSimpleCanvasUI = forwardRef(
+export const DataFrameCanvasUI = forwardRef(
   function DataFrameSimpleCanvasUI(
     {
       df,
@@ -367,18 +367,18 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       // row index
 
       ctx.textAlign = df.getRowName(0) !== '1' ? 'left' : 'center'
-
+      ctx.textBaseline = 'middle'
       const x = df.getRowName(0) !== '1' ? GAP : 0.5 * dfProps.rowIndexW
 
-      let py = (rowRange[0] + 1) * cellSize[1] - normTop
-
+      let py = rowRange[0] * cellSize[1] - normTop
+      const ty = cellSize[1] / 2
       if (rowRange[0] !== -1) {
         range(rowRange[0], rowRange[1]).forEach(row => {
           const v = df.getRowName(row)
 
           //const py = cellSize[1] + row * cellSize[1] - normTop
 
-          ctx.fillText(v.toLocaleString(), x, py - GAP2)
+          ctx.fillText(v.toLocaleString(), x, py + ty)
 
           py += cellSize[1]
         })
@@ -505,7 +505,9 @@ export const DataFrameSimpleCanvasUI = forwardRef(
           region.rect(px + GAP, 0, w - GAP2, cellSize[1])
           ctx.clip(region)
 
-          ctx.fillText(v.toLocaleString(), px + 0.5 * w, cellSize[1] - GAP2)
+          ctx.textAlign = 'center'
+          ctx.textBaseline = 'middle'
+          ctx.fillText(v.toLocaleString(), (px + px2) / 2, cellSize[1] / 2)
 
           ctx.restore()
         })
@@ -746,7 +748,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       rowRange: Shape,
       colRange: Shape
     ) {
-      if (!ctx) {
+      if (!ctx || rowRange[0] === -1 || colRange[0] === -1) {
         return
       }
 
@@ -766,50 +768,53 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       ctx.font = NORMAL_FONT
       ctx.fillStyle = 'black'
 
-      if (colRange[0] !== -1) {
+      // initial offset of text in first visible row
+      // so we can just increment by cell size to get next
+      // row y without needing to do more multiplications
+      let py = (rowRange[0] + 0.5) * cellSize[1] - top
+
+      range(rowRange[0], rowRange[1]).forEach(row => {
         range(colRange[0], colRange[1] + 1).forEach(col => {
           const px1 = colPositions.current[col] - left
           const px2 = colPositions.current[col + 1] - left
           const w = px2 - px1
-          ctx.save()
+          //ctx.save()
 
-          const region = new Path2D()
-          region.rect(px1, GAP, w - GAP, h)
-          ctx.clip(region)
+          // const region = new Path2D()
+          // region.rect(px1, GAP, w - GAP, h)
+          // ctx.clip(region)
 
-          if (rowRange[0] !== -1) {
-            range(rowRange[0], rowRange[1]).forEach(row => {
-              let v = df.get(row, col)
+          let v = df.get(row, col)
 
-              //console.log('here', row, col, v, typeof v)
+          //console.log('here', row, col, v, typeof v)
 
-              const isNum = typeof v === 'number'
+          const isNum = typeof v === 'number'
 
-              if (isNum) {
-                if (Number.isInteger(v)) {
-                  v = (v as number).toLocaleString()
-                } else {
-                  v = (v as number).toFixed(dp)
-                }
-              }
+          // if (isNum) {
+          //   if (Number.isInteger(v)) {
+          //     v = (v as number).toLocaleString()
+          //   } else {
+          //     v = (v as number).toFixed(dp)
+          //   }
+          // }
 
-              //console.log(v, row, col, typeof v, isNum)
+          //console.log(v, row, col, typeof v, isNum)
 
-              ctx.textAlign = isNum ? 'right' : 'left'
+          ctx.textAlign = isNum ? 'right' : 'left'
+          ctx.textBaseline = 'middle'
 
-              const py = (row + 1) * cellSize[1] - top
+          ctx.fillText(cellStr(v), px1 + GAP + (isNum ? w - GAP2 : 0), py)
 
-              ctx.fillText(
-                cellStr(v),
-                px1 + GAP + (isNum ? w - GAP2 : 0),
-                py - GAP2
-              )
-            })
-          }
-
-          ctx.restore()
+          // ctx.beginPath();
+          // ctx.strokeStyle = "black"
+          // ctx.moveTo(0, py)
+          // ctx.lineTo(100, py)
+          // ctx.stroke()
         })
-      }
+
+        py += cellSize[1]
+        //ctx.restore()
+      })
 
       //ctx.restore()
 
@@ -856,16 +861,17 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       let v = df.get(row, col)
       const isNum = typeof v === 'number'
 
-      if (isNum) {
-        v = (v as number).toFixed(dp)
-      }
+      // if (isNum) {
+      //   v = (v as number).toFixed(dp)
+      // }
 
       ctx.textAlign = isNum ? 'right' : 'left'
+      ctx.textBaseline='middle'
 
       ctx.fillText(
         cellStr(v),
         px1 + GAP + (isNum ? w - GAP2 : 0),
-        y + cellSize[1] - GAP2
+        y + cellSize[1]/2
       )
 
       ctx.restore()

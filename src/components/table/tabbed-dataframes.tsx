@@ -7,7 +7,7 @@ import { cn } from '@lib/class-names'
 import { truncate } from '@lib/text/text'
 import type { TabsProps } from '@radix-ui/react-tabs'
 import { forwardRef, useState, type ForwardedRef } from 'react'
-import { DataFrameSimpleCanvasUI } from './dataframe-simple-canvas-ui'
+import { DataFrameCanvasUI } from './dataframe-canvas-ui'
 
 const MAX_NAME_CHARS = 15
 
@@ -49,7 +49,7 @@ export const TabbedDataFrames = forwardRef(function TabbedDataFrames(
       id: sheetId, //nanoid(),
       name,
       content: (
-        <DataFrameSimpleCanvasUI
+        <DataFrameCanvasUI
           df={df}
           key={i}
           scale={scale}
