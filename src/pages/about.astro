@@ -1,0 +1,8 @@
+---
+import { AboutQueryPage } from "@components/pages/about"
+import BaseLayout from "@layouts/BaseLayout.astro"
+---
+
+<BaseLayout title="About">
+  <AboutQueryPage client:only="react" slot="main" />
+</BaseLayout>

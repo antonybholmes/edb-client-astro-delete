@@ -1,0 +1,8 @@
+---
+import { UpdateEmailQueryPage } from "@components/pages/account/email/update"
+import BaseLayout from "@layouts/BaseLayout.astro"
+---
+
+<BaseLayout title="Update Email Address">
+  <UpdateEmailQueryPage client:only="react" slot="main" />
+</BaseLayout>

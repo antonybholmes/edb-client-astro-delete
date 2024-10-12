@@ -1,0 +1,9 @@
+---
+import { VennPageQuery } from "@components/pages/modules/venn/venn"
+import ModuleLayout from "@layouts/ModuleLayout.astro"
+import MODULE_INFO from "@components/pages/modules/venn/module.json"
+---
+
+<ModuleLayout info={MODULE_INFO}>
+  <VennPageQuery client:only="react" slot="main" />
+</ModuleLayout>

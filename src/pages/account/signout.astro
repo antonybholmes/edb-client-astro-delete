@@ -1,0 +1,9 @@
+---
+import { SignOutPage } from "@components/pages/account/signout"
+import BaseLayout from "@layouts/BaseLayout.astro"
+import { TEXT_SIGN_OUT } from "@modules/edb"
+---
+
+<BaseLayout title={TEXT_SIGN_OUT}>
+  <SignOutPage client:only="react" slot="main" />
+</BaseLayout>

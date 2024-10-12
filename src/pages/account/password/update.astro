@@ -1,0 +1,8 @@
+---
+import { UpdatePasswordQueryPage } from "@components/pages/account/password/update"
+import BaseLayout from "@layouts/BaseLayout.astro"
+---
+
+<BaseLayout title="Update Password">
+  <UpdatePasswordQueryPage client:only="react" slot="main" />
+</BaseLayout>

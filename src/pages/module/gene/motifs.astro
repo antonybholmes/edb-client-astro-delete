@@ -1,0 +1,9 @@
+---
+import { MotifsQueryPage } from "@components/pages/modules/gene/motifs/motifs"
+import ModuleLayout from "@layouts/ModuleLayout.astro"
+import MODULE_INFO from "@components/pages/modules/gene/motifs/module.json"
+---
+
+<ModuleLayout info={MODULE_INFO}>
+  <MotifsQueryPage client:only="react" slot="main" />
+</ModuleLayout>

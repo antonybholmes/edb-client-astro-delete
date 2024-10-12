@@ -1,0 +1,10 @@
+---
+import { AnnotationQueryPage } from "@components/pages/modules/genomic/annotate/annotate"
+
+import ModuleLayout from "@layouts/ModuleLayout.astro"
+import MODULE_INFO from "@components/pages/modules/genomic/annotate/module.json"
+---
+
+<ModuleLayout info={MODULE_INFO}>
+  <AnnotationQueryPage client:only="react" slot="main" />
+</ModuleLayout>

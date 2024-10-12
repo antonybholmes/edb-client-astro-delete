@@ -1,0 +1,8 @@
+---
+import { SeqViewPage, MODULE_INFO } from "@components/pages/genomic/seq-view"
+import ModuleLayout from "@layouts/ModuleLayout.astro"
+---
+
+<ModuleLayout info={MODULE_INFO}>
+  <SeqViewPage client:only="react" slot="main" />
+</ModuleLayout>

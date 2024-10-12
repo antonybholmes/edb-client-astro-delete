@@ -1,0 +1,9 @@
+---
+import { GeneConvQueryPage } from "@components/pages/modules/gene/geneconvert/geneconvert"
+import ModuleLayout from "@layouts/ModuleLayout.astro"
+import MODULE_INFO from "@components/pages/modules/gene/geneconvert/module.json"
+---
+
+<ModuleLayout info={MODULE_INFO}>
+  <GeneConvQueryPage client:only="react" slot="main" />
+</ModuleLayout>

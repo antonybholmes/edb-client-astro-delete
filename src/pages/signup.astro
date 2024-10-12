@@ -1,0 +1,8 @@
+---
+import { SignUpQueryPage } from "@components/pages/signup"
+import BaseLayout from "@layouts/BaseLayout.astro"
+---
+
+<BaseLayout title="Create your account">
+  <SignUpQueryPage client:only="react" slot="main" />
+</BaseLayout>

@@ -1,0 +1,61 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content"
+
+import { getSlug } from "@lib/urls"
+import PostLayout from "@layouts/PostLayout.astro"
+import { BaseCol } from "@components/base-col"
+import { MarkdownContent } from "@components/markdown-content"
+import { ThemeLink } from "@components/link/theme-link"
+
+export async function getStaticPaths() {
+  const posts = await getCollection("help")
+
+  return posts.map(post => {
+    return {
+      params: {
+        slug: getSlug(post.id), //post.data.slug,
+      },
+      props: {
+        post,
+      },
+    }
+  })
+}
+
+interface Props {
+  post: CollectionEntry<"help">
+}
+
+const { post } = Astro.props
+const { Content, headings } = await post.render()
+---
+
+<PostLayout title={post.data.title} tab="Help">
+  <Fragment slot="main">
+    <div class="grid grid-cols-1 gap-y-2 lg:grid-cols-5 lg:gap-x-16">
+      <BaseCol className="shrink-0 gap-y-2 p-1 text-xs">
+        <h2 class="border-b border-border pb-1 font-semibold">Contents</h2>
+        <ul class="flex flex-col gap-y-2">
+          {
+            headings.map(h => {
+              return (
+                <ThemeLink
+                  href={`#${h.slug}`}
+                  aria-label={`Goto help section ${h.text}`}
+                >
+                  {h.text}
+                </ThemeLink>
+              )
+            })
+          }
+        </ul>
+      </BaseCol>
+
+      <MarkdownContent
+        className="col-span-4 flex flex-col gap-y-4 py-1 text-xs"
+      >
+        <Content />
+      </MarkdownContent>
+    </div>
+  </Fragment>
+</PostLayout>

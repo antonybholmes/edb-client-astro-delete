@@ -1,0 +1,9 @@
+---
+import { DNAQueryPage } from "@components/pages/modules/genomic/dna/dna"
+import ModuleLayout from "@layouts/ModuleLayout.astro"
+import MODULE_INFO from "@components/pages/modules/genomic/dna/module.json"
+---
+
+<ModuleLayout info={MODULE_INFO}>
+  <DNAQueryPage client:only="react" slot="main" />
+</ModuleLayout>

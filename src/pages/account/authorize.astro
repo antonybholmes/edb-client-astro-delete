@@ -1,0 +1,8 @@
+---
+import { AuthorizePage } from "@components/pages/account/authorize"
+import BaseLayout from "@layouts/BaseLayout.astro"
+---
+
+<BaseLayout title="Signin Authorization">
+  <AuthorizePage client:only="react" slot="main" />
+</BaseLayout>
