@@ -71,19 +71,25 @@ export class BaseDataFrame {
     return []
   }
 
-  // @ts-ignore
-  row(row: IndexType): BaseSeries {
+  row(
+    // @ts-ignore
+    row: IndexType
+  ): BaseSeries {
     return EMPTY_SERIES
   }
 
   setRow(
+    // @ts-ignore
     row: IndexType = -1,
+    // @ts-ignore
     data: BaseSeries | SeriesType[],
+    // @ts-ignore
     inplace = true
   ): BaseDataFrame {
     return this
   }
 
+  // @ts-ignore
   set(row: number, col: number, v: SeriesType): BaseDataFrame {
     return this
   }

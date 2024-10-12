@@ -51,7 +51,7 @@ const LollipopPanel = forwardRef(function LollipopPanel(
     canvasRef,
     downloadRef,
   }: ILollipopPanelProps,
-  ref: ForwardedRef<HTMLDivElement>
+  _ref: ForwardedRef<HTMLDivElement>
 ) {
   const svgRef = useRef<SVGSVGElement>(null)
 

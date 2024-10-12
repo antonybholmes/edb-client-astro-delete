@@ -28,7 +28,6 @@ import { useContext, useRef, useState, type BaseSyntheticEvent } from 'react'
 import { FormInputError } from '@components/input-error'
 import { Form, FormField, FormItem } from '@components/shadcn/ui/themed/form'
 import { TEXT_CANCEL, TEXT_CONFIRM } from '@consts'
-import { AccountSettingsProvider } from '@providers/account-settings-provider'
 
 import { WarningButtonLink } from '@components/link/warning-button-link'
 import { Input } from '@components/shadcn/ui/themed/input'
@@ -214,9 +213,7 @@ function UpdateEmailPage() {
 export function UpdateEmailQueryPage() {
   return (
     <CoreProviders>
-      
-        <UpdateEmailPage />
- 
+      <UpdateEmailPage />
     </CoreProviders>
   )
 }

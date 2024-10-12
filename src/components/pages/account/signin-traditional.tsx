@@ -2,7 +2,6 @@
 
 import {
   AlertsContext,
-  AlertsProvider,
   makeAlertFromAxiosError,
 } from '@components/alerts/alerts-provider'
 import { FORWARD_DELAY_MS, makeSignedInAlert } from '@layouts/signin-layout'
@@ -13,7 +12,6 @@ import {
   SIGNEDIN_ROUTE,
 } from '@modules/edb'
 
-import { AccountSettingsProvider } from '@providers/account-settings-provider'
 import { AuthProvider } from '@providers/auth-provider'
 
 import { SignIn } from '@components/auth/signin'
@@ -23,9 +21,9 @@ import axios, { AxiosError } from 'axios'
 import { jwtDecode } from 'jwt-decode'
 
 import { redirect } from '@lib/urls'
+import { CoreProviders } from '@providers/core-providers'
 import { useContext, useEffect, useState } from 'react'
 import type { ICallbackJwtPayload } from './verify'
-import { CoreProviders } from '@providers/core-providers'
 
 // async function signIn(jwt: string): Promise<AxiosResponse> {
 //   console.log("signin")
@@ -126,9 +124,7 @@ export function SignInQueryPage() {
   return (
     <AuthProvider callbackUrl={url}>
       <CoreProviders>
- 
-          <SignInPage />
- 
+        <SignInPage />
       </CoreProviders>
     </AuthProvider>
   )

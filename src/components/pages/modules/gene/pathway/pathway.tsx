@@ -62,7 +62,6 @@ import {
   API_PATHWAY_GENES_URL,
   JSON_HEADERS,
 } from '@modules/edb'
-import { AccountSettingsProvider } from '@providers/account-settings-provider'
 import axios from 'axios'
 
 import {
@@ -207,13 +206,12 @@ export function PathwayPage() {
     setDisplayProps({ ...displayProps, scale })
   }
 
-  function onFileChange(message: string, files: FileList | null) {
+  function onFileChange(_message: string, files: FileList | null) {
     if (!files) {
       return
     }
 
     const file: File = files[0] // OR const file = files.item(i);
-    const name = file.name
 
     const fileReader = new FileReader()
 
@@ -924,9 +922,7 @@ export function PathwayPage() {
 export function PathwayQueryPage() {
   return (
     <CoreProviders>
- 
-        <PathwayPage />
-    
+      <PathwayPage />
     </CoreProviders>
   )
 }

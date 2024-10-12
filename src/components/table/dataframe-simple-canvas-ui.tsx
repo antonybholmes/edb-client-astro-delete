@@ -14,6 +14,7 @@ import { NO_SHAPE, type BaseDataFrame } from '@lib/dataframe/base-dataframe'
 import { cellStr, getExcelColName } from '@lib/dataframe/cell'
 import { FOCUS_RING_CLS } from '@theme'
 
+import { BaseRow } from '@components/base-row'
 import type { Shape } from '@lib/dataframe/dataframe-types'
 import { range } from '@lib/math/range'
 import type { ChangeEvent, ForwardedRef, WheelEvent } from 'react'
@@ -168,6 +169,8 @@ export const DataFrameSimpleCanvasUI = forwardRef(
     //const scrollDirection = useRef<IScrollDirection>(DEFAULT_SCROLL_DIRECTION)
 
     const bgCanvasRef = useRef<HTMLCanvasElement | null>(null)
+    const rightScrollRef = useRef<HTMLDivElement | null>(null)
+    const bottomScrollRef = useRef<HTMLDivElement | null>(null)
     //const gridCanvasRef = useRef<HTMLCanvasElement | null>(null)
     const tableCanvasRef = useRef<HTMLCanvasElement | null>(null)
     //const selectionCanvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -296,8 +299,8 @@ export const DataFrameSimpleCanvasUI = forwardRef(
         return
       }
 
-      ctx.fillStyle = INDEX_BG_COLOR
-      ctx.fillRect(0, cellSize[1], dfProps.rowIndexW, h)
+      //ctx.fillStyle = INDEX_BG_COLOR
+      //ctx.fillRect(0, cellSize[1], dfProps.rowIndexW, h)
 
       ctx.save()
 
@@ -421,8 +424,8 @@ export const DataFrameSimpleCanvasUI = forwardRef(
         return
       }
 
-      ctx.fillStyle = INDEX_BG_COLOR
-      ctx.fillRect(0, 0, w, cellSize[1])
+      //ctx.fillStyle = INDEX_BG_COLOR
+      //ctx.fillRect(0, 0, w, cellSize[1])
 
       // draw line
 
@@ -1019,8 +1022,8 @@ export const DataFrameSimpleCanvasUI = forwardRef(
 
     function onScroll(e: UIEvent<HTMLDivElement>) {
       let scrollTop: number = 0
-      const scrollHeight = e.currentTarget.scrollHeight
-      const clientHeight = e.currentTarget.clientHeight
+      const scrollHeight = rightScrollRef.current!.scrollHeight // e.currentTarget.scrollHeight
+      const clientHeight = rightScrollRef.current!.scrollWidth // e.currentTarget.clientHeight
 
       // scroll events occur when the div height exceeds the client height
       // in which case we convert the the scroll position into a normalized
@@ -1034,8 +1037,8 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       }
 
       let scrollLeft: number = 0
-      const scrollWidth = e.currentTarget.scrollWidth
-      const clientWidth = e.currentTarget.clientWidth
+      const scrollWidth = bottomScrollRef.current!.scrollWidth // e.currentTarget.scrollWidth
+      const clientWidth = bottomScrollRef.current!.clientWidth // e.currentTarget.clientWidth
 
       if (scrollWidth > clientWidth) {
         const fracScrollLeft =
@@ -1847,45 +1850,143 @@ export const DataFrameSimpleCanvasUI = forwardRef(
             />
           )}
         </VCenterRow>
+        <BaseCol className="gap-y-1 grow">
+          <BaseRow className="gap-x-1 grow">
+            <BaseCol
+              onKeyDown={onKeyDown}
+              onMouseDown={onHeaderMouseDown}
+              onMouseMove={onHeaderMouseMove}
+              onMouseUp={onMouseUp}
+              onWheel={onHeaderWheel}
+              ref={outerRef}
+              className={cn(
+                'relative z-50 grow overflow-hidden border border-border rounded-md bg-muted',
+                FOCUS_RING_CLS
+              )}
+              style={{
+                paddingLeft: dfProps.scaledRowIndexW,
+                paddingTop: dfProps.scaledCellSize[1],
+              }}
+              tabIndex={0}
+            >
+              <div
+                ref={(e: HTMLDivElement) => {
+                  scrollRef.current = e
+                  //scrollTargetRef(e)
+                }}
+                //className="relative z-50 overflow-scroll border border-orange-400"
+                className="custom-scrollbar relative z-50 grow"
+                //onMouseMove={onMouseMove}
+                onClick={onClick}
+                onScroll={(e: UIEvent<HTMLDivElement>) => {
+                  onScroll(e)
+                  //   e.preventDefault()
+                  //   console.log('scroll', e.currentTarget.scrollLeft,  e.currentTarget.scrollTop)
+                  //   //e.stopPropagation()
+                }}
+                //{...events}
 
-        <BaseCol
-          className={cn('relative z-50 grow overflow-hidden', FOCUS_RING_CLS)}
-        >
-          <BaseCol
-            onKeyDown={onKeyDown}
-            onMouseDown={onHeaderMouseDown}
-            onMouseMove={onHeaderMouseMove}
-            onMouseUp={onMouseUp}
-            onWheel={onHeaderWheel}
-            ref={outerRef}
-            className="relative z-40 grow overflow-hidden border border-border rounded-md"
+                //onMouseUp={scrollOnEdgesMouseUp}
+                //onMouseMove={scrollOnEdgesMouseMove}
+              >
+                {/* Used to create scroll bars */}
+                {/* <div
+                  className="invisible absolute left-0 top-0"
+                  style={{
+                    width: dfProps.maxScaledDim[0],
+                    height: 1,
+                  }}
+                />
+
+                <div
+                  className="invisible absolute left-0 top-0"
+                  style={{
+                    width: 1,
+                    height: dfProps.maxScaledDim[1],
+                  }}
+                /> */}
+
+                {editable && editCell.r !== -1 && (
+                  <VCenterRow
+                    className="absolute z-100 overflow-hidden p-1 text-sm animate-in fade-in-0"
+                    style={{
+                      left: colPositions.current[editCell.c] * scale,
+                      top: editCell.r * dfProps.scaledCellSize[1],
+                      width:
+                        (colPositions.current[editCell.c + 1] -
+                          colPositions.current[editCell.c]) *
+                          scale +
+                        scale,
+                      height: dfProps.scaledCellSize[1] + scale,
+                    }}
+                    onMouseDown={(e: MouseEvent) => e.preventDefault()}
+                    onMouseUp={(e: MouseEvent) => e.preventDefault()}
+                  >
+                    <input
+                      className={cn(
+                        'w-full resize-none bg-white outline-none',
+                        [!isNaN(parseFloat(editText)), 'text-right']
+                      )}
+                      value={editText}
+                      onKeyDown={onCellEditKeyDown}
+                      onChange={onEditChange}
+                      onFocus={e => e.target.select()}
+                      onClick={(e: MouseEvent) => e.stopPropagation()}
+                      onMouseDown={(e: MouseEvent) => e.stopPropagation()}
+                      readOnly={false}
+                      ref={editRef}
+                    />
+                  </VCenterRow>
+                )}
+              </div>
+
+              <canvas
+                ref={tableCanvasRef}
+                className="absolute left-0 top-0 z-10"
+              />
+
+              <canvas ref={bgCanvasRef} className="absolute left-0 top-0 z-0" />
+            </BaseCol>
+
+            <div
+              className="w-3 shrink-0 h-full"
+              style={{
+                //paddingLeft: dfProps.scaledRowIndexW,
+                paddingTop: dfProps.scaledCellSize[1],
+              }}
+            >
+              <div
+                className="shrink-0 relative w-full h-full custom-scrollbar overflow-y-scroll overflow-x-hidden"
+                ref={rightScrollRef}
+                onScroll={(e: UIEvent<HTMLDivElement>) => {
+                  onScroll(e)
+                }}
+              >
+                <div
+                  className="invisible absolute left-0 top-0"
+                  style={{
+                    width: 1,
+                    height: dfProps.maxScaledDim[1],
+                  }}
+                />
+              </div>
+            </div>
+          </BaseRow>
+
+          <div
+            className="h-3 shrink-0 w-full pr-3"
             style={{
               paddingLeft: dfProps.scaledRowIndexW,
-              paddingTop: dfProps.scaledCellSize[1],
+              //paddingTop: dfProps.scaledCellSize[1],
             }}
-            tabIndex={0}
           >
             <div
-              ref={(e: HTMLDivElement) => {
-                scrollRef.current = e
-                //scrollTargetRef(e)
-              }}
-              //className="relative z-50 overflow-scroll border border-orange-400"
-              className="custom-scrollbar relative z-50 grow overflow-scroll"
-              //onMouseMove={onMouseMove}
-              onClick={onClick}
+              className=" shrink-0 relative w-full h-full custom-scrollbar overflow-x-scroll overflow-y-hidden"
+              ref={bottomScrollRef}
               onScroll={(e: UIEvent<HTMLDivElement>) => {
                 onScroll(e)
-                //   e.preventDefault()
-                //   console.log('scroll', e.currentTarget.scrollLeft,  e.currentTarget.scrollTop)
-                //   //e.stopPropagation()
               }}
-              //{...events}
-
-              //onMouseUp={scrollOnEdgesMouseUp}
-              //onMouseMove={scrollOnEdgesMouseMove}
             >
-              {/* Used to create scroll bars */}
               <div
                 className="invisible absolute left-0 top-0"
                 style={{
@@ -1893,73 +1994,8 @@ export const DataFrameSimpleCanvasUI = forwardRef(
                   height: 1,
                 }}
               />
-
-              <div
-                className="invisible absolute left-0 top-0"
-                style={{
-                  width: 1,
-                  height: dfProps.maxScaledDim[1],
-                }}
-              />
-
-              {/* <div
-            ref={selectionRef}
-            className="pointer-events-none invisible absolute z-70 border"
-            style={{
-              borderColor: SELECTION_STROKE_COLOR,
-              backgroundColor: SELECTION_FILL,
-            }}
-          /> */}
-
-              {/* <div
-            ref={selectionCellRef}
-            className="pointer-events-none invisible absolute z-80 border-2"
-            style={{
-              borderColor: SELECTION_STROKE_COLOR,
-            }}
-          /> */}
-
-              {editable && editCell.r !== -1 && (
-                <VCenterRow
-                  className="absolute z-100 overflow-hidden p-1 text-sm animate-in fade-in-0"
-                  style={{
-                    left: colPositions.current[editCell.c] * scale,
-                    top: editCell.r * dfProps.scaledCellSize[1],
-                    width:
-                      (colPositions.current[editCell.c + 1] -
-                        colPositions.current[editCell.c]) *
-                        scale +
-                      scale,
-                    height: dfProps.scaledCellSize[1] + scale,
-                  }}
-                  onMouseDown={(e: MouseEvent) => e.preventDefault()}
-                  onMouseUp={(e: MouseEvent) => e.preventDefault()}
-                >
-                  <input
-                    className={cn('w-full resize-none bg-white outline-none', [
-                      !isNaN(parseFloat(editText)),
-                      'text-right',
-                    ])}
-                    value={editText}
-                    onKeyDown={onCellEditKeyDown}
-                    onChange={onEditChange}
-                    onFocus={e => e.target.select()}
-                    onClick={(e: MouseEvent) => e.stopPropagation()}
-                    onMouseDown={(e: MouseEvent) => e.stopPropagation()}
-                    readOnly={false}
-                    ref={editRef}
-                  />
-                </VCenterRow>
-              )}
             </div>
-
-            <canvas
-              ref={tableCanvasRef}
-              className="absolute left-0 top-0 z-10"
-            />
-
-            <canvas ref={bgCanvasRef} className="absolute left-0 top-0 z-0" />
-          </BaseCol>
+          </div>
         </BaseCol>
       </BaseCol>
     )

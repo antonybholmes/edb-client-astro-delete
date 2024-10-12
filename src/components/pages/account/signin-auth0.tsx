@@ -11,7 +11,6 @@ import {
 } from '@modules/edb'
 
 import { useAuth0 } from '@auth0/auth0-react'
-import { AccountSettingsProvider } from '@providers/account-settings-provider'
 import { AuthProvider } from '@providers/auth-provider'
 
 import { Button } from '@components/shadcn/ui/themed/button'
@@ -184,9 +183,7 @@ export function SignInQueryPage() {
   return (
     <CoreProviders>
       <AuthProvider callbackUrl={url}>
- 
-          <SignInPage />
-   
+        <SignInPage />
       </AuthProvider>
     </CoreProviders>
   )

@@ -34,7 +34,6 @@ export const ViolinPlotSvg = forwardRef<SVGElement, IProps>(
       fill = 'none',
       stroke = 'black',
       fillOpacity = 0.5,
-      r = 5,
     }: IProps,
     _svgRef
   ) {

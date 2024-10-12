@@ -24,7 +24,6 @@ import { truncate } from '@lib/text/text'
 import { useSettingsStore, type Theme } from '@stores/use-settings-store'
 
 import { EdbAuthContext } from '@providers/edb-auth-provider'
-import { useQueryClient } from '@tanstack/react-query'
 import { useContext, useEffect, useState } from 'react'
 import {
   getAccessTokenContents,
@@ -39,8 +38,6 @@ import {
 } from './edb'
 
 export function EDBSignedIn() {
-  const queryClient = useQueryClient()
-
   const [open, setOpen] = useState(false)
 
   const { theme, applyTheme } = useSettingsStore()

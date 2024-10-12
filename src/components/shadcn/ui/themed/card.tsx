@@ -21,7 +21,7 @@ export const CenteredCardContainer = forwardRef<
   HTMLDivElement,
   HTMLAttributes<HTMLDivElement>
   // eslint-disable-next-line react/prop-types
->(({ className, children }, ref) => (
+>(({ children }, ref) => (
   <VCenterCol ref={ref} className="grow">
     <CardContainer>{children}</CardContainer>
   </VCenterCol>

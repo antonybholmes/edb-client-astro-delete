@@ -15,8 +15,6 @@ import { Textarea3 } from '@components/shadcn/ui/themed/textarea3'
 import { forwardRef, useContext, type ForwardedRef } from 'react'
 import { ProteinContext, searchProteins } from './protein-context'
 
-const H = 32
-
 export interface IMotifDBEntry {
   name: string
   file: string

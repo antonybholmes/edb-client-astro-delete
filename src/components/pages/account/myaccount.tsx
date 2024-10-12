@@ -48,7 +48,6 @@ import { FormInputError } from '@components/input-error'
 import { Button } from '@components/shadcn/ui/themed/button'
 import { Form, FormField, FormItem } from '@components/shadcn/ui/themed/form'
 import { VCenterRow } from '@components/v-center-row'
-import { AccountSettingsProvider } from '@providers/account-settings-provider'
 
 import { Input } from '@components/shadcn/ui/themed/input'
 import { Label } from '@components/shadcn/ui/themed/label'
@@ -496,9 +495,7 @@ function MyAccountPage() {
 export function MyAccountQueryPage() {
   return (
     <CoreProviders>
- 
-        <MyAccountPage />
- 
+      <MyAccountPage />
     </CoreProviders>
   )
 }

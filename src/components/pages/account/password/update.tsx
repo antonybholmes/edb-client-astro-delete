@@ -38,7 +38,6 @@ import { FormInputError } from '@components/input-error'
 import { Form, FormField, FormItem } from '@components/shadcn/ui/themed/form'
 import { Input5 } from '@components/shadcn/ui/themed/input5'
 import { TEXT_CONTINUE } from '@consts'
-import { AccountSettingsProvider } from '@providers/account-settings-provider'
 
 import {
   SignInLink,
@@ -423,9 +422,7 @@ function UpdatePasswordPage() {
 export function UpdatePasswordQueryPage() {
   return (
     <CoreProviders>
-     
-        <UpdatePasswordPage />
- 
+      <UpdatePasswordPage />
     </CoreProviders>
   )
 }

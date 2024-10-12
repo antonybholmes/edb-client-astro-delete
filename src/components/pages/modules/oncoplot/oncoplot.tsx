@@ -33,23 +33,18 @@ import { FileLinesIcon } from '@components/icons/file-lines-icon'
 import { SaveIcon } from '@components/icons/save-icon'
 
 import { ToolbarTabButton } from '@components/toolbar/toolbar-tab-button'
-import { HistoryContext, HistoryProvider } from '@providers/history-provider'
+import { HistoryContext } from '@providers/history-provider'
 import { useContext, useEffect, useRef, useState } from 'react'
 
 import { ShortcutLayout } from '@layouts/shortcut-layout'
 
-import { AccountSettingsProvider } from '@providers/account-settings-provider'
 import axios from 'axios'
 
-import { AlertsProvider } from '@components/alerts/alerts-provider'
 import {
   MessageContext,
   MessagesProvider,
 } from '@components/pages/message-context'
-import {
-  SelectionRangeContext,
-  SelectionRangeProvider,
-} from '@components/table/use-selection-range'
+import { SelectionRangeProvider } from '@components/table/use-selection-range'
 import { UndoShortcuts } from '@components/toolbar/undo-shortcuts'
 import { findCol } from '@lib/dataframe/dataframe-utils'
 import { parseLocation } from '@modules/genomic/genomic'
@@ -78,9 +73,9 @@ import { OncoPlotDialog, type OncoplotType } from './oncoplot-dialog'
 import { OncoplotPanelWrapper } from './oncoplot-panel'
 
 import type { ITab } from '@components/tab-provider'
+import { CoreProviders } from '@providers/core-providers'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import MODULE_INFO from './module.json'
-import { CoreProviders } from '@providers/core-providers'
 
 function OncoplotPage() {
   const queryClient = useQueryClient()
@@ -91,7 +86,6 @@ function OncoplotPage() {
   //const [tableData, setTableData] = useState<object[]>(DEFAULT_TABLE_ROWS)
   //const [tableH, setTableH] = useState<IReactTableCol[]>(DEFAULT_TABLE_HEADER)
   //const [selectedSheet, setSelectedSheet] = useState(0)
-  const [selection, selectionRangeDispatch] = useContext(SelectionRangeContext)
 
   const dataTab: ITab = {
     id: nanoid(),
@@ -103,7 +97,7 @@ function OncoplotPage() {
   const [foldersTab, setFoldersTab] = useState<ITab>(dataTab)
   const [tab, setTab] = useState<ITab | undefined>(dataTab)
   const [foldersIsOpen, setShowFolders] = useState(true)
-  const [tabName, setTabName] = useState('Table 1')
+  const [tabName] = useState('Table 1')
 
   const [toolbarTab, setToolbarTab] = useState('Home')
 
@@ -328,7 +322,7 @@ function OncoplotPage() {
   useEffect(() => {
     //setSelectedSheet(0) //history.currentStep.df.length - 1)
     setTab(dataTab)
-    selectionRangeDispatch({ type: 'clear' })
+    //selectionRangeDispatch({ type: 'clear' })
     //setClusterFrame(NO_CF)
   }, [historyState])
 
@@ -1056,13 +1050,13 @@ function OncoplotPage() {
 export function OncoplotQueryPage() {
   return (
     <CoreProviders>
-          <MessagesProvider>
-            <SelectionRangeProvider>
-              <PlotsProvider>
-                <OncoplotPage />
-              </PlotsProvider>
-            </SelectionRangeProvider>
-          </MessagesProvider>
-        </CoreProviders>
+      <MessagesProvider>
+        <SelectionRangeProvider>
+          <PlotsProvider>
+            <OncoplotPage />
+          </PlotsProvider>
+        </SelectionRangeProvider>
+      </MessagesProvider>
+    </CoreProviders>
   )
 }

@@ -68,12 +68,12 @@ export type IPasswordAction =
 //   }
 // }
 
-interface IFormInput {
-  password: string
-  password1: string
-  password2: string
-  passwordless: boolean
-}
+// interface IFormInput {
+//   password: string
+//   password1: string
+//   password2: string
+//   passwordless: boolean
+// }
 
 export interface IPasswordDialogProps extends IModalProps {}
 

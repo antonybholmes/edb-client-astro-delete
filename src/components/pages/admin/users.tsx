@@ -21,7 +21,6 @@ import {
 import { useContext, useEffect, useState } from 'react'
 
 import { RolesLayout } from '@layouts/roles-layout'
-import { AccountSettingsProvider } from '@providers/account-settings-provider'
 
 import axios, { AxiosError } from 'axios'
 
@@ -81,7 +80,7 @@ function AdminUsersPage() {
 
   const [, alertDispatch] = useContext(AlertsContext)
 
-  const [itemsPerPage, setItemsPerPage] = useState(100)
+  const [itemsPerPage] = useState(100)
 
   const [users, setUsers] = useState<IUserAdminView[]>([])
 
@@ -518,9 +517,7 @@ function AdminUsersPage() {
 export function AdminUsersQueryPage() {
   return (
     <CoreProviders>
- 
-        <AdminUsersPage />
-      
+      <AdminUsersPage />
     </CoreProviders>
   )
 }

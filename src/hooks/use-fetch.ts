@@ -44,7 +44,7 @@ export function useQueryPostFetch(
   const [rows, setRows] = useState<any[]>([])
   const [stats, setStats] = useState<INumberMap>({})
 
-  const { data, loading, error } = usePostFetch(url, body, headers)
+  const { data } = usePostFetch(url, body, headers)
 
   useEffect(() => {
     if (data?.length > 0) {

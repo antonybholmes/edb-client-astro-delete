@@ -105,7 +105,7 @@ export function UMAPPage() {
   const [selectedTab, setSelectedTab] = useState('Data')
   //const [selectedRightTab, setSelectedRightTab] = useState(0)
   const [selectedPlotTab, setSelectedPlotTab] = useState('Clusters')
-  const [search] = useState<string[]>([])
+  //const [search] = useState<string[]>([])
 
   const downloadRef = useRef<HTMLAnchorElement>(null)
   //const [dataSetHeaders, setDataSetHeaders] = useState<any[]>([])

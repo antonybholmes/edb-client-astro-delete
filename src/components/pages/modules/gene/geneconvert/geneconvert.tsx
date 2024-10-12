@@ -40,7 +40,7 @@ import { ClockRotateLeftIcon } from '@icons/clock-rotate-left-icon'
 import { FileLinesIcon } from '@icons/file-lines-icon'
 import { OpenIcon } from '@icons/open-icon'
 import { SaveIcon } from '@icons/save-icon'
-import { HistoryContext, HistoryProvider } from '@providers/history-provider'
+import { HistoryContext } from '@providers/history-provider'
 
 import { useContext, useRef, useState } from 'react'
 
@@ -58,7 +58,6 @@ import { UndoShortcuts } from '@components/toolbar/undo-shortcuts'
 import { ShortcutLayout } from '@layouts/shortcut-layout'
 import { makeRandId } from '@lib/utils'
 import { createGeneConvTable } from '@modules/gene/geneconv'
-import { AccountSettingsProvider } from '@providers/account-settings-provider'
 import axios from 'axios'
 
 import { HistoryPanel } from '@components/pages/history-panel'
@@ -67,10 +66,10 @@ import { Label } from '@components/shadcn/ui/themed/label'
 import type { ITab } from '@components/tab-provider'
 import { ToggleButtons, ToggleButtonTriggers } from '@components/toggle-buttons'
 import { cn } from '@lib/class-names'
+import { CoreProviders } from '@providers/core-providers'
 import { useQueryClient } from '@tanstack/react-query'
 import { DATA_PANEL_CLS } from '../../matcalc/data-panel'
 import MODULE_INFO from './module.json'
-import { CoreProviders } from '@providers/core-providers'
 
 function GeneConvPage() {
   const queryClient = useQueryClient()
@@ -508,7 +507,7 @@ function GeneConvPage() {
 export function GeneConvQueryPage() {
   return (
     <CoreProviders>
-        <GeneConvPage />
-      </CoreProviders>
+      <GeneConvPage />
+    </CoreProviders>
   )
 }

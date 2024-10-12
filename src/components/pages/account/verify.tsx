@@ -23,7 +23,6 @@ import {
   TEXT_SIGN_UP,
   bearerHeaders,
 } from '@modules/edb'
-import { AccountSettingsProvider } from '@providers/account-settings-provider'
 
 import { useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
@@ -139,9 +138,7 @@ function VerifyPage() {
 export function VerifyQueryPage() {
   return (
     <AlertsProvider>
- 
-        <VerifyPage />
- 
+      <VerifyPage />
     </AlertsProvider>
   )
 }

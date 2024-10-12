@@ -15,7 +15,7 @@ export const PropRow = forwardRef(function PropRow(
     labelCls,
     justify = 'justify-between',
     items = 'items-center',
-    className,
+
     children,
   }: IDivProps & {
     title: string

@@ -22,13 +22,13 @@ export default defineConfig({
   },
   //base: '/',
   output: 'static',
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
-    routing: {
-      prefixDefaultLocale: false,
-    },
-  },
+  // i18n: {
+  //   defaultLocale: 'en',
+  //   locales: ['en'],
+  //   routing: {
+  //     prefixDefaultLocale: false,
+  //   },
+  // },
   markdown: {
     // Applied to .md and .mdx files
     remarkPlugins: [remarkSectionize],

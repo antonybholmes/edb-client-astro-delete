@@ -38,7 +38,7 @@ export interface IProps {
 
 export const VolcanoPropsPanel = forwardRef(function HeatmapPropsPanel(
   { df, x, y, plot }: IProps,
-  ref: ForwardedRef<HTMLDivElement>
+  _ref: ForwardedRef<HTMLDivElement>
 ) {
   const [propsState, propsDispatch] = useContext(PlotPropsContext)
 

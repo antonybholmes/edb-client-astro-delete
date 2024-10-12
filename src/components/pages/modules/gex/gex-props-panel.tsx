@@ -13,12 +13,11 @@ import {
 import { NumericalInput } from '@components/shadcn/ui/themed/numerical-input'
 import { SwitchPropRow } from '@components/switch-prop-row'
 import { VCenterRow } from '@components/v-center-row'
-import { TEXT_OK } from '@consts'
 import type { IBoolMap } from '@interfaces/bool-map'
 import { forwardRef, useState, type ForwardedRef } from 'react'
 import { useGexPlotStore } from './gex-plot-store'
 import { useGexStore } from './gex-store'
-import { type IGexDataset, type IGexPlotDisplayProps } from './gex-utils'
+import { type IGexDataset } from './gex-utils'
 import INFO from './module.json'
 
 export interface IProps {
@@ -35,9 +34,10 @@ export const GexPropsPanel = forwardRef(function GexPropsPanel(
   const [displayProps, setDisplayProps] = useGexStore()
   const { gexPlotSettings, updateGexPlotSettings } = useGexPlotStore()
 
-  const [text, setText] = useState<string>(
-    process.env.NODE_ENV === 'development' ? 'BCL6\nPRDM1\nKMT2D' : ''
-  )
+  // const [text, setText] = useState<string>(
+  //   process.env.NODE_ENV === 'development' ? 'BCL6\nPRDM1\nKMT2D' : ''
+  // )
+
   const [confirmClear, setConfirmClear] = useState(false)
 
   const [showAll, setShowAll] = useState<IBoolMap>({
@@ -58,16 +58,16 @@ export const GexPropsPanel = forwardRef(function GexPropsPanel(
     swarm: true,
   })
 
-  function setProps(dataset: IGexDataset, props: IGexPlotDisplayProps) {
-    updateGexPlotSettings(
-      Object.fromEntries([
-        ...Object.entries(gexPlotSettings).filter(
-          ([id, _]) => id !== dataset.id.toString()
-        ),
-        [dataset.id.toString(), props],
-      ])
-    )
-  }
+  // function setProps(dataset: IGexDataset, props: IGexPlotDisplayProps) {
+  //   updateGexPlotSettings(
+  //     Object.fromEntries([
+  //       ...Object.entries(gexPlotSettings).filter(
+  //         ([id, _]) => id !== dataset.id.toString()
+  //       ),
+  //       [dataset.id.toString(), props],
+  //     ])
+  //   )
+  // }
 
   return (
     <>
@@ -75,9 +75,6 @@ export const GexPropsPanel = forwardRef(function GexPropsPanel(
         open={confirmClear}
         title={INFO.name}
         onReponse={r => {
-          if (r === TEXT_OK) {
-            setText('')
-          }
           setConfirmClear(false)
         }}
       >
