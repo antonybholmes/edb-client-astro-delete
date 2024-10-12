@@ -1,7 +1,7 @@
-import { forwardRef, useState, type ForwardedRef } from "react"
+import { forwardRef, useState, type ForwardedRef } from 'react'
 
-import type { IDivProps } from "@interfaces/div-props"
-import { SlideBar, SlideBarContent } from "./slide-bar"
+import type { IDivProps } from '@interfaces/div-props'
+import { SlideBar, SlideBarContent } from './slide-bar'
 
 interface IProps extends IDivProps {
   open?: boolean
@@ -20,9 +20,8 @@ export const HelpSlideBar = forwardRef(function HelpSlideBar(
     limits = [5, 85],
     className,
     children,
-    ...props
   }: IProps,
-  ref: ForwardedRef<HTMLDivElement>,
+  _ref: ForwardedRef<HTMLDivElement>
 ) {
   const [isOpen, setIsOpen] = useState(true)
 

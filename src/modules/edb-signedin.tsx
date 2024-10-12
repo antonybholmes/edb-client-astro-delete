@@ -1,9 +1,9 @@
-import { ComputerIcon } from "@components/icons/computer"
-import { MoonIcon } from "@components/icons/moon-icon"
-import { SignOutIcon } from "@components/icons/sign-out-icon"
-import { SunIcon } from "@components/icons/sun"
-import { UserIcon } from "@components/icons/user-icon"
-import { Button } from "@components/shadcn/ui/themed/button"
+import { ComputerIcon } from '@components/icons/computer'
+import { MoonIcon } from '@components/icons/moon-icon'
+import { SignOutIcon } from '@components/icons/sign-out-icon'
+import { SunIcon } from '@components/icons/sun'
+import { UserIcon } from '@components/icons/user-icon'
+import { Button } from '@components/shadcn/ui/themed/button'
 
 import {
   DropdownMenu,
@@ -18,14 +18,14 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
   MenuSeparator,
-} from "@components/shadcn/ui/themed/dropdown-menu"
-import { truncate } from "@lib/text/text"
+} from '@components/shadcn/ui/themed/dropdown-menu'
+import { truncate } from '@lib/text/text'
 
-import { useSettingsStore, type Theme } from "@stores/use-settings-store"
+import { useSettingsStore, type Theme } from '@stores/use-settings-store'
 
-import { EdbAuthContext } from "@providers/edb-auth-provider"
-import { useQueryClient } from "@tanstack/react-query"
-import { useContext, useEffect, useState } from "react"
+import { EdbAuthContext } from '@providers/edb-auth-provider'
+import { useQueryClient } from '@tanstack/react-query'
+import { useContext, useEffect, useState } from 'react'
 import {
   getAccessTokenContents,
   isAdminFromAccessToken,
@@ -36,7 +36,7 @@ import {
   TEXT_SIGN_IN,
   TEXT_SIGN_OUT,
   type IUser,
-} from "./edb"
+} from './edb'
 
 export function EDBSignedIn() {
   const queryClient = useQueryClient()
@@ -48,7 +48,7 @@ export function EDBSignedIn() {
   const [user, setUser] = useState<IUser | null>(null)
 
   const { getCachedUser, refreshAccessToken } = useContext(EdbAuthContext)
-  const [accessToken, setAccessToken] = useState("")
+  const [accessToken, setAccessToken] = useState('')
   //const [accessContents, setAccessContents] = useState<IAccessJwtPayload | null >(null)
 
   useEffect(() => {
@@ -97,12 +97,12 @@ export function EDBSignedIn() {
   let name: string
 
   if (user.firstName) {
-    name = user.firstName.split(" ")[0]
+    name = user.firstName.split(' ')[0]
   } else {
     name = user.username
   }
 
-  const isSignedIn = user.publicId !== "" //userIsSignedInWithSession()
+  const isSignedIn = user.publicId !== '' //userIsSignedInWithSession()
 
   return (
     <>
@@ -159,7 +159,7 @@ export function EDBSignedIn() {
               {isAdminFromAccessToken(getAccessTokenContents(accessToken)) && (
                 <DropdownMenuItem
                   onClick={() => {
-                    window.location.href = "/admin/users"
+                    window.location.href = '/admin/users'
                   }}
                   aria-label="Admin users"
                 >
@@ -204,27 +204,27 @@ export function EDBSignedIn() {
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
                 <DropdownMenuCheckboxItem
-                  onClick={() => clickTheme("light")}
+                  onClick={() => clickTheme('light')}
                   aria-label="Set theme to light"
-                  checked={theme === "light"}
+                  checked={theme === 'light'}
                 >
                   <SunIcon className="w-4 " />
                   <>Light theme</>
                 </DropdownMenuCheckboxItem>
 
                 <DropdownMenuCheckboxItem
-                  onClick={() => clickTheme("dark")}
+                  onClick={() => clickTheme('dark')}
                   aria-label="Set theme to dark"
-                  checked={theme === "dark"}
+                  checked={theme === 'dark'}
                 >
                   <MoonIcon className="w-3.5" />
                   <>Dark theme</>
                 </DropdownMenuCheckboxItem>
 
                 <DropdownMenuCheckboxItem
-                  onClick={() => clickTheme("system")}
+                  onClick={() => clickTheme('system')}
                   aria-label="Set theme to system"
-                  checked={theme === "system"}
+                  checked={theme === 'system'}
                 >
                   <ComputerIcon className="w-4 -scale-x-100" />
                   <>System theme</>

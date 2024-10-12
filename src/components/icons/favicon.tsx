@@ -1,7 +1,7 @@
-import { ICON_CLS, type IIconProps } from "@interfaces/icon-props"
-import { cn } from "@lib/class-names"
+import { ICON_CLS, type IIconProps } from '@interfaces/icon-props'
+import { cn } from '@lib/class-names'
 
-export function FavIcon({ w = "w-7", className }: IIconProps) {
+export function FavIcon({ w = 'w-7', className }: IIconProps) {
   return (
     <svg
       version="1.1"

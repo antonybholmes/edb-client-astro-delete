@@ -1,7 +1,7 @@
-import { BaseDataFrame } from "@lib/dataframe/base-dataframe"
-import { DataFrame } from "@lib/dataframe/dataframe"
-import { pearsond } from "./distance"
-import { range } from "./range"
+import { BaseDataFrame } from '@lib/dataframe/base-dataframe'
+import { DataFrame } from '@lib/dataframe/dataframe'
+import { pearsond } from './distance'
+import { range } from './range'
 
 export interface ICluster {
   id: number
@@ -24,7 +24,7 @@ export interface IClusterTree {
   leaves: number[]
 }
 
-export const MAIN_CLUSTER_FRAME = "main"
+export const MAIN_CLUSTER_FRAME = 'main'
 
 export interface ClusterFrame {
   dataframes: { [key: string]: BaseDataFrame }
@@ -41,7 +41,7 @@ export type ILinkage = (
   c1: ICluster,
   c2: ICluster,
   distFunc: IDistFunc,
-  dcache: Map<number, Map<number, number>>,
+  dcache: Map<number, Map<number, number>>
 ) => number
 
 /**
@@ -75,7 +75,7 @@ function _linkage(
   c2: ICluster,
   distFunc: IDistFunc = pearsond,
   linkageFunc: ILinkageFunc,
-  dcache: Map<number, Map<number, number>>,
+  dcache: Map<number, Map<number, number>>
 ): number {
   if (!dcache.has(c1.id)) {
     dcache.set(c1.id, new Map<number, number>())
@@ -87,9 +87,9 @@ function _linkage(
         c2.indices.map(c2i => {
           return distFunc(
             (df.row(c1i)!.values as number[]) ?? [],
-            (df.row(c2i)!.values as number[]) ?? [],
+            (df.row(c2i)!.values as number[]) ?? []
           )
-        }),
+        })
       )
       .flat()
 
@@ -117,7 +117,7 @@ export function singleLinkage(
   c1: ICluster,
   c2: ICluster,
   distFunc: IDistFunc = pearsond,
-  dcache: Map<number, Map<number, number>>,
+  dcache: Map<number, Map<number, number>>
 ): number {
   return _linkage(df, c1, c2, distFunc, (d: number[]) => d.sort()[0], dcache)
 }
@@ -127,7 +127,7 @@ export function completeLinkage(
   c1: ICluster,
   c2: ICluster,
   distFunc: IDistFunc = pearsond,
-  dcache: Map<number, Map<number, number>>,
+  dcache: Map<number, Map<number, number>>
 ): number {
   return _linkage(
     df,
@@ -135,7 +135,7 @@ export function completeLinkage(
     c2,
     distFunc,
     (d: number[]) => d.sort().toReversed()[0],
-    dcache,
+    dcache
   )
 }
 
@@ -144,7 +144,7 @@ export function averageLinkage(
   c1: ICluster,
   c2: ICluster,
   distFunc: IDistFunc = pearsond,
-  dcache: Map<number, Map<number, number>>,
+  dcache: Map<number, Map<number, number>>
 ): number {
   return _linkage(
     df,
@@ -153,7 +153,7 @@ export function averageLinkage(
     distFunc,
     (d: number[]) =>
       d.reduce((x, y) => x + y) / (c1.indices.length * c2.indices.length),
-    dcache,
+    dcache
   )
 }
 
@@ -162,7 +162,7 @@ export class HCluster {
   private _distFunc: IDistFunc
   constructor(
     linkage: ILinkage = averageLinkage,
-    distFunc: IDistFunc = pearsond,
+    distFunc: IDistFunc = pearsond
   ) {
     this._linkage = linkage
     this._distFunc = distFunc
@@ -221,7 +221,7 @@ export class HCluster {
       // as the running 'sum'
       const nearestPair = clusterPairs.reduce(
         (pairA, pairB) => (pairA[2] <= pairB[2] ? pairA : pairB),
-        [0, 0, Infinity],
+        [0, 0, Infinity]
       )
 
       // console.log(
@@ -298,7 +298,7 @@ export function getLeaves(cluster: ICluster): number[] {
 export function clusterToCoords(
   df: BaseDataFrame,
   cluster: ICluster,
-  leaves: number[],
+  leaves: number[]
 ): IBranchCoords[] {
   if (!leaves) {
     leaves = getLeaves(cluster)
@@ -341,7 +341,7 @@ export function clusterToCoords(
 export function _getNodeX(
   cluster: ICluster,
   leafMap: { [key: number]: number },
-  xMap: { [key: number]: number } = {},
+  xMap: { [key: number]: number } = {}
 ): number {
   // use cached coordinate if we already have it
   if (cluster.id in xMap) {

@@ -1,77 +1,76 @@
 // 'use client'
 
-import { ToolbarFooter } from "@components/toolbar/toolbar-footer"
+import { ToolbarFooter } from '@components/toolbar/toolbar-footer'
 
 import {
   ShowOptionsMenu,
   Toolbar,
   ToolbarMenu,
   ToolbarPanel,
-} from "@components/toolbar/toolbar"
+} from '@components/toolbar/toolbar'
 
 import {
   NO_DIALOG,
   TEXT_EXPORT,
   TEXT_SAVE_AS,
   type IDialogParams,
-} from "@consts"
-import { ClockRotateLeftIcon } from "@icons/clock-rotate-left-icon"
-import { getDataFrameInfo } from "@lib/dataframe/dataframe-utils"
-import { HistoryContext, HistoryProvider } from "@providers/history-provider"
+} from '@consts'
+import { ClockRotateLeftIcon } from '@icons/clock-rotate-left-icon'
+import { getDataFrameInfo } from '@lib/dataframe/dataframe-utils'
+import { HistoryContext } from '@providers/history-provider'
 
-import { useContext, useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from 'react'
 
 import {
   AlertsContext,
-  AlertsProvider,
   makeErrorAlert,
   makeWarningAlert,
-} from "@components/alerts/alerts-provider"
+} from '@components/alerts/alerts-provider'
 import {
   API_GEX_DATASETS_URL,
   API_GEX_EXP_URL,
   API_GEX_PLATFORMS_URL,
   bearerHeaders,
   JSON_HEADERS,
-} from "@modules/edb"
-import axios from "axios"
+} from '@modules/edb'
+import axios from 'axios'
 
-import { BaseCol } from "@components/base-col"
-import { makeFoldersRootNode } from "@components/collapse-tree"
-import { FileImageIcon } from "@components/icons/file-image-icon"
-import { FileLinesIcon } from "@components/icons/file-lines-icon"
-import { SaveIcon } from "@components/icons/save-icon"
+import { BaseCol } from '@components/base-col'
+import { makeFoldersRootNode } from '@components/collapse-tree'
+import { FileImageIcon } from '@components/icons/file-image-icon'
+import { FileLinesIcon } from '@components/icons/file-lines-icon'
+import { SaveIcon } from '@components/icons/save-icon'
 
-import { DropdownMenuItem } from "@components/shadcn/ui/themed/dropdown-menu"
+import { DropdownMenuItem } from '@components/shadcn/ui/themed/dropdown-menu'
 import {
   ResizablePanel,
   ResizablePanelGroup,
-} from "@components/shadcn/ui/themed/resizable"
-import { SlideBar, SlideBarContent } from "@components/slide-bar"
-import { ThinVResizeHandle } from "@components/split-pane/thin-v-resize-handle"
-import { TabSlideBar } from "@components/tab-slide-bar"
-import { TabbedDataFrames } from "@components/table/tabbed-dataframes"
-import { ToolbarButton } from "@components/toolbar/toolbar-button"
-import { ShortcutLayout } from "@layouts/shortcut-layout"
-import { downloadDataFrame } from "@lib/dataframe/dataframe-utils"
-import { downloadImageAutoFormat } from "@lib/image-utils"
-import { makeRandId } from "@lib/utils"
+} from '@components/shadcn/ui/themed/resizable'
+import { SlideBar, SlideBarContent } from '@components/slide-bar'
+import { ThinVResizeHandle } from '@components/split-pane/thin-v-resize-handle'
+import { TabSlideBar } from '@components/tab-slide-bar'
+import { TabbedDataFrames } from '@components/table/tabbed-dataframes'
+import { ToolbarButton } from '@components/toolbar/toolbar-button'
+import { ShortcutLayout } from '@layouts/shortcut-layout'
+import { downloadDataFrame } from '@lib/dataframe/dataframe-utils'
+import { downloadImageAutoFormat } from '@lib/image-utils'
+import { makeRandId } from '@lib/utils'
 
-import { DatabaseIcon } from "@components/icons/database-icon"
-import { HistoryPanel } from "@components/pages/history-panel"
-import { SaveImageDialog } from "@components/pages/save-image-dialog"
-import { SaveTxtDialog } from "@components/pages/save-txt-dialog"
-import { DEFAULT_PALETTE } from "@components/plot/palette"
+import { DatabaseIcon } from '@components/icons/database-icon'
+import { HistoryPanel } from '@components/pages/history-panel'
+import { SaveImageDialog } from '@components/pages/save-image-dialog'
+import { SaveTxtDialog } from '@components/pages/save-txt-dialog'
+import { DEFAULT_PALETTE } from '@components/plot/palette'
 
-import { mannWhitneyU } from "@lib/math/mann-whitney"
-import { range } from "@lib/math/range"
+import { mannWhitneyU } from '@lib/math/mann-whitney'
+import { range } from '@lib/math/range'
 
-import { SlidersIcon } from "@components/icons/sliders-icon"
-import { DataFrame } from "@lib/dataframe/dataframe"
-import { GexBoxWhiskerPlotSvg } from "./gex-box-whisker-plot-svg"
-import { useGexPlotStore } from "./gex-plot-store"
-import { GexPropsPanel } from "./gex-props-panel"
-import { useGexStore } from "./gex-store"
+import { SlidersIcon } from '@components/icons/sliders-icon'
+import { DataFrame } from '@lib/dataframe/dataframe'
+import { GexBoxWhiskerPlotSvg } from './gex-box-whisker-plot-svg'
+import { useGexPlotStore } from './gex-plot-store'
+import { GexPropsPanel } from './gex-props-panel'
+import { useGexStore } from './gex-store'
 import {
   DEFAULT_GEX_PLOT_DISPLAY_PROPS,
   type IGexDataset,
@@ -79,7 +78,7 @@ import {
   type IGexSearchResults,
   type IGexStats,
   type IGexValueType,
-} from "./gex-utils"
+} from './gex-utils'
 
 import {
   Select,
@@ -87,30 +86,31 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@components/shadcn/ui/themed/select"
-import { type ITab } from "@components/tab-provider"
-import { ToolbarSeparator } from "@components/toolbar/toolbar-separator"
-import { ToolbarTabGroup } from "@components/toolbar/toolbar-tab-group"
-import { ZoomSlider } from "@components/toolbar/zoom-slider"
+} from '@components/shadcn/ui/themed/select'
+import { type ITab } from '@components/tab-provider'
+import { ToolbarSeparator } from '@components/toolbar/toolbar-separator'
+import { ToolbarTabGroup } from '@components/toolbar/toolbar-tab-group'
+import { ZoomSlider } from '@components/toolbar/zoom-slider'
 
-import { ShowSideButton } from "@components/pages/show-side-button"
-import { HeatMapSvg } from "@components/plot/heatmap-svg"
-import { Button } from "@components/shadcn/ui/themed/button"
-import { VCenterRow } from "@components/v-center-row"
-import { cn } from "@lib/class-names"
-import type { IClusterGroup } from "@lib/cluster-group"
-import { DEFAULT_SHEET_NAME } from "@lib/dataframe/base-dataframe"
+import { ShowSideButton } from '@components/pages/show-side-button'
+import { HeatMapSvg } from '@components/plot/heatmap-svg'
+import { Button } from '@components/shadcn/ui/themed/button'
+import { VCenterRow } from '@components/v-center-row'
+import { cn } from '@lib/class-names'
+import type { IClusterGroup } from '@lib/cluster-group'
+import { DEFAULT_SHEET_NAME } from '@lib/dataframe/base-dataframe'
 import {
   getClusterOrderedDataFrame,
   type ClusterFrame,
-} from "@lib/math/hcluster"
-import { useEdbAuth } from "@providers/edb-auth-provider"
-import { useQueryClient } from "@tanstack/react-query"
-import { nanoid } from "nanoid"
-import { HeatMapDialog } from "../matcalc/heatmap-dialog"
-import { MatcalcSettingsProvider } from "../matcalc/matcalc-settings-provider"
-import MODULE_INFO from "./module.json"
-import { SearchPropsPanel } from "./search-props-panel"
+} from '@lib/math/hcluster'
+import { CoreProviders } from '@providers/core-providers'
+import { useEdbAuth } from '@providers/edb-auth-provider'
+import { useQueryClient } from '@tanstack/react-query'
+import { nanoid } from 'nanoid'
+import { HeatMapDialog } from '../matcalc/heatmap-dialog'
+import { MatcalcSettingsProvider } from '../matcalc/matcalc-settings-provider'
+import MODULE_INFO from './module.json'
+import { SearchPropsPanel } from './search-props-panel'
 
 // export const MODULE_INFO: IModuleInfo = {
 //   name: "Gene Expression",
@@ -119,14 +119,14 @@ import { SearchPropsPanel } from "./search-props-panel"
 //   copyright: "Copyright (C) 2024 Antony Holmes",
 // }
 
-type OutputMode = "Data" | "Violin" | "Heatmap"
+type OutputMode = 'Data' | 'Violin' | 'Heatmap'
 
 export function GexPage() {
   const queryClient = useQueryClient()
 
-  const [rightTab, setRightTab] = useState("Search")
+  const [rightTab, setRightTab] = useState('Search')
 
-  const [outputMode, setOutputMode] = useState<OutputMode>("Data")
+  const [outputMode, setOutputMode] = useState<OutputMode>('Data')
 
   const [platform, setPlatform] = useState<IGexPlatform | null>(null)
   const [platforms, setPlatforms] = useState<IGexPlatform[]>([])
@@ -135,7 +135,7 @@ export function GexPage() {
 
   //const {settings, applySettings}=useGexSettingsStore()
   const [gexValueType, setGexValueType] = useState<IGexValueType | undefined>(
-    undefined,
+    undefined
   )
 
   const [genes, setGenes] = useState<string[]>([])
@@ -151,15 +151,15 @@ export function GexPage() {
   const [groups, setGroups] = useState<IClusterGroup[]>([])
   const [datasets, setDatasets] = useState<IGexDataset[]>([])
   const [datasetMap, setDatasetMap] = useState<Map<number, IGexDataset>>(
-    new Map<number, IGexDataset>(),
+    new Map<number, IGexDataset>()
   )
 
   const [datasetUseMap, setDatasetUseMap] = useState<Map<string, boolean>>(
-    new Map<string, boolean>(),
+    new Map<string, boolean>()
   )
 
   const [foldersTab, setFoldersTab] = useState<ITab>({
-    ...makeFoldersRootNode("Datasets"),
+    ...makeFoldersRootNode('Datasets'),
   })
 
   //const [addChrPrefix, setAddChrPrefix] = useState(true)
@@ -192,7 +192,7 @@ export function GexPage() {
   async function loadPlatforms() {
     try {
       const res = await queryClient.fetchQuery({
-        queryKey: ["platforms"],
+        queryKey: ['platforms'],
         queryFn: () => {
           return axios.get(API_GEX_PLATFORMS_URL, {
             headers: JSON_HEADERS,
@@ -204,7 +204,7 @@ export function GexPage() {
 
       setPlatforms(platforms)
     } catch (e) {
-      console.error("error loading platforms")
+      console.error('error loading platforms')
     }
   }
 
@@ -214,7 +214,7 @@ export function GexPage() {
 
   useEffect(() => {
     if (!platform) {
-      const defaultPlatforms = platforms.filter(t => t.name.includes("RNA"))
+      const defaultPlatforms = platforms.filter(t => t.name.includes('RNA'))
 
       if (defaultPlatforms.length > 0) {
         setPlatform(defaultPlatforms[0])
@@ -228,7 +228,7 @@ export function GexPage() {
     }
 
     const defaultValueTypes = platform.gexValueTypes.filter(t =>
-      t.name.includes("TPM"),
+      t.name.includes('TPM')
     )
 
     if (defaultValueTypes.length > 0) {
@@ -244,41 +244,41 @@ export function GexPage() {
 
     try {
       const res = await queryClient.fetchQuery({
-        queryKey: ["datasets"],
+        queryKey: ['datasets'],
         queryFn: () => {
           return axios.post(
             API_GEX_DATASETS_URL,
             { platform },
             {
               headers: JSON_HEADERS,
-            },
+            }
           )
         },
       })
 
       datasets = res.data.data
     } catch (err) {
-      console.error("error loading datasets from remote")
+      console.error('error loading datasets from remote')
     }
 
     setDatasets(datasets)
 
     setDatasetMap(
       new Map<number, IGexDataset>(
-        datasets.map(dataset => [dataset.id, dataset]),
-      ),
+        datasets.map(dataset => [dataset.id, dataset])
+      )
     )
 
     setDatasetUseMap(
       new Map<string, boolean>([
         ...datasets.map(
-          dataset => [dataset.id.toString(), true] as [string, boolean],
+          dataset => [dataset.id.toString(), true] as [string, boolean]
         ),
         ...datasets.map(
-          dataset => [dataset.institution, true] as [string, boolean],
+          dataset => [dataset.institution, true] as [string, boolean]
         ),
-        ["all", true],
-      ]),
+        ['all', true],
+      ])
     )
   }
 
@@ -336,8 +336,8 @@ export function GexPage() {
 
     const tab: ITab = {
       ...{
-        ...makeFoldersRootNode("Datasets"),
-        checked: datasetUseMap.get("all"),
+        ...makeFoldersRootNode('Datasets'),
+        checked: datasetUseMap.get('all'),
       },
       children,
     }
@@ -409,11 +409,11 @@ export function GexPage() {
   async function fetchGex() {
     if (!platform) {
       alertDispatch({
-        type: "set",
+        type: 'set',
         alert: makeWarningAlert({
-          title: "Gene Expression",
-          size: "popup",
-          content: "You must select a platform.",
+          title: 'Gene Expression',
+          size: 'popup',
+          content: 'You must select a platform.',
         }),
       })
       return
@@ -421,19 +421,19 @@ export function GexPage() {
 
     if (genes.length === 0) {
       alertDispatch({
-        type: "set",
+        type: 'set',
         alert: makeErrorAlert({
-          title: "Gene Expression",
-          size: "dialog",
+          title: 'Gene Expression',
+          size: 'dialog',
           content:
-            "You do not have permission to download data from this module. Please contact your adminstrator to get access.",
+            'You do not have permission to download data from this module. Please contact your adminstrator to get access.',
         }),
       })
       return
     }
 
     const selectedDatasets = datasets.filter(dataset =>
-      datasetUseMap.get(dataset.id.toString()),
+      datasetUseMap.get(dataset.id.toString())
     )
 
     if (selectedDatasets.length === 0) {
@@ -444,12 +444,12 @@ export function GexPage() {
 
     if (!accessToken) {
       alertDispatch({
-        type: "set",
+        type: 'set',
         alert: makeErrorAlert({
-          title: "Gene Expression",
-          size: "dialog",
+          title: 'Gene Expression',
+          size: 'dialog',
           content:
-            "You do not have permission to download data from this module. Please contact your adminstrator to get access.",
+            'You do not have permission to download data from this module. Please contact your adminstrator to get access.',
         }),
       })
 
@@ -458,7 +458,7 @@ export function GexPage() {
 
     try {
       const res = await queryClient.fetchQuery({
-        queryKey: ["gex"],
+        queryKey: ['gex'],
         queryFn: () => {
           return axios.post(
             API_GEX_EXP_URL,
@@ -470,7 +470,7 @@ export function GexPage() {
             },
             {
               headers: bearerHeaders(accessToken),
-            },
+            }
           )
         },
       })
@@ -487,25 +487,25 @@ export function GexPage() {
 
           const group: IClusterGroup = {
             id: nanoid(),
-            name: ds?.name ?? "",
+            name: ds?.name ?? '',
             color: DEFAULT_PALETTE[cidx],
             search: ds?.samples.map(sample => sample.name) ?? [],
           }
 
           return group
-        }),
+        })
       )
 
       // for violin
       setSearch(search)
     } catch (error) {
       alertDispatch({
-        type: "set",
+        type: 'set',
         alert: makeErrorAlert({
-          title: "Gene Expression",
-          size: "dialog",
+          title: 'Gene Expression',
+          size: 'dialog',
           content:
-            "You do not have permission to download data from this module. Please contact your adminstrator to get access.",
+            'You do not have permission to download data from this module. Please contact your adminstrator to get access.',
         }),
       })
     }
@@ -528,8 +528,8 @@ export function GexPage() {
       // for each gene compare each pair
       const values: number[][] = result.datasets.map(dataset =>
         dataset.values.map(v =>
-          displayProps.tpm.log2Mode ? Math.log2(v + 1) : v,
-        ),
+          displayProps.tpm.log2Mode ? Math.log2(v + 1) : v
+        )
       )
 
       const datasetStats: IGexStats[] = range(0, values.length)
@@ -552,18 +552,18 @@ export function GexPage() {
     //
 
     const data: number[][] = searchResults.genes.map(geneResult =>
-      geneResult.datasets.map(datasetResult => datasetResult.values).flat(),
+      geneResult.datasets.map(datasetResult => datasetResult.values).flat()
     )
 
     const df = new DataFrame({
       data,
       index: searchResults.genes.map(
         geneResult =>
-          `${geneResult.gene.geneSymbol} (${geneResult.gene.geneId})`,
+          `${geneResult.gene.geneSymbol} (${geneResult.gene.geneId})`
       ),
       columns: searchResults.genes[0].datasets
         .map(datasetResult =>
-          datasetMap.get(datasetResult.id)!.samples.map(sample => sample.name),
+          datasetMap.get(datasetResult.id)!.samples.map(sample => sample.name)
         )
         .flat(),
       name: gexValueType?.name,
@@ -592,8 +592,8 @@ export function GexPage() {
     // historyDispatch({ type: 'reset', name: 'Web search', sheets: [df] })
 
     historyDispatch({
-      type: "reset",
-      name: "Web search",
+      type: 'reset',
+      name: 'Web search',
       sheets: [df],
     })
   }, [searchResults])
@@ -605,7 +605,7 @@ export function GexPage() {
       return
     }
 
-    const sep = format === "csv" ? "," : "\t"
+    const sep = format === 'csv' ? ',' : '\t'
 
     downloadDataFrame(df, downloadRef, {
       hasHeader: true,
@@ -620,7 +620,7 @@ export function GexPage() {
   const tabs: ITab[] = [
     {
       //id: nanoid(),
-      name: "Home",
+      name: 'Home',
       content: (
         <>
           <ToolbarTabGroup>
@@ -639,7 +639,7 @@ export function GexPage() {
               title="Save table"
               onClick={() =>
                 setShowDialog({
-                  name: makeRandId("save"),
+                  name: makeRandId('save'),
                 })
               }
             >
@@ -655,7 +655,7 @@ export function GexPage() {
               onValueChange={value => {
                 if (platform) {
                   const matches = platform.gexValueTypes.filter(
-                    t => t.name === value,
+                    t => t.name === value
                   )
 
                   if (matches.length > 0) {
@@ -715,14 +715,14 @@ export function GexPage() {
             <ToolbarButton
               onClick={() => {
                 if (history.currentStep.sheets[0].name !== DEFAULT_SHEET_NAME) {
-                  setShowDialog({ name: "heatmap" })
+                  setShowDialog({ name: 'heatmap' })
                 }
               }}
             >
               Heatmap
             </ToolbarButton>
 
-            <ToolbarButton onClick={() => setOutputMode("Violin")}>
+            <ToolbarButton onClick={() => setOutputMode('Violin')}>
               Violin
             </ToolbarButton>
           </ToolbarTabGroup>
@@ -746,7 +746,7 @@ export function GexPage() {
 
     {
       //id: nanoid(),
-      name: "Genes",
+      name: 'Genes',
       icon: <SlidersIcon />,
 
       content: (
@@ -760,7 +760,7 @@ export function GexPage() {
 
     {
       //id: nanoid(),
-      name: "History",
+      name: 'History',
       icon: <ClockRotateLeftIcon />,
 
       content: <HistoryPanel />,
@@ -776,7 +776,7 @@ export function GexPage() {
           <DropdownMenuItem
             aria-label="Download as TXT"
             onClick={() => {
-              save("txt")
+              save('txt')
             }}
           >
             <FileLinesIcon fill="" />
@@ -785,7 +785,7 @@ export function GexPage() {
           <DropdownMenuItem
             aria-label="Download as CSV"
             onClick={() => {
-              save("csv")
+              save('csv')
             }}
           >
             <span>Download as CSV</span>
@@ -795,7 +795,7 @@ export function GexPage() {
     },
     {
       //id: nanoid(),
-      name: "Export",
+      name: 'Export',
       content: (
         <>
           <DropdownMenuItem
@@ -822,7 +822,7 @@ export function GexPage() {
 
   return (
     <>
-      {showDialog.name.includes("save") && (
+      {showDialog.name.includes('save') && (
         <SaveTxtDialog
           open="open"
           onSave={format => {
@@ -833,7 +833,7 @@ export function GexPage() {
         />
       )}
 
-      {showDialog.name.includes("export") && (
+      {showDialog.name.includes('export') && (
         <SaveImageDialog
           open="open"
           onSave={format => {
@@ -841,7 +841,7 @@ export function GexPage() {
               svgRef,
               canvasRef,
               downloadRef,
-              `gex.${format.ext}`,
+              `gex.${format.ext}`
             )
             setShowDialog(NO_DIALOG)
           }}
@@ -849,17 +849,17 @@ export function GexPage() {
         />
       )}
 
-      {showDialog.name === "heatmap" && (
+      {showDialog.name === 'heatmap' && (
         <HeatMapDialog
           df={history.currentStep.sheets[0]}
           onPlot={cf => {
             setShowDialog(NO_DIALOG)
 
             setClusterFrame(cf)
-            setOutputMode("Heatmap")
+            setOutputMode('Heatmap')
             historyDispatch({
-              type: "add_sheets",
-              sheets: [getClusterOrderedDataFrame(cf).setName("Heatmap")],
+              type: 'add_sheets',
+              sheets: [getClusterOrderedDataFrame(cf).setName('Heatmap')],
             })
           }}
           onCancel={() => setShowDialog(NO_DIALOG)}
@@ -933,7 +933,7 @@ export function GexPage() {
                   minSize={10}
                   collapsible={true}
                   className={cn(
-                    "relative grow overflow-hidden flex flex-col mt-2",
+                    'relative grow overflow-hidden flex flex-col mt-2'
                   )}
                 >
                   {/* <BaseRow className="grow gap-x-1">
@@ -975,14 +975,14 @@ export function GexPage() {
                   className="flex flex-col" // bg-white border border-border rounded-md overflow-hidden"
                 >
                   <BaseCol className="grow">
-                    {((outputMode === "Heatmap" && clusterFrame) ||
-                      (outputMode === "Violin" && searchResults)) && (
+                    {((outputMode === 'Heatmap' && clusterFrame) ||
+                      (outputMode === 'Violin' && searchResults)) && (
                       <ToolbarTabGroup>
                         <ToolbarButton
                           title="Export image"
                           onClick={() =>
                             setShowDialog({
-                              name: makeRandId("export"),
+                              name: makeRandId('export'),
                             })
                           }
                         >
@@ -993,7 +993,7 @@ export function GexPage() {
                     )}
                     <div className="rounded-md overflow-hidden grow flex flex-col">
                       <div className="custom-scrollbar relative overflow-y-scroll grow">
-                        {outputMode === "Violin" && searchResults && (
+                        {outputMode === 'Violin' && searchResults && (
                           <GexBoxWhiskerPlotSvg
                             ref={svgRef}
                             plot={searchResults}
@@ -1004,7 +1004,7 @@ export function GexPage() {
                           />
                         )}
 
-                        {outputMode === "Heatmap" && clusterFrame && (
+                        {outputMode === 'Heatmap' && clusterFrame && (
                           <HeatMapSvg
                             cf={clusterFrame}
                             groups={groups}
@@ -1055,12 +1055,10 @@ export function GexPage() {
 
 export function GexQueryPage() {
   return (
-    <AlertsProvider>
-      <HistoryProvider>
-        <MatcalcSettingsProvider>
-          <GexPage />
-        </MatcalcSettingsProvider>
-      </HistoryProvider>
-    </AlertsProvider>
+    <CoreProviders>
+      <MatcalcSettingsProvider>
+        <GexPage />
+      </MatcalcSettingsProvider>
+    </CoreProviders>
   )
 }

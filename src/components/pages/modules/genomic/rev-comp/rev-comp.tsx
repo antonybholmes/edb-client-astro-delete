@@ -1,81 +1,81 @@
 // 'use client'
 
-import { ToolbarOpenFile } from "@components/toolbar/toolbar-open-files"
+import { ToolbarOpenFile } from '@components/toolbar/toolbar-open-files'
 
-import { ToolbarFooter } from "@components/toolbar/toolbar-footer"
+import { ToolbarFooter } from '@components/toolbar/toolbar-footer'
 
 import {
   ShowOptionsMenu,
   Toolbar,
   ToolbarMenu,
   ToolbarPanel,
-} from "@components/toolbar/toolbar"
-import { ToolbarSeparator } from "@components/toolbar/toolbar-separator"
-import { PlayIcon } from "@icons/play-icon"
+} from '@components/toolbar/toolbar'
+import { ToolbarSeparator } from '@components/toolbar/toolbar-separator'
+import { PlayIcon } from '@icons/play-icon'
 
-import { ToolbarButton } from "@components/toolbar/toolbar-button"
+import { ToolbarButton } from '@components/toolbar/toolbar-button'
 
-import { download } from "@lib/download-utils"
+import { download } from '@lib/download-utils'
 
-import { OpenFiles, onFileChange } from "@components/pages/open-files"
+import { OpenFiles, onFileChange } from '@components/pages/open-files'
 
-import { BasicAlertDialog } from "@components/dialog/basic-alert-dialog"
-import { ToolbarTabGroup } from "@components/toolbar/toolbar-tab-group"
+import { BasicAlertDialog } from '@components/dialog/basic-alert-dialog'
+import { ToolbarTabGroup } from '@components/toolbar/toolbar-tab-group'
 
-import { ToolbarTabButton } from "@components/toolbar/toolbar-tab-button"
-import { FileLinesIcon } from "@icons/file-lines-icon"
-import { SaveIcon } from "@icons/save-icon"
+import { ToolbarTabButton } from '@components/toolbar/toolbar-tab-button'
+import { FileLinesIcon } from '@icons/file-lines-icon'
+import { SaveIcon } from '@icons/save-icon'
 
-import { queryClient } from "@query"
-import { useEffect, useRef, useState } from "react"
+import { queryClient } from '@query'
+import { useEffect, useRef, useState } from 'react'
 
 import {
   ResizablePanel,
   ResizablePanelGroup,
-} from "@components/shadcn/ui/themed/resizable"
+} from '@components/shadcn/ui/themed/resizable'
 import {
   NO_DIALOG,
   TEXT_OPEN,
   TEXT_OPEN_FILE,
   TEXT_SAVE_AS,
   type IDialogParams,
-} from "@consts"
+} from '@consts'
 
-import { SlidersIcon } from "@components/icons/sliders-icon"
-import { PropsPanel } from "@components/props-panel"
-import { Checkbox } from "@components/shadcn/ui/themed/check-box"
-import { DropdownMenuItem } from "@components/shadcn/ui/themed/dropdown-menu"
-import { ThinVResizeHandle } from "@components/split-pane/thin-v-resize-handle"
-import { TabSlideBar } from "@components/tab-slide-bar"
+import { SlidersIcon } from '@components/icons/sliders-icon'
+import { PropsPanel } from '@components/props-panel'
+import { Checkbox } from '@components/shadcn/ui/themed/check-box'
+import { DropdownMenuItem } from '@components/shadcn/ui/themed/dropdown-menu'
+import { ThinVResizeHandle } from '@components/split-pane/thin-v-resize-handle'
+import { TabSlideBar } from '@components/tab-slide-bar'
 
-import { OpenIcon } from "@components/icons/open-icon"
+import { OpenIcon } from '@components/icons/open-icon'
 import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
   ScrollAccordion,
-} from "@components/shadcn/ui/themed/accordion"
-import { Textarea3 } from "@components/shadcn/ui/themed/textarea3"
-import type { ITab } from "@components/tab-provider"
-import { ShortcutLayout } from "@layouts/shortcut-layout"
-import { cn } from "@lib/class-names"
-import { makeRandId } from "@lib/utils"
-import { UploadIcon } from "@radix-ui/react-icons"
-import axios from "axios"
-import { DATA_PANEL_CLS } from "../../matcalc/data-panel"
-import MODULE_INFO from "./module.json"
+} from '@components/shadcn/ui/themed/accordion'
+import { Textarea3 } from '@components/shadcn/ui/themed/textarea3'
+import type { ITab } from '@components/tab-provider'
+import { ShortcutLayout } from '@layouts/shortcut-layout'
+import { cn } from '@lib/class-names'
+import { makeRandId } from '@lib/utils'
+import { UploadIcon } from '@radix-ui/react-icons'
+import axios from 'axios'
+import { DATA_PANEL_CLS } from '../../matcalc/data-panel'
+import MODULE_INFO from './module.json'
 
-export type DNABase = "A" | "C" | "G" | "T" | "a" | "c" | "g" | "t"
+export type DNABase = 'A' | 'C' | 'G' | 'T' | 'a' | 'c' | 'g' | 't'
 
 const REV_MAP: { [K in DNABase]: DNABase } = {
-  A: "T",
-  C: "G",
-  G: "C",
-  T: "A",
-  a: "t",
-  c: "g",
-  g: "c",
-  t: "a",
+  A: 'T',
+  C: 'G',
+  G: 'C',
+  T: 'A',
+  a: 't',
+  c: 'g',
+  g: 'c',
+  t: 'a',
 }
 
 interface ISeq {
@@ -92,10 +92,10 @@ function RevCompPage() {
 
   const downloadRef = useRef<HTMLAnchorElement>(null)
 
-  const [text, setText] = useState("")
+  const [text, setText] = useState('')
 
-  const [output, setOutput] = useState("")
-  const [outputMode] = useState("FASTA")
+  const [output, setOutput] = useState('')
+  const [outputMode] = useState('FASTA')
   const [outputSeqs, setOutputSeqs] = useState<IRevCompSeq[]>([])
 
   const [modeRev, setModeRev] = useState(true)
@@ -111,7 +111,7 @@ function RevCompPage() {
   // }
 
   function revComp(seq: ISeq): string {
-    let bases: DNABase[] = seq.seq.split("") as DNABase[]
+    let bases: DNABase[] = seq.seq.split('') as DNABase[]
 
     if (modeComp) {
       bases = bases.map(c => REV_MAP[c] ?? c)
@@ -121,14 +121,14 @@ function RevCompPage() {
       bases = bases.toReversed()
     }
 
-    return bases.join("")
+    return bases.join('')
   }
 
   function applyRevComp() {
     const lines = text.split(/[\r?\n]/g)
 
     let name: string | null = null
-    let buffer = ""
+    let buffer = ''
     const seqs: ISeq[] = []
 
     lines.forEach(line => {
@@ -140,8 +140,8 @@ function RevCompPage() {
 
         // space so reset
         name = null
-        buffer = ""
-      } else if (line.startsWith(">")) {
+        buffer = ''
+      } else if (line.startsWith('>')) {
         if (buffer.length > 0) {
           seqs.push({ id: name ?? `seq${seqs.length + 1}`, seq: buffer })
         }
@@ -171,20 +171,20 @@ function RevCompPage() {
     setOutputSeqs(revSeqs)
   }
 
-  function save(format = "FASTA") {
+  function save(format = 'FASTA') {
     if (outputSeqs.length === 0) {
       return
     }
 
     switch (format) {
-      case "JSON":
-        download(JSON.stringify(outputSeqs), downloadRef, "seqs.json")
+      case 'JSON':
+        download(JSON.stringify(outputSeqs), downloadRef, 'seqs.json')
         break
       default:
         download(
-          outputSeqs.map(seq => `>${seq.id}\n${seq.rev}`).join("\n"),
+          outputSeqs.map(seq => `>${seq.id}\n${seq.rev}`).join('\n'),
           downloadRef,
-          "seqs.fasta",
+          'seqs.fasta'
         )
         break
     }
@@ -194,8 +194,8 @@ function RevCompPage() {
 
   async function loadTestData() {
     const res = await queryClient.fetchQuery({
-      queryKey: ["test_data"],
-      queryFn: () => axios.get("/data/test/rev-comp.fasta"),
+      queryKey: ['test_data'],
+      queryFn: () => axios.get('/data/test/rev-comp.fasta'),
     })
 
     setText(res.data)
@@ -207,11 +207,11 @@ function RevCompPage() {
   useEffect(() => {
     if (outputSeqs.length > 0) {
       switch (outputMode) {
-        case "json":
+        case 'json':
           setOutput(JSON.stringify(outputSeqs))
           break
         default:
-          setOutput(outputSeqs.map(seq => `>${seq.id}\n${seq.rev}`).join("\n"))
+          setOutput(outputSeqs.map(seq => `>${seq.id}\n${seq.rev}`).join('\n'))
           break
       }
     }
@@ -220,7 +220,7 @@ function RevCompPage() {
   const tabs: ITab[] = [
     {
       //id: nanoid(),
-      name: "Home",
+      name: 'Home',
       content: (
         <>
           <ToolbarTabGroup>
@@ -228,12 +228,12 @@ function RevCompPage() {
               onOpenChange={open => {
                 if (open) {
                   setShowDialog({
-                    name: makeRandId("open"),
+                    name: makeRandId('open'),
                   })
                 }
               }}
               multiple={true}
-              fileTypes={["txt", "tsv", "gmx"]}
+              fileTypes={['txt', 'tsv', 'gmx']}
             />
 
             <ToolbarButton
@@ -264,7 +264,7 @@ function RevCompPage() {
       content: (
         <DropdownMenuItem
           aria-label={TEXT_OPEN_FILE}
-          onClick={() => setShowDialog({ name: makeRandId("open") })}
+          onClick={() => setShowDialog({ name: makeRandId('open') })}
         >
           <UploadIcon fill="" />
 
@@ -279,7 +279,7 @@ function RevCompPage() {
         <>
           <DropdownMenuItem
             aria-label="Save text file"
-            onClick={() => save("txt")}
+            onClick={() => save('txt')}
           >
             <FileLinesIcon fill="" />
             <span>Download as TXT</span>
@@ -287,7 +287,7 @@ function RevCompPage() {
 
           <DropdownMenuItem
             aria-label="Save CSV file"
-            onClick={() => save("csv")}
+            onClick={() => save('csv')}
           >
             <span>Download as CSV</span>
           </DropdownMenuItem>
@@ -300,10 +300,10 @@ function RevCompPage() {
     {
       //id: nanoid(),
       icon: <SlidersIcon />,
-      name: "Settings",
+      name: 'Settings',
       content: (
         <PropsPanel>
-          <ScrollAccordion value={["output"]}>
+          <ScrollAccordion value={['output']}>
             <AccordionItem value="output">
               <AccordionTrigger>Output</AccordionTrigger>
               <AccordionContent>
@@ -344,7 +344,7 @@ function RevCompPage() {
 
   return (
     <>
-      {showDialog.name === "alert" && (
+      {showDialog.name === 'alert' && (
         <BasicAlertDialog onReponse={() => setShowDialog(NO_DIALOG)}>
           {showDialog.params!.message}
         </BasicAlertDialog>
@@ -392,7 +392,7 @@ function RevCompPage() {
               id="dna"
               defaultSize={50}
               minSize={10}
-              className={cn(DATA_PANEL_CLS, "flex flex-col text-sm p-2")}
+              className={cn(DATA_PANEL_CLS, 'flex flex-col text-sm p-2')}
               collapsible={true}
             >
               <Textarea3
@@ -408,7 +408,7 @@ function RevCompPage() {
             </ResizablePanel>
             <ThinVResizeHandle />
             <ResizablePanel
-              className={cn(DATA_PANEL_CLS, "flex flex-col text-sm p-2")}
+              className={cn(DATA_PANEL_CLS, 'flex flex-col text-sm p-2')}
               id="output"
               defaultSize={50}
               minSize={10}
@@ -428,13 +428,13 @@ function RevCompPage() {
         <ToolbarFooter className="justify-end"></ToolbarFooter>
 
         <OpenFiles
-          open={showDialog.name.includes("open") ? showDialog.name : ""}
+          open={showDialog.name.includes('open') ? showDialog.name : ''}
           onFileChange={(_, files) =>
             onFileChange(files, files => {
               setText(files[0].text)
             })
           }
-          fileTypes={["fasta"]}
+          fileTypes={['fasta']}
         />
 
         <a ref={downloadRef} className="hidden" href="#" />

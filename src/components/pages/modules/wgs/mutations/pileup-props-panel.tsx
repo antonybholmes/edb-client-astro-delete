@@ -1,27 +1,27 @@
-import { VCenterRow } from "@components/v-center-row"
+import { VCenterRow } from '@components/v-center-row'
 
 import type {
   IMotifPattern,
   IPileupProps,
-} from "@components/pages/modules/wgs/mutations/pileup-plot-svg"
+} from '@components/pages/modules/wgs/mutations/pileup-plot-svg'
 import {
   ColorPickerButton,
   SIMPLE_COLOR_EXT_CLS,
-} from "@components/pages/plot/color-picker-button"
-import { PropsPanel } from "@components/props-panel"
+} from '@components/pages/plot/color-picker-button'
+import { PropsPanel } from '@components/props-panel'
 import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
   ScrollAccordion,
-} from "@components/shadcn/ui/themed/accordion"
-import { Label } from "@components/shadcn/ui/themed/label"
+} from '@components/shadcn/ui/themed/accordion'
+import { Label } from '@components/shadcn/ui/themed/label'
 import {
   RadioGroup,
   RadioGroupItem,
-} from "@components/shadcn/ui/themed/radio-group"
-import { SwitchPropRow } from "@components/switch-prop-row"
-import { forwardRef, type ForwardedRef } from "react"
+} from '@components/shadcn/ui/themed/radio-group'
+import { SwitchPropRow } from '@components/switch-prop-row'
+import { forwardRef, type ForwardedRef } from 'react'
 
 export interface IProps {
   motifPatterns: IMotifPattern[]
@@ -40,11 +40,11 @@ export const PileupPropsPanel = forwardRef(function PileupPropsPanel(
     onDisplayPropsChange,
     onMotifPatternsChange,
   }: IProps,
-  ref: ForwardedRef<HTMLDivElement>,
+  ref: ForwardedRef<HTMLDivElement>
 ) {
   return (
     <PropsPanel ref={ref}>
-      <ScrollAccordion value={["plot"]}>
+      <ScrollAccordion value={['plot']}>
         <AccordionItem value="plot">
           <AccordionTrigger>Plot</AccordionTrigger>
           <AccordionContent>
@@ -138,7 +138,7 @@ export const PileupPropsPanel = forwardRef(function PileupPropsPanel(
 
               {Object.keys(displayProps.cmaps)
                 .sort()
-                .filter(cmap => cmap !== "None")
+                .filter(cmap => cmap !== 'None')
                 .map((cmap, pi) => {
                   return (
                     <VCenterRow className="gap-x-1" key={pi}>

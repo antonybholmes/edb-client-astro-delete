@@ -1,4 +1,4 @@
-import { OKCancelDialog } from "@components/dialog/ok-cancel-dialog"
+import { OKCancelDialog } from '@components/dialog/ok-cancel-dialog'
 import {
   dfLog2Plus1,
   dfMean,
@@ -9,10 +9,10 @@ import {
   dfStdev,
   dfStdevFilter,
   dfTranspose,
-} from "@components/pages/plot/dataframe-ui"
-import { VCenterRow } from "@components/v-center-row"
-import { TEXT_CANCEL } from "@consts"
-import { type BaseDataFrame } from "@lib/dataframe/base-dataframe"
+} from '@components/pages/plot/dataframe-ui'
+import { VCenterRow } from '@components/v-center-row'
+import { TEXT_CANCEL } from '@consts'
+import { type BaseDataFrame } from '@lib/dataframe/base-dataframe'
 import {
   HCluster,
   MAIN_CLUSTER_FRAME,
@@ -22,26 +22,26 @@ import {
   type IClusterTree,
   type IDistFunc,
   type ILinkage,
-} from "@lib/math/hcluster"
-import { HistoryContext } from "@providers/history-provider"
-import { useContext, useEffect } from "react"
+} from '@lib/math/hcluster'
+import { HistoryContext } from '@providers/history-provider'
+import { useContext, useEffect } from 'react'
 
-import { Input } from "@components/shadcn/ui/themed/input"
-import { SelectItem, SelectList } from "@components/shadcn/ui/themed/select"
+import { Input } from '@components/shadcn/ui/themed/input'
+import { SelectItem, SelectList } from '@components/shadcn/ui/themed/select'
 
 import {
   euclidean as euclideanDist,
   pearsond as pearsonDist,
-} from "@lib/math/distance"
+} from '@lib/math/distance'
 
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@components/shadcn/ui/themed/accordion"
-import { Checkbox } from "@components/shadcn/ui/themed/check-box"
-import { MatcalcSettingsContext } from "./matcalc-settings-provider"
+} from '@components/shadcn/ui/themed/accordion'
+import { Checkbox } from '@components/shadcn/ui/themed/check-box'
+import { MatcalcSettingsContext } from './matcalc-settings-provider'
 
 export const MAX_CLUSTER_ITEMS = 501
 
@@ -98,12 +98,12 @@ export function HeatMapDialog({
 
     if (settings.heatmap.filterRows) {
       switch (settings.heatmap.rowFilterMethod) {
-        case "Mean":
+        case 'Mean':
           dfMean(df, historyDispatch)
 
           df = dfMeanFilter(df, historyDispatch, settings.heatmap.topRows)
           break
-        case "Median":
+        case 'Median':
           dfMedian(df, historyDispatch)
 
           df = dfMedianFilter(df, historyDispatch, settings.heatmap.topRows)
@@ -181,7 +181,7 @@ export function HeatMapDialog({
     >
       <Accordion
         type="multiple"
-        defaultValue={["filter", "transform", "cluster"]}
+        defaultValue={['filter', 'transform', 'cluster']}
       >
         <AccordionItem value="filter">
           <AccordionTrigger>Filter</AccordionTrigger>

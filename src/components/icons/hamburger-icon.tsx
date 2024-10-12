@@ -1,12 +1,12 @@
-import { VCenterCol } from "@components/v-center-col"
-import { ICON_CLS, type IIconProps } from "@interfaces/icon-props"
-import { cn } from "@lib/class-names"
-import { motion } from "framer-motion"
+import { VCenterCol } from '@components/v-center-col'
+import { ICON_CLS, type IIconProps } from '@interfaces/icon-props'
+import { cn } from '@lib/class-names'
+import { motion } from 'framer-motion'
 
-const LINE_CLS = "w-full rounded-full h-[1px] bg-foreground/75"
+const LINE_CLS = 'w-full rounded-full h-[1px] bg-foreground/75'
 
 export function HamburgerIcon({
-  w = "w-4",
+  w = 'w-4',
   hover = false,
   className,
   style,
@@ -41,7 +41,7 @@ export function HamburgerIcon({
     // </svg>
 
     <VCenterCol
-      className={cn(ICON_CLS, w, "gap-y-1.5", className)}
+      className={cn(ICON_CLS, w, 'gap-y-1.5', className)}
       style={style}
     >
       <motion.span

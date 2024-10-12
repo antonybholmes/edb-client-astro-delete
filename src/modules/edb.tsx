@@ -1,15 +1,15 @@
-import { APP_ID } from "@consts"
+import { APP_ID } from '@consts'
 
-import type { IStringMap } from "@interfaces/string-map"
-import type { UndefNullStr } from "@lib/text/text"
-import { QueryClient } from "@tanstack/react-query"
+import type { IStringMap } from '@interfaces/string-map'
+import type { UndefNullStr } from '@lib/text/text'
+import { QueryClient } from '@tanstack/react-query'
 
 //import { useUserStore } from "@stores/account-store"
 
-import axios from "axios"
+import axios from 'axios'
 
-import Cookies from "js-cookie"
-import { jwtDecode, type JwtPayload } from "jwt-decode"
+import Cookies from 'js-cookie'
+import { jwtDecode, type JwtPayload } from 'jwt-decode'
 
 export interface IUser {
   publicId: string
@@ -21,40 +21,40 @@ export interface IUser {
 }
 
 export const DEFAULT_USER: IUser = {
-  publicId: "",
-  username: "",
-  email: "",
-  firstName: "",
-  lastName: "",
+  publicId: '',
+  username: '',
+  email: '',
+  firstName: '',
+  lastName: '',
   //roles: "",
 }
 
 export const EDB_API_URL = import.meta.env.PUBLIC_EDB_API_URL
 export const APP_URL = import.meta.env.PUBLIC_SITE_URL
 
-export const ROLE_SUPER = "Super"
-export const ROLE_ADMIN = "Admin"
+export const ROLE_SUPER = 'Super'
+export const ROLE_ADMIN = 'Admin'
 
-export const TEXT_SIGN_IN = "Sign In"
-export const TEXT_PASSWORDLESS = "Passwordless"
-export const TEXT_SIGN_OUT = "Sign Out"
-export const TEXT_SIGN_UP = "Sign Up"
-export const TEXT_CONNECTION_ISSUE = "Connection issue with server"
+export const TEXT_SIGN_IN = 'Sign In'
+export const TEXT_PASSWORDLESS = 'Passwordless'
+export const TEXT_SIGN_OUT = 'Sign Out'
+export const TEXT_SIGN_UP = 'Sign Up'
+export const TEXT_CONNECTION_ISSUE = 'Connection issue with server'
 
-export const TEXT_MY_ACCOUNT = "My Account"
+export const TEXT_MY_ACCOUNT = 'My Account'
 
-export const EDB_TOKEN_PARAM = "jwt"
-export const CALLBACK_URL_PARAM = "callbackUrl"
+export const EDB_TOKEN_PARAM = 'jwt'
+export const CALLBACK_URL_PARAM = 'callbackUrl'
 
 export const TEXT_SERVER_ISSUE =
-  "Hmm, the server does not seem to be available. Please try again at a later time."
+  'Hmm, the server does not seem to be available. Please try again at a later time.'
 
-export const SIGN_IN_ROUTE = "/account/signin"
-export const SIGN_OUT_ROUTE = "/account/signout"
-export const SIGNEDIN_ROUTE = "/account/signedin"
-export const MYACCOUNT_ROUTE = "/account/myaccount"
-export const SIGN_UP_ROUTE = "/signup"
-export const RESET_PASSWORD_ROUTE = "/account/password/reset"
+export const SIGN_IN_ROUTE = '/account/signin'
+export const SIGN_OUT_ROUTE = '/account/signout'
+export const SIGNEDIN_ROUTE = '/account/signedin'
+export const MYACCOUNT_ROUTE = '/account/myaccount'
+export const SIGN_UP_ROUTE = '/signup'
+export const RESET_PASSWORD_ROUTE = '/account/password/reset'
 
 export const EDB_ACCESS_TOKEN_COOKIE = `${APP_ID}-access-token-v1`
 export const EDB_SESSION_COOKIE = `${APP_ID}-session-v2`
@@ -149,9 +149,9 @@ export const APP_UPDATE_EMAIL_URL = `${APP_URL}/account/email/update`
 
 export const COOKIE_EXPIRE_DAYS = 365
 
-export const MIME_JSON = "application/json"
+export const MIME_JSON = 'application/json'
 
-export const JSON_HEADERS = { "Content-Type": MIME_JSON }
+export const JSON_HEADERS = { 'Content-Type': MIME_JSON }
 
 export interface IRole {
   publicId: string
@@ -225,29 +225,29 @@ export function validateJwt(jwt: IEdbJwtPayload, window: number = 30): boolean {
  * @returns A valid jwt token or null if user is not allowed a token
  */
 export async function fetchAccessTokenUsingSession(
-  queryClient: QueryClient,
+  queryClient: QueryClient
 ): Promise<string> {
-  let token: string = ""
+  let token: string = ''
 
   //const queryClient = useQueryClient()
 
   try {
     // token not valid so attempt to use session to refresh
     const res = await queryClient.fetchQuery({
-      queryKey: ["access_token"],
+      queryKey: ['access_token'],
       queryFn: () =>
         axios.post(
           SESSION_ACCESS_TOKEN_URL,
           {},
           {
             withCredentials: true,
-          },
+          }
         ),
     })
 
     token = res.data.data.accessToken
   } catch (err) {
-    console.error("cannot fetch access token from remote")
+    console.error('cannot fetch access token from remote')
   }
 
   return token
@@ -255,7 +255,7 @@ export async function fetchAccessTokenUsingSession(
 
 export async function fetchUser(
   accessToken: string,
-  queryClient: QueryClient,
+  queryClient: QueryClient
 ): Promise<IUser> {
   let ret: IUser = { ...DEFAULT_USER }
 
@@ -263,7 +263,7 @@ export async function fetchUser(
 
   try {
     const res = await queryClient.fetchQuery({
-      queryKey: ["info"],
+      queryKey: ['info'],
       queryFn: () =>
         axios.post(
           API_USER_URL,
@@ -276,7 +276,7 @@ export async function fetchUser(
             // extra credentials. If we are logged in, we will get
             // the account info back.
             //withCredentials: true,
-          },
+          }
         ),
     })
 
@@ -284,7 +284,7 @@ export async function fetchUser(
 
     ret = res.data.data
   } catch (err) {
-    console.error("cannot fetch user from remote")
+    console.error('cannot fetch user from remote')
   }
 
   return ret
@@ -469,7 +469,7 @@ export function bearerToken(token: UndefNullStr): string {
 
 export function bearerHeaders(accessToken: UndefNullStr): IStringMap {
   return {
-    "Content-Type": MIME_JSON,
+    'Content-Type': MIME_JSON,
     Authorization: bearerToken(accessToken),
   }
 }
@@ -485,20 +485,20 @@ export function bearerHeaders(accessToken: UndefNullStr): IStringMap {
 // }
 
 export function rolesFromAccessToken(accessToken: string): string[] {
-  if (accessToken === "") {
+  if (accessToken === '') {
     return []
   }
 
   try {
     const contents = jwtDecode<IAccessJwtPayload>(accessToken)
-    return contents.roles.split(" ")
+    return contents.roles.split(' ')
   } catch (err) {
     return []
   }
 }
 
 export function isAdminFromAccessToken(
-  contents: IAccessJwtPayload | null,
+  contents: IAccessJwtPayload | null
 ): boolean {
   if (!contents) {
     return false
@@ -517,7 +517,7 @@ export function isAdminFromAccessToken(
  *          there is an error.
  */
 export function getJwtContents<T extends IEdbJwtPayload>(
-  jwt: string,
+  jwt: string
 ): T | null {
   if (!jwt) {
     return null

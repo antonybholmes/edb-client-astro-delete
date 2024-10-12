@@ -12,20 +12,20 @@
 // import "@fontsource/open-sans/600.css"
 // import "@fontsource/open-sans/700.css"
 
-import "@fontsource/inter/400.css"
-import "@fontsource/inter/500.css"
-import "@fontsource/inter/600.css"
-import "@fontsource/inter/700.css"
+import '@fontsource/inter/400.css'
+import '@fontsource/inter/500.css'
+import '@fontsource/inter/600.css'
+import '@fontsource/inter/700.css'
 
-import "@styles/global.scss"
-import "@styles/color-picker.scss"
-import "@styles/scrollbar.scss"
-import "@styles/collapsible.scss"
+import '@styles/global.scss'
+import '@styles/color-picker.scss'
+import '@styles/scrollbar.scss'
+import '@styles/collapsible.scss'
 
-import { type ILayoutProps } from "@interfaces/layout-props"
-import { SEO } from "astro-seo"
-import { ViewTransitions } from "astro:transitions"
-import { APP_NAME } from "@consts"
+import { type ILayoutProps } from '@interfaces/layout-props'
+import { SEO } from 'astro-seo'
+import { ViewTransitions } from 'astro:transitions'
+import { APP_NAME } from '@consts'
 
 interface Props extends ILayoutProps {
   isIndexed?: boolean
@@ -63,8 +63,8 @@ const pageDescription = description ? description : APP_NAME
   openGraph={{
     basic: {
       title: pageTitle,
-      type: "website",
-      image: new URL("/favicon.svg", Astro.site).href,
+      type: 'website',
+      image: new URL('/favicon.svg', Astro.site).href,
     },
   }}
 />
@@ -72,25 +72,25 @@ const pageDescription = description ? description : APP_NAME
 <script is:inline>
   function getTheme() {
     if (
-      typeof localStorage !== "undefined" &&
-      localStorage.getItem("edb-theme")
+      typeof localStorage !== 'undefined' &&
+      localStorage.getItem('edb-theme')
     ) {
-      return localStorage.getItem("edb-theme")
+      return localStorage.getItem('edb-theme')
     }
 
-    const theme = window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "system"
+    const theme = window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'system'
 
-    window.localStorage.setItem("edb-theme", theme)
+    window.localStorage.setItem('edb-theme', theme)
 
     return theme
   }
 
   const theme = getTheme()
 
-  if (theme === "dark") {
-    document.documentElement.classList.add("dark")
+  if (theme === 'dark') {
+    document.documentElement.classList.add('dark')
   }
 </script>
 

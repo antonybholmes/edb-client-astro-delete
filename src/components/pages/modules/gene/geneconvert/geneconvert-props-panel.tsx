@@ -1,14 +1,14 @@
-import { PropsPanel } from "@components/props-panel"
+import { PropsPanel } from '@components/props-panel'
 import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
   ScrollAccordion,
-} from "@components/shadcn/ui/themed/accordion"
-import { Label } from "@components/shadcn/ui/themed/label"
-import { ToggleButtonTriggers, ToggleButtons } from "@components/toggle-buttons"
-import { VCenterRow } from "@components/v-center-row"
-import { forwardRef, type ForwardedRef } from "react"
+} from '@components/shadcn/ui/themed/accordion'
+import { Label } from '@components/shadcn/ui/themed/label'
+import { ToggleButtonTriggers, ToggleButtons } from '@components/toggle-buttons'
+import { VCenterRow } from '@components/v-center-row'
+import { forwardRef, type ForwardedRef } from 'react'
 
 export interface IProps {
   fromSpecies: string
@@ -27,18 +27,18 @@ export const GeneConvertPropsPanel = forwardRef(function GeneConvertPropsPanel(
     setFromSpecies,
     setToSpecies,
   }: IProps,
-  ref: ForwardedRef<HTMLDivElement>,
+  ref: ForwardedRef<HTMLDivElement>
 ) {
   const tabs = [
-    { id: "human", name: "Human" },
-    { id: "mouse", name: "Mouse" },
+    { id: 'human', name: 'Human' },
+    { id: 'mouse', name: 'Mouse' },
   ]
 
   console.log(fromSpecies, toSpecies)
 
   return (
     <PropsPanel ref={ref}>
-      <ScrollAccordion value={["species"]}>
+      <ScrollAccordion value={['species']}>
         <AccordionItem value="species">
           <AccordionTrigger>Species</AccordionTrigger>
           <AccordionContent>

@@ -1,7 +1,7 @@
-import { HamburgerIcon } from "@components/icons/hamburger-icon"
-import { IconButton } from "@components/shadcn/ui/themed/icon-button"
-import type { IElementProps } from "@interfaces/element-props"
-import { useState } from "react"
+import { HamburgerIcon } from '@components/icons/hamburger-icon'
+import { IconButton } from '@components/shadcn/ui/themed/icon-button'
+import type { IElementProps } from '@interfaces/element-props'
+import { useState } from 'react'
 
 /**
  * Standardized button for showing a side menu consisting of a simple

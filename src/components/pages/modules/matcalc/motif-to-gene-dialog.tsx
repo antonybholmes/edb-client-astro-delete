@@ -1,28 +1,21 @@
-import { BaseCol } from "@components/base-col"
+import { BaseCol } from '@components/base-col'
 
-import { OKCancelDialog } from "@components/dialog/ok-cancel-dialog"
-import type { ISelectionRange } from "@components/table/use-selection-range"
-import { TEXT_CANCEL } from "@consts"
-import { type BaseDataFrame } from "@lib/dataframe/base-dataframe"
-import { HistoryContext } from "@providers/history-provider"
+import { OKCancelDialog } from '@components/dialog/ok-cancel-dialog'
+import type { ISelectionRange } from '@components/table/use-selection-range'
+import { TEXT_CANCEL } from '@consts'
+import { type BaseDataFrame } from '@lib/dataframe/base-dataframe'
+import { HistoryContext } from '@providers/history-provider'
 
-import { DataFrame } from "@lib/dataframe/dataframe"
+import { DataFrame } from '@lib/dataframe/dataframe'
 
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState } from 'react'
 
-import { Checkbox } from "@components/shadcn/ui/themed/check-box"
-import type { SeriesType } from "@lib/dataframe/dataframe-types"
-import { NA } from "@lib/text/text"
-import { API_MOTIF_SEARCH_URL, JSON_HEADERS } from "@modules/edb"
-import { useQueryClient } from "@tanstack/react-query"
-import axios from "axios"
-
-interface IMotif {
-  db: string[]
-  genes: string[]
-}
-
-type IMotifToGeneDb = { [key: string]: IMotif }
+import { Checkbox } from '@components/shadcn/ui/themed/check-box'
+import type { SeriesType } from '@lib/dataframe/dataframe-types'
+import { NA } from '@lib/text/text'
+import { API_MOTIF_SEARCH_URL, JSON_HEADERS } from '@modules/edb'
+import { useQueryClient } from '@tanstack/react-query'
+import axios from 'axios'
 
 export interface IProps {
   open?: boolean
@@ -86,7 +79,7 @@ export function MotifToGeneDialog({
         let id = rename[ri] ?? NA
 
         const res = await queryClient.fetchQuery({
-          queryKey: ["motiftogene"],
+          queryKey: ['motiftogene'],
           queryFn: () =>
             axios.post(
               API_MOTIF_SEARCH_URL,
@@ -97,7 +90,7 @@ export function MotifToGeneDialog({
               },
               {
                 headers: JSON_HEADERS,
-              },
+              }
             ),
         })
 
@@ -116,10 +109,10 @@ export function MotifToGeneDialog({
         //  id = data[ri].conversions[0].genes.join("|")
         //}
 
-        table.push(row.concat([...genes].sort().join(",")))
+        table.push(row.concat([...genes].sort().join(',')))
       }
 
-      const header: string[] = df.colNames.concat(["Motif to gene"])
+      const header: string[] = df.colNames.concat(['Motif to gene'])
 
       let df_out = new DataFrame({
         data: table,
@@ -128,9 +121,9 @@ export function MotifToGeneDialog({
       })
 
       historyDispatch({
-        type: "add_step",
-        name: "Motif to gene",
-        sheets: [df_out.setName("Motif to gene")],
+        type: 'add_step',
+        name: 'Motif to gene',
+        sheets: [df_out.setName('Motif to gene')],
       })
     } catch (error) {
       console.log(error)

@@ -1,14 +1,14 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content"
+import { getCollection, type CollectionEntry } from 'astro:content'
 
-import { getSlug } from "@lib/urls"
-import PostLayout from "@layouts/PostLayout.astro"
-import { BaseCol } from "@components/base-col"
-import { MarkdownContent } from "@components/markdown-content"
-import { ThemeLink } from "@components/link/theme-link"
+import { getSlug } from '@lib/urls'
+import PostLayout from '@layouts/PostLayout.astro'
+import { BaseCol } from '@components/base-col'
+import { MarkdownContent } from '@components/markdown-content'
+import { ThemeLink } from '@components/link/theme-link'
 
 export async function getStaticPaths() {
-  const posts = await getCollection("help")
+  const posts = await getCollection('help')
 
   return posts.map(post => {
     return {
@@ -23,7 +23,7 @@ export async function getStaticPaths() {
 }
 
 interface Props {
-  post: CollectionEntry<"help">
+  post: CollectionEntry<'help'>
 }
 
 const { post } = Astro.props

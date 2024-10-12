@@ -7,44 +7,44 @@ import {
   useState,
   type ForwardedRef,
   type KeyboardEvent,
-} from "react"
+} from 'react'
 
-import { cn } from "@lib/class-names"
-import { H2_CLS } from "@theme"
+import { cn } from '@lib/class-names'
+import { H2_CLS } from '@theme'
 
-import { BaseCol } from "@components/base-col"
+import { BaseCol } from '@components/base-col'
 
-import { type IButtonProps } from "@components/shadcn/ui/themed/button"
+import { type IButtonProps } from '@components/shadcn/ui/themed/button'
 
-import type { IChildrenProps } from "@interfaces/children-props"
-import type { IClassProps } from "@interfaces/class-props"
-import type { IElementProps } from "@interfaces/element-props"
-import { motion } from "framer-motion"
-import { HCenterRow } from "./h-center-row"
-import { CloseIcon } from "./icons/close-icon"
-import { Button } from "./shadcn/ui/themed/button"
+import type { IChildrenProps } from '@interfaces/children-props'
+import type { IClassProps } from '@interfaces/class-props'
+import type { IElementProps } from '@interfaces/element-props'
+import { motion } from 'framer-motion'
+import { HCenterRow } from './h-center-row'
+import { CloseIcon } from './icons/close-icon'
+import { Button } from './shadcn/ui/themed/button'
 import {
   SlidebarContext,
   SlidebarProvider,
   type ISlidebarContext,
-} from "./slide-bar-provider"
-import { VCenterRow } from "./v-center-row"
+} from './slide-bar-provider'
+import { VCenterRow } from './v-center-row'
 
 const KEY_STEP = 5
 
 const H_DIV_BOX_CLS =
-  "group hidden sm:flex shrink-0 grow-0 cursor-ew-resize flex-row items-center justify-center rounded-full px-4 outline-none overflow-hidden"
+  'group hidden sm:flex shrink-0 grow-0 cursor-ew-resize flex-row items-center justify-center rounded-full px-4 outline-none overflow-hidden'
 
 const H_LINE_CLS =
-  "pointer-events-none group-hover:bg-ring group-focus-visible:bg-ring h-full rounded-full trans-color"
+  'pointer-events-none group-hover:bg-ring group-focus-visible:bg-ring h-full rounded-full trans-color'
 
 const V_DIV_BOX_CLS =
-  "group flex flex-col sm:hidden shrink-0 grow-0 cursor-ns-resize items-center justify-center rounded-full py-2 outline-none"
+  'group flex flex-col sm:hidden shrink-0 grow-0 cursor-ns-resize items-center justify-center rounded-full py-2 outline-none'
 
 const V_LINE_CLS =
-  "pointer-events-none group-hover:bg-ring group-focus-visible:bg-ring w-full rounded-full trans-color"
+  'pointer-events-none group-hover:bg-ring group-focus-visible:bg-ring w-full rounded-full trans-color'
 
-type DIR_TYPE = "h" | "v" | ""
+type DIR_TYPE = 'h' | 'v' | ''
 
 export function CloseButton({ className, ...props }: IButtonProps) {
   return (
@@ -52,7 +52,7 @@ export function CloseButton({ className, ...props }: IButtonProps) {
       variant="muted"
       multiProps="icon-md"
       //rounded="full"
-      className={cn("shrink-0", className)}
+      className={cn('shrink-0', className)}
       ripple={false}
       title="Close side bar"
       {...props}
@@ -72,7 +72,7 @@ export function SlideBarSide(props: IChildrenProps) {
 
 interface ISlideBarProps extends ISlidebarContext, IElementProps {
   title?: string
-  side?: "left" | "right"
+  side?: 'left' | 'right'
   position: number
   limits: [number, number]
 }
@@ -80,7 +80,7 @@ interface ISlideBarProps extends ISlidebarContext, IElementProps {
 export const SlideBar = forwardRef(function SlideBar(
   {
     title,
-    side = "left",
+    side = 'left',
     open = true,
     onOpenChange,
     position = 80,
@@ -89,7 +89,7 @@ export const SlideBar = forwardRef(function SlideBar(
     sideContent,
     children,
   }: ISlideBarProps,
-  _ref: ForwardedRef<HTMLDivElement>,
+  _ref: ForwardedRef<HTMLDivElement>
 ) {
   //const c = Children.toArray(children)
 
@@ -539,7 +539,7 @@ interface ISlideBarContentProps extends IClassProps {
 
 export const SlideBarContent = forwardRef(function SlideBarContent(
   { lineClassName, className, ...props }: ISlideBarContentProps,
-  ref: ForwardedRef<HTMLDivElement>,
+  ref: ForwardedRef<HTMLDivElement>
 ) {
   //const firstUpdate = useRef(true)
   //const _value = value ?? tabs[0].name // getTabValue(value, tabs)
@@ -564,10 +564,10 @@ export const SlideBarContent = forwardRef(function SlideBarContent(
   } = useContext(SlidebarContext)
 
   //const [focus, setFocus] = useState(false)
-  const [isDragging, setIsDragging] = useState<DIR_TYPE>("")
+  const [isDragging, setIsDragging] = useState<DIR_TYPE>('')
   const [divPos, setDivPos] = useState(position)
   const [flexPos, setFlexPos] = useState(
-    open ? position : side === "right" ? 100 : 0,
+    open ? position : side === 'right' ? 100 : 0
   )
 
   function onMouseHoldDown(e: MouseEvent | React.MouseEvent, dir: DIR_TYPE) {
@@ -583,12 +583,12 @@ export const SlideBarContent = forwardRef(function SlideBarContent(
     }
 
     switch (e.key) {
-      case "ArrowLeft":
-      case "ArrowUp":
+      case 'ArrowLeft':
+      case 'ArrowUp':
         setDivPos(Math.max(limits[0], divPos - KEY_STEP))
         break
-      case "ArrowRight":
-      case "ArrowDown":
+      case 'ArrowRight':
+      case 'ArrowDown':
         setDivPos(Math.min(limits[1], divPos + KEY_STEP))
         break
     }
@@ -609,12 +609,12 @@ export const SlideBarContent = forwardRef(function SlideBarContent(
   }, [position])
 
   useEffect(() => {
-    setFlexPos(open ? divPos : side === "right" ? 100 : 0)
+    setFlexPos(open ? divPos : side === 'right' ? 100 : 0)
   }, [divPos, open])
 
   useEffect(() => {
     function onMouseHoldUp() {
-      setIsDragging("")
+      setIsDragging('')
     }
 
     function onMouseHoldMove(e: MouseEvent) {
@@ -625,29 +625,29 @@ export const SlideBarContent = forwardRef(function SlideBarContent(
       const clientRect = innerRef.current.getBoundingClientRect()
       const divRect = divRef.current?.getBoundingClientRect()
 
-      if (isDragging === "h") {
-        const bw = side == "right" ? divRect.width : -divRect.width
+      if (isDragging === 'h') {
+        const bw = side == 'right' ? divRect.width : -divRect.width
 
         const p = Math.max(
           limits[0],
           Math.min(
             limits[1],
-            ((e.pageX - clientRect.left - 0.5 * bw) / clientRect.width) * 100,
-          ),
+            ((e.pageX - clientRect.left - 0.5 * bw) / clientRect.width) * 100
+          )
         )
 
         setNormDivPos(p)
       }
 
-      if (isDragging === "v") {
-        const bw = side == "right" ? divRect.height : -divRect.height
+      if (isDragging === 'v') {
+        const bw = side == 'right' ? divRect.height : -divRect.height
 
         const p = Math.max(
           limits[0],
           Math.min(
             limits[1],
-            ((e.pageY - clientRect.top - 0.5 * bw) / clientRect.height) * 100,
-          ),
+            ((e.pageY - clientRect.top - 0.5 * bw) / clientRect.height) * 100
+          )
         )
 
         setNormDivPos(p)
@@ -657,12 +657,12 @@ export const SlideBarContent = forwardRef(function SlideBarContent(
       e.stopPropagation()
     }
 
-    document.addEventListener("mouseup", onMouseHoldUp)
-    document.addEventListener("mousemove", onMouseHoldMove)
+    document.addEventListener('mouseup', onMouseHoldUp)
+    document.addEventListener('mousemove', onMouseHoldMove)
 
     return () => {
-      document.removeEventListener("mouseup", onMouseHoldUp)
-      document.removeEventListener("mousemove", onMouseHoldMove)
+      document.removeEventListener('mouseup', onMouseHoldUp)
+      document.removeEventListener('mousemove', onMouseHoldMove)
     }
   }, [isDragging])
 
@@ -670,14 +670,14 @@ export const SlideBarContent = forwardRef(function SlideBarContent(
     <div
       ref={innerRef}
       className={cn(
-        "flex flex-col sm:flex-row grow min-h-0 h-full overflow-hidden",
-        [isDragging === "h", "cursor-ew-resize"],
-        [isDragging === "v", "cursor-ns-resize"],
-        className,
+        'flex flex-col sm:flex-row grow min-h-0 h-full overflow-hidden',
+        [isDragging === 'h', 'cursor-ew-resize'],
+        [isDragging === 'v', 'cursor-ns-resize'],
+        className
       )}
       {...props}
     >
-      {side === "right" && (
+      {side === 'right' && (
         <motion.div
           initial={false}
           layout
@@ -699,19 +699,19 @@ export const SlideBarContent = forwardRef(function SlideBarContent(
         id="side-pane"
         ref={sidebarRef}
         className="flex flex-col sm:flex-row min-h-0 min-w-0 basis-0 overflow-hidden"
-        animate={{ flexGrow: side === "right" ? 100 - flexPos : flexPos }}
+        animate={{ flexGrow: side === 'right' ? 100 - flexPos : flexPos }}
       >
         <div
           ref={sidebarContentRef}
           className="flex flex-col sm:flex-row grow min-h-0 overflow-hidden"
         >
-          {side === "right" && (
+          {side === 'right' && (
             <>
               <div
                 id="divider-hitbox"
                 ref={divRef}
                 className={H_DIV_BOX_CLS}
-                onMouseDown={e => onMouseHoldDown(e, "h")}
+                onMouseDown={e => onMouseHoldDown(e, 'h')}
                 onClick={() => {
                   divRef.current!.focus()
                 }}
@@ -723,8 +723,8 @@ export const SlideBarContent = forwardRef(function SlideBarContent(
                 <div
                   className={cn(
                     H_LINE_CLS,
-                    [isDragging !== "", "bg-ring"],
-                    lineClassName,
+                    [isDragging !== '', 'bg-ring'],
+                    lineClassName
                   )}
                   style={{ width: 1 }}
                 />
@@ -734,7 +734,7 @@ export const SlideBarContent = forwardRef(function SlideBarContent(
                 id="divider-hitbox"
                 ref={divRef}
                 className={V_DIV_BOX_CLS}
-                onMouseDown={e => onMouseHoldDown(e, "v")}
+                onMouseDown={e => onMouseHoldDown(e, 'v')}
                 onClick={() => {
                   divRef.current!.focus()
                 }}
@@ -744,7 +744,7 @@ export const SlideBarContent = forwardRef(function SlideBarContent(
                 tabIndex={0}
               >
                 <div
-                  className={cn(V_LINE_CLS, [isDragging !== "", "bg-ring"])}
+                  className={cn(V_LINE_CLS, [isDragging !== '', 'bg-ring'])}
                   style={{ height: 1 }}
                 />
               </div>
@@ -753,9 +753,9 @@ export const SlideBarContent = forwardRef(function SlideBarContent(
 
           <BaseCol
             className={cn(
-              "gap-y-1 grow overflow-hidden",
+              'gap-y-1 grow overflow-hidden',
               //[side === "right", "pr-2", "pl-2"],
-              [isDragging !== "", "pointer-events-none"], // disable content whilst dragging
+              [isDragging !== '', 'pointer-events-none'] // disable content whilst dragging
             )}
           >
             {title && (
@@ -768,13 +768,13 @@ export const SlideBarContent = forwardRef(function SlideBarContent(
             {sideContent && sideContent}
           </BaseCol>
 
-          {side === "left" && (
+          {side === 'left' && (
             <>
               <HCenterRow
                 id="divider-hitbox"
                 ref={divRef}
                 className={H_DIV_BOX_CLS}
-                onMouseDown={e => onMouseHoldDown(e, "h")}
+                onMouseDown={e => onMouseHoldDown(e, 'h')}
                 onClick={() => {
                   divRef.current!.focus()
                 }}
@@ -786,8 +786,8 @@ export const SlideBarContent = forwardRef(function SlideBarContent(
                 <div
                   className={cn(
                     H_LINE_CLS,
-                    [isDragging !== "", "bg-ring"],
-                    lineClassName,
+                    [isDragging !== '', 'bg-ring'],
+                    lineClassName
                   )}
                   style={{ width: 1 }}
                 />
@@ -797,7 +797,7 @@ export const SlideBarContent = forwardRef(function SlideBarContent(
                 id="divider-hitbox"
                 ref={divRef}
                 className={V_DIV_BOX_CLS}
-                onMouseDown={e => onMouseHoldDown(e, "v")}
+                onMouseDown={e => onMouseHoldDown(e, 'v')}
                 onClick={() => {
                   divRef.current!.focus()
                 }}
@@ -807,7 +807,7 @@ export const SlideBarContent = forwardRef(function SlideBarContent(
                 tabIndex={0}
               >
                 <div
-                  className={cn(V_LINE_CLS, [isDragging !== "", "bg-ring"])}
+                  className={cn(V_LINE_CLS, [isDragging !== '', 'bg-ring'])}
                   style={{ height: 1 }}
                 />
               </div>
@@ -816,7 +816,7 @@ export const SlideBarContent = forwardRef(function SlideBarContent(
         </div>
       </motion.div>
 
-      {side === "left" && (
+      {side === 'left' && (
         <motion.div
           initial={false}
           layout

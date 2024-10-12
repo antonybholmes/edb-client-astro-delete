@@ -1,37 +1,37 @@
 import {
   OKCancelDialog,
   type IModalProps,
-} from "@components/dialog/ok-cancel-dialog"
-import { Checkbox } from "@components/shadcn/ui/themed/check-box"
+} from '@components/dialog/ok-cancel-dialog'
+import { Checkbox } from '@components/shadcn/ui/themed/check-box'
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@components/shadcn/ui/themed/form"
+} from '@components/shadcn/ui/themed/form'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@components/shadcn/ui/themed/select"
-import { TEXT_OK } from "@consts"
-import { type IClusterGroup } from "@lib/cluster-group"
-import type { IndexFromType } from "@lib/dataframe"
-import { type BaseDataFrame } from "@lib/dataframe/base-dataframe"
-import { HistoryContext } from "@providers/history-provider"
+} from '@components/shadcn/ui/themed/select'
+import { TEXT_OK } from '@consts'
+import { type IClusterGroup } from '@lib/cluster-group'
+import type { IndexFromType } from '@lib/dataframe'
+import { type BaseDataFrame } from '@lib/dataframe/base-dataframe'
+import { HistoryContext } from '@providers/history-provider'
 
-import { DataFrame } from "@lib/dataframe/dataframe"
-import { filterNA, findCols, subset, zip } from "@lib/dataframe/dataframe-utils"
-import { MAIN_CLUSTER_FRAME, type ClusterFrame } from "@lib/math/hcluster"
-import { range } from "@lib/math/range"
+import { DataFrame } from '@lib/dataframe/dataframe'
+import { filterNA, findCols, subset, zip } from '@lib/dataframe/dataframe-utils'
+import { MAIN_CLUSTER_FRAME, type ClusterFrame } from '@lib/math/hcluster'
+import { range } from '@lib/math/range'
 
-import type { SeriesType } from "@lib/dataframe/dataframe-types"
-import { useContext, useRef, type BaseSyntheticEvent } from "react"
-import { useForm } from "react-hook-form"
-import { MatcalcSettingsContext } from "./matcalc-settings-provider"
+import type { SeriesType } from '@lib/dataframe/dataframe-types'
+import { useContext, useRef, type BaseSyntheticEvent } from 'react'
+import { useForm } from 'react-hook-form'
+import { MatcalcSettingsContext } from './matcalc-settings-provider'
 
 const MAX_COLS = 10
 const FOLD_REGEX = /fold/
@@ -55,13 +55,13 @@ export interface IProps extends IModalProps {
 
 function findFoldChangeCol(df: BaseDataFrame | null) {
   if (!df) {
-    return "Log2 Fold Change"
+    return 'Log2 Fold Change'
   }
 
   const cols = df.colNames.filter(c => FOLD_REGEX.test(c.toLowerCase()))
 
   if (cols.length === 0) {
-    return "Log2 Fold Change"
+    return 'Log2 Fold Change'
   }
 
   return cols[0]
@@ -69,13 +69,13 @@ function findFoldChangeCol(df: BaseDataFrame | null) {
 
 function findPValueCol(df: BaseDataFrame | null) {
   if (!df) {
-    return "FDR"
+    return 'FDR'
   }
 
   const cols = df.colNames.filter(c => P_REGEX.test(c.toLowerCase()))
 
   if (cols.length === 0) {
-    return "FDR"
+    return 'FDR'
   }
 
   return cols[0]
@@ -153,15 +153,15 @@ export function VolcanoDialog({ open = true, df, onPlot, onCancel }: IProps) {
     }
 
     const vdf = new DataFrame({
-      name: "Volcano",
+      name: 'Volcano',
       data: zip(foldChanges, pvalues, labels),
       index: subset(df.index.values, idx) as IndexFromType,
-      columns: ["Log2 fold change", "-log10 p-value", "Label"],
+      columns: ['Log2 fold change', '-log10 p-value', 'Label'],
     })
 
     historyDispatch({
-      type: "add_step",
-      name: "Volcano",
+      type: 'add_step',
+      name: 'Volcano',
       sheets: [vdf],
     })
 

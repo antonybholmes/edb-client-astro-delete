@@ -1,15 +1,15 @@
-import { VCenterRow } from "@components/v-center-row"
-import { cn } from "@lib/class-names"
-import { forwardRef, type InputHTMLAttributes, type ReactNode } from "react"
-import { CloseIcon } from "./icons/close-icon"
-import { NumericalInput } from "./shadcn/ui/themed/numerical-input"
+import { VCenterRow } from '@components/v-center-row'
+import { cn } from '@lib/class-names'
+import { forwardRef, type InputHTMLAttributes, type ReactNode } from 'react'
+import { CloseIcon } from './icons/close-icon'
+import { NumericalInput } from './shadcn/ui/themed/numerical-input'
 
 export const CONTAINER_CLS = cn(
-  "flex flex-row  gap-x-2 justify-between disabled:cursor-not-allowed disabled:opacity-50",
+  'flex flex-row  gap-x-2 justify-between disabled:cursor-not-allowed disabled:opacity-50'
 )
 
 export const INPUT_CLS = cn(
-  "h-full shrink-0 disabled:cursor-not-allowed disabled:opacity-50 read-only:opacity-50",
+  'h-full shrink-0 disabled:cursor-not-allowed disabled:opacity-50 read-only:opacity-50'
 )
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -32,14 +32,14 @@ export const DoubleNumericalInput = forwardRef<HTMLDivElement, InputProps>(
       onNumChanged1,
       onNumChanged2,
       type,
-      inputCls = "w-16 rounded-md",
+      inputCls = 'w-16 rounded-md',
       limit = [1, 100],
       inc = 1,
       dp,
       leftChildren,
       children,
     },
-    ref,
+    ref
   ) => {
     //const [focus, setFocus] = useState(false)
 
@@ -78,5 +78,5 @@ export const DoubleNumericalInput = forwardRef<HTMLDivElement, InputProps>(
         />
       </VCenterRow>
     )
-  },
+  }
 )

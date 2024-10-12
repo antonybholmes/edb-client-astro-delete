@@ -1,12 +1,12 @@
-import { TabbedDataFrames } from "@components/table/tabbed-dataframes"
+import { TabbedDataFrames } from '@components/table/tabbed-dataframes'
 
 //import { ZoomSlider } from "@components/toolbar/zoom-slider"
 
-import { ClockRotateLeftIcon } from "@components/icons/clock-rotate-left-icon"
-import { FilterIcon } from "@components/icons/filter-icon"
-import { LayersIcon } from "@components/icons/layers-icon"
+import { ClockRotateLeftIcon } from '@components/icons/clock-rotate-left-icon'
+import { FilterIcon } from '@components/icons/filter-icon'
+import { LayersIcon } from '@components/icons/layers-icon'
 
-import { HistoryContext } from "@providers/history-provider"
+import { HistoryContext } from '@providers/history-provider'
 import {
   forwardRef,
   useContext,
@@ -14,31 +14,31 @@ import {
   useRef,
   useState,
   type ForwardedRef,
-} from "react"
+} from 'react'
 
-import { GroupPropsPanel } from "./group-props-panel"
+import { GroupPropsPanel } from './group-props-panel'
 
-import { HistoryPanel } from "@components/pages/history-panel"
+import { HistoryPanel } from '@components/pages/history-panel'
 import {
   MessageContext,
   messageTextFileFormat,
-} from "@components/pages/message-context"
-import { FilterPropsPanel } from "@components/pages/plot/filter-props-panel"
-import { SaveTxtDialog } from "@components/pages/save-txt-dialog"
-import { type ISelectedTab, type ITab } from "@components/tab-provider"
-import { TabSlideBar } from "@components/tab-slide-bar"
-import { ToolbarFooter } from "@components/toolbar/toolbar-footer"
+} from '@components/pages/message-context'
+import { FilterPropsPanel } from '@components/pages/plot/filter-props-panel'
+import { SaveTxtDialog } from '@components/pages/save-txt-dialog'
+import { type ISelectedTab, type ITab } from '@components/tab-provider'
+import { TabSlideBar } from '@components/tab-slide-bar'
+import { ToolbarFooter } from '@components/toolbar/toolbar-footer'
 import {
   downloadDataFrame,
   getFormattedShape,
-} from "@lib/dataframe/dataframe-utils"
+} from '@lib/dataframe/dataframe-utils'
 
-export const DEFAULT_PANEL_ID = "Table 1"
+export const DEFAULT_PANEL_ID = 'Table 1'
 
 export const DATA_PANEL_CLS =
-  "bg-background ounded-md overflow-hidden bg-white my-1 relative grow flex flex-col rounded-md overflow-hidden"
+  'bg-background ounded-md overflow-hidden bg-white my-1 relative grow flex flex-col rounded-md overflow-hidden'
 
-export const SHEET_PANEL_CLS = "mt-2 pl-2 overflow-hidden relative" //cn(DATA_PANEL_CLS, 'px-3 pt-3')
+export const SHEET_PANEL_CLS = 'mt-2 pl-2 overflow-hidden relative' //cn(DATA_PANEL_CLS, 'px-3 pt-3')
 
 export interface IDataPanelProps {
   panelId?: string
@@ -47,7 +47,7 @@ export interface IDataPanelProps {
 
 export const DataPanel = forwardRef(function DataPanel(
   { panelId = DEFAULT_PANEL_ID }: IDataPanelProps,
-  _ref: ForwardedRef<HTMLDivElement>,
+  _ref: ForwardedRef<HTMLDivElement>
 ) {
   const [history, historyDispatch] = useContext(HistoryContext)
 
@@ -58,13 +58,13 @@ export const DataPanel = forwardRef(function DataPanel(
   //const [tableH, setTableH] = useState<IReactTableCol[]>(DEFAULT_TABLE_HEADER)
   //const [selectedSheet, setSelectedSheet] = useState(0)
 
-  const [selectedTab, setSelectedTab] = useState("Groups")
+  const [selectedTab, setSelectedTab] = useState('Groups')
 
   //const [scaleIndex, setScaleIndex] = useState(3)
 
   const [messageState, messageDispatch] = useContext(MessageContext)
 
-  const [showSave, setShowSave] = useState("")
+  const [showSave, setShowSave] = useState('')
 
   const [showSideBar, setShowSideBar] = useState(true)
 
@@ -77,9 +77,9 @@ export const DataPanel = forwardRef(function DataPanel(
       return
     }
 
-    const sep = format === "csv" ? "," : "\t"
-    const hasHeader = !df.name.includes("GCT")
-    const hasIndex = !df.name.includes("GCT")
+    const sep = format === 'csv' ? ',' : '\t'
+    const hasHeader = !df.name.includes('GCT')
+    const hasIndex = !df.name.includes('GCT')
 
     downloadDataFrame(df, downloadRef, {
       hasHeader,
@@ -97,18 +97,18 @@ export const DataPanel = forwardRef(function DataPanel(
     messages.forEach(message => {
       console.log(message)
 
-      if (message.text.includes("save")) {
+      if (message.text.includes('save')) {
         setShowSave(messageTextFileFormat(message))
       }
 
-      if (message.text.includes("show-sidebar")) {
+      if (message.text.includes('show-sidebar')) {
         setShowSideBar(!showSideBar)
       }
     })
 
     // clear any messages so they are not repeatedly reused
     if (messageState.queue.length > 0) {
-      messageDispatch({ type: "clear" })
+      messageDispatch({ type: 'clear' })
     }
 
     //downloadSvgAsPng(svgRef, canvasRef, downloadRef)
@@ -117,7 +117,7 @@ export const DataPanel = forwardRef(function DataPanel(
   const rightTabs: ITab[] = [
     {
       //id: nanoid(),
-      name: "Groups",
+      name: 'Groups',
       icon: <LayersIcon />,
       content: (
         <GroupPropsPanel
@@ -129,14 +129,14 @@ export const DataPanel = forwardRef(function DataPanel(
     },
     {
       //id: nanoid(),
-      name: "Filter",
+      name: 'Filter',
       icon: <FilterIcon />,
       size: 2.2,
       content: <FilterPropsPanel df={history.currentStep.currentSheet} />,
     },
     {
       //id: nanoid(),
-      name: "History",
+      name: 'History',
       icon: <ClockRotateLeftIcon />,
       content: <HistoryPanel />,
     },
@@ -148,9 +148,9 @@ export const DataPanel = forwardRef(function DataPanel(
         <SaveTxtDialog
           onSave={format => {
             save(format.ext)
-            setShowSave("")
+            setShowSave('')
           }}
-          onCancel={() => setShowSave("")}
+          onCancel={() => setShowSave('')}
         />
       )}
 
@@ -168,7 +168,7 @@ export const DataPanel = forwardRef(function DataPanel(
           dataFrames={history.currentStep.sheets}
           onTabChange={(selectedTab: ISelectedTab) => {
             historyDispatch({
-              type: "goto_sheet",
+              type: 'goto_sheet',
               sheetId: selectedTab.index,
             })
           }}

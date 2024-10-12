@@ -1,6 +1,6 @@
 // 'use client'
 
-import { SignInLayout } from "@layouts/signin-layout"
+import { SignInLayout } from '@layouts/signin-layout'
 import {
   bearerHeaders,
   type IUser,
@@ -8,13 +8,13 @@ import {
   SESSION_AUTH0_SIGNIN_URL,
   SIGNEDIN_ROUTE,
   TEXT_SIGN_IN,
-} from "@modules/edb"
+} from '@modules/edb'
 
-import { useAuth0 } from "@auth0/auth0-react"
-import { AccountSettingsProvider } from "@providers/account-settings-provider"
-import { AuthProvider } from "@providers/auth-provider"
+import { useAuth0 } from '@auth0/auth0-react'
+import { AccountSettingsProvider } from '@providers/account-settings-provider'
+import { AuthProvider } from '@providers/auth-provider'
 
-import { Button } from "@components/shadcn/ui/themed/button"
+import { Button } from '@components/shadcn/ui/themed/button'
 import {
   Card,
   CardDescription,
@@ -22,15 +22,15 @@ import {
   CardHeader,
   CardTitle,
   CenteredCardContainer,
-} from "@components/shadcn/ui/themed/card"
+} from '@components/shadcn/ui/themed/card'
 
-import { useEdbAuth } from "@providers/edb-auth-provider"
-import { useQueryClient } from "@tanstack/react-query"
-import axios from "axios"
+import { useEdbAuth } from '@providers/edb-auth-provider'
+import { useQueryClient } from '@tanstack/react-query'
+import axios from 'axios'
 
-import { redirect } from "@lib/urls"
-import { CoreProviders } from "@providers/core-providers"
-import { useEffect, useState } from "react"
+import { redirect } from '@lib/urls'
+import { CoreProviders } from '@providers/core-providers'
+import { useEffect, useState } from 'react'
 
 // async function signIn(jwt: string): Promise<AxiosResponse> {
 //   console.log("signin")
@@ -77,11 +77,11 @@ function SignInPage() {
 
       const auth0Token = await getAccessTokenSilently()
 
-      console.log("sliden", auth0Token)
+      console.log('sliden', auth0Token)
 
       try {
         const res = await queryClient.fetchQuery({
-          queryKey: ["update"],
+          queryKey: ['update'],
           queryFn: () =>
             axios.post(
               SESSION_AUTH0_SIGNIN_URL, //SESSION_UPDATE_USER_URL,
@@ -89,7 +89,7 @@ function SignInPage() {
               {
                 headers: bearerHeaders(auth0Token),
                 withCredentials: true,
-              },
+              }
             ),
         })
 
@@ -113,7 +113,7 @@ function SignInPage() {
   // }
 
   // if user has been loaded, redirect to account page
-  if (edbUser && edbUser.publicId !== "") {
+  if (edbUser && edbUser.publicId !== '') {
     redirect(`${SIGNEDIN_ROUTE}?callbackUrl=${MYACCOUNT_ROUTE}`)
   }
 
@@ -126,7 +126,7 @@ function SignInPage() {
     return (
       <SignInLayout signInEnabled={false}>
         <div>
-          Hello {user.name}{" "}
+          Hello {user.name}{' '}
           <button
             onClick={() =>
               logout({ logoutParams: { returnTo: window.location.href } })
@@ -171,7 +171,7 @@ function SignInPage() {
 }
 
 export function SignInQueryPage() {
-  const [url, setUrl] = useState("")
+  const [url, setUrl] = useState('')
 
   useEffect(() => {
     setUrl(window.location.href)
@@ -184,9 +184,9 @@ export function SignInQueryPage() {
   return (
     <CoreProviders>
       <AuthProvider callbackUrl={url}>
-        <AccountSettingsProvider>
+ 
           <SignInPage />
-        </AccountSettingsProvider>
+   
       </AuthProvider>
     </CoreProviders>
   )

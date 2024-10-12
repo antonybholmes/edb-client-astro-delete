@@ -1,22 +1,22 @@
-import { OKCancelDialog } from "@components/dialog/ok-cancel-dialog"
+import { OKCancelDialog } from '@components/dialog/ok-cancel-dialog'
 
-import { VCenterRow } from "@components/v-center-row"
-import { APP_NAME, TEXT_OK } from "@consts"
+import { VCenterRow } from '@components/v-center-row'
+import { APP_NAME, TEXT_OK } from '@consts'
 
-import { BaseCol } from "@components/base-col"
-import { CollapseTree } from "@components/collapse-tree"
-import { CloseIcon } from "@components/icons/close-icon"
-import { SearchIcon } from "@components/icons/search-icon"
-import { PropsPanel } from "@components/props-panel"
-import { Button } from "@components/shadcn/ui/themed/button"
+import { BaseCol } from '@components/base-col'
+import { CollapseTree } from '@components/collapse-tree'
+import { CloseIcon } from '@components/icons/close-icon'
+import { SearchIcon } from '@components/icons/search-icon'
+import { PropsPanel } from '@components/props-panel'
+import { Button } from '@components/shadcn/ui/themed/button'
 import {
   ResizablePanel,
   ResizablePanelGroup,
-} from "@components/shadcn/ui/themed/resizable"
-import { ThinVResizeHandle } from "@components/split-pane/thin-v-resize-handle"
-import { getTabId, type ITab } from "@components/tab-provider"
-import { forwardRef, useState, type ForwardedRef } from "react"
-import type { IGexDataset } from "./gex-utils"
+} from '@components/shadcn/ui/themed/resizable'
+import { ThinVResizeHandle } from '@components/split-pane/thin-v-resize-handle'
+import { getTabId, type ITab } from '@components/tab-provider'
+import { forwardRef, useState, type ForwardedRef } from 'react'
+import type { IGexDataset } from './gex-utils'
 
 export interface IProps {
   foldersTab: ITab
@@ -36,13 +36,13 @@ export const SearchPropsPanel = forwardRef(function SearchPropsPanel(
     setDatasetUseMap,
     setGenes,
   }: IProps,
-  ref: ForwardedRef<HTMLDivElement>,
+  ref: ForwardedRef<HTMLDivElement>
 ) {
   const [tab, setTab] = useState<ITab | undefined>(undefined)
 
   // Load some genes in dev, but otherwise leave empty
   const [text, setText] = useState<string>(
-    process.env.NODE_ENV === "development" ? "BCL6\nPRDM1\nKMT2D" : "",
+    process.env.NODE_ENV === 'development' ? 'BCL6\nPRDM1\nKMT2D' : ''
   )
   const [confirmClear, setConfirmClear] = useState(false)
 
@@ -53,7 +53,7 @@ export const SearchPropsPanel = forwardRef(function SearchPropsPanel(
         title={APP_NAME}
         onReponse={r => {
           if (r === TEXT_OK) {
-            setText("")
+            setText('')
           }
           setConfirmClear(false)
         }}
@@ -140,16 +140,16 @@ export const SearchPropsPanel = forwardRef(function SearchPropsPanel(
               onCheckedChange={(tab: ITab, state: boolean) => {
                 const tabId = getTabId(tab)
 
-                if (tab.name === "Datasets") {
+                if (tab.name === 'Datasets') {
                   // update all datasets and collections
                   setDatasetUseMap(
                     new Map<string, boolean>(
                       [...datasetUseMap.keys()].map(
-                        key => [key, state] as [string, boolean],
-                      ),
-                    ),
+                        key => [key, state] as [string, boolean]
+                      )
+                    )
                   )
-                } else if (tabId.includes("institution")) {
+                } else if (tabId.includes('institution')) {
                   // for a particular institution, update the datasets
                   setDatasetUseMap(
                     new Map<string, boolean>([
@@ -158,10 +158,10 @@ export const SearchPropsPanel = forwardRef(function SearchPropsPanel(
                         .filter(dataset => dataset.institution === tab.name)
                         .map(
                           dataset =>
-                            [dataset.id.toString(), state] as [string, boolean],
+                            [dataset.id.toString(), state] as [string, boolean]
                         ),
                       [tab.name, state],
-                    ]),
+                    ])
                   )
                 } else {
                   // update a specific dataset
@@ -169,7 +169,7 @@ export const SearchPropsPanel = forwardRef(function SearchPropsPanel(
                     new Map<string, boolean>([
                       ...datasetUseMap.entries(),
                       [tabId, state],
-                    ]),
+                    ])
                   )
                 }
               }}

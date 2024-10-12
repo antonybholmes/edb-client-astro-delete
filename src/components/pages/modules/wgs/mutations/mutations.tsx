@@ -1,50 +1,49 @@
 // 'use client'
 
-import { ToolbarFooter } from "@components/toolbar/toolbar-footer"
+import { ToolbarFooter } from '@components/toolbar/toolbar-footer'
 
-import { BaseRow } from "@components/base-row"
+import { BaseRow } from '@components/base-row'
 
 import {
   ShowOptionsMenu,
   Toolbar,
   ToolbarMenu,
   ToolbarPanel,
-} from "@components/toolbar/toolbar"
-import { ToolbarIconButton } from "@components/toolbar/toolbar-icon-button"
-import { ToolbarSeparator } from "@components/toolbar/toolbar-separator"
+} from '@components/toolbar/toolbar'
+import { ToolbarIconButton } from '@components/toolbar/toolbar-icon-button'
+import { ToolbarSeparator } from '@components/toolbar/toolbar-separator'
 
-import { ToolbarTabButton } from "@components/toolbar/toolbar-tab-button"
-import { NO_DIALOG, TEXT_SAVE_AS, type IDialogParams } from "@consts"
-import { ClockRotateLeftIcon } from "@icons/clock-rotate-left-icon"
-import { getDataFrameInfo } from "@lib/dataframe/dataframe-utils"
-import { HistoryContext, HistoryProvider } from "@providers/history-provider"
+import { ToolbarTabButton } from '@components/toolbar/toolbar-tab-button'
+import { NO_DIALOG, TEXT_SAVE_AS, type IDialogParams } from '@consts'
+import { ClockRotateLeftIcon } from '@icons/clock-rotate-left-icon'
+import { getDataFrameInfo } from '@lib/dataframe/dataframe-utils'
+import { HistoryContext } from '@providers/history-provider'
 
-import { GenomicLocation } from "@modules/genomic/genomic"
-import { useContext, useEffect, useRef, useState } from "react"
+import { GenomicLocation } from '@modules/genomic/genomic'
+import { useContext, useEffect, useRef, useState } from 'react'
 
 import {
   AlertsContext,
-  AlertsProvider,
   makeErrorAlert,
-} from "@components/alerts/alerts-provider"
+} from '@components/alerts/alerts-provider'
 import {
   API_MUTATIONS_DATABASES_URL as API_MUTATIONS_DATASETS_URL,
   API_MUTATIONS_PILEUP_URL,
   bearerHeaders,
-} from "@modules/edb"
-import { fetchDNA, type IDNA } from "@modules/genomic/dna"
-import { parseLocation } from "@modules/genomic/genomic"
-import axios from "axios"
+} from '@modules/edb'
+import { fetchDNA, type IDNA } from '@modules/genomic/dna'
+import { parseLocation } from '@modules/genomic/genomic'
+import axios from 'axios'
 
-import { BaseCol } from "@components/base-col"
-import { CollapseTree, makeFoldersRootNode } from "@components/collapse-tree"
-import { FileImageIcon } from "@components/icons/file-image-icon"
-import { FileLinesIcon } from "@components/icons/file-lines-icon"
-import { FolderIcon } from "@components/icons/folder-icon"
-import { PlayIcon } from "@components/icons/play-icon"
-import { SaveIcon } from "@components/icons/save-icon"
-import { SearchIcon } from "@components/icons/search-icon"
-import { SlidersIcon } from "@components/icons/sliders-icon"
+import { BaseCol } from '@components/base-col'
+import { CollapseTree, makeFoldersRootNode } from '@components/collapse-tree'
+import { FileImageIcon } from '@components/icons/file-image-icon'
+import { FileLinesIcon } from '@components/icons/file-lines-icon'
+import { FolderIcon } from '@components/icons/folder-icon'
+import { PlayIcon } from '@components/icons/play-icon'
+import { SaveIcon } from '@components/icons/save-icon'
+import { SearchIcon } from '@components/icons/search-icon'
+import { SlidersIcon } from '@components/icons/sliders-icon'
 import {
   DEFAULT_PILEUP_PROPS,
   PileupPlotSvg,
@@ -54,53 +53,54 @@ import {
   type IPileupPlot,
   type IPileupProps,
   type IPileupResults,
-} from "@components/pages/modules/wgs/mutations/pileup-plot-svg"
+} from '@components/pages/modules/wgs/mutations/pileup-plot-svg'
 import {
   DropdownMenuItem,
   MenuSeparator,
-} from "@components/shadcn/ui/themed/dropdown-menu"
-import { Input } from "@components/shadcn/ui/themed/input"
+} from '@components/shadcn/ui/themed/dropdown-menu'
+import { Input } from '@components/shadcn/ui/themed/input'
 import {
   ResizablePanel,
   ResizablePanelGroup,
-} from "@components/shadcn/ui/themed/resizable"
+} from '@components/shadcn/ui/themed/resizable'
 
-import { SlideBar } from "@components/slide-bar"
-import { ThinHResizeHandle } from "@components/split-pane/thin-h-resize-handle"
-import { ThinVResizeHandle } from "@components/split-pane/thin-v-resize-handle"
-import { TabSlideBar } from "@components/tab-slide-bar"
-import { TabbedDataFrames } from "@components/table/tabbed-dataframes"
-import { ToolbarButton } from "@components/toolbar/toolbar-button"
-import { VCenterRow } from "@components/v-center-row"
-import { ShortcutLayout } from "@layouts/shortcut-layout"
-import { DataFrame } from "@lib/dataframe/dataframe"
-import { downloadDataFrame } from "@lib/dataframe/dataframe-utils"
-import { downloadImageAutoFormat } from "@lib/image-utils"
-import { makeRandId, nanoid } from "@lib/utils"
-import { queryClient } from "@query"
+import { SlideBar } from '@components/slide-bar'
+import { ThinHResizeHandle } from '@components/split-pane/thin-h-resize-handle'
+import { ThinVResizeHandle } from '@components/split-pane/thin-v-resize-handle'
+import { TabSlideBar } from '@components/tab-slide-bar'
+import { TabbedDataFrames } from '@components/table/tabbed-dataframes'
+import { ToolbarButton } from '@components/toolbar/toolbar-button'
+import { VCenterRow } from '@components/v-center-row'
+import { ShortcutLayout } from '@layouts/shortcut-layout'
+import { DataFrame } from '@lib/dataframe/dataframe'
+import { downloadDataFrame } from '@lib/dataframe/dataframe-utils'
+import { downloadImageAutoFormat } from '@lib/image-utils'
+import { makeRandId, nanoid } from '@lib/utils'
+import { queryClient } from '@query'
 
-import { PileupPropsPanel } from "./pileup-props-panel"
+import { PileupPropsPanel } from './pileup-props-panel'
 
-import { HistoryPanel } from "@components/pages/history-panel"
-import { SaveImageDialog } from "@components/pages/save-image-dialog"
-import { SaveTxtDialog } from "@components/pages/save-txt-dialog"
+import { HistoryPanel } from '@components/pages/history-panel'
+import { SaveImageDialog } from '@components/pages/save-image-dialog'
+import { SaveTxtDialog } from '@components/pages/save-txt-dialog'
 import {
   SideToggleGroup,
   ToggleGroupItem,
-} from "@components/shadcn/ui/themed/side-toggle-group"
-import { getTabId, type ITab } from "@components/tab-provider"
-import { V_SCROLL_CHILD_CLS, VScrollPanel } from "@components/v-scroll-panel"
+} from '@components/shadcn/ui/themed/side-toggle-group'
+import { getTabId, type ITab } from '@components/tab-provider'
+import { V_SCROLL_CHILD_CLS, VScrollPanel } from '@components/v-scroll-panel'
 
-import { ShowSideButton } from "@components/pages/show-side-button"
-import { useEdbAuth } from "@providers/edb-auth-provider"
-import MODULE_INFO from "./module.json"
+import { ShowSideButton } from '@components/pages/show-side-button'
+import { CoreProviders } from '@providers/core-providers'
+import { useEdbAuth } from '@providers/edb-auth-provider'
+import MODULE_INFO from './module.json'
 
 export const DEFAULT_MOTIF_PATTERNS: IMotifPattern[] = [
   {
-    name: "AID",
+    name: 'AID',
     regex: /(?:[AG]G[CT][AT])|(?:[AT][AG]C[CT])/g,
-    color: "red",
-    bgColor: "red",
+    color: 'red',
+    bgColor: 'red',
     bgOpacity: 0.1,
     show: true,
   },
@@ -110,10 +110,10 @@ export function MutationsPage() {
   //const [fileStore, filesDispatch] = useReducer(filesReducer, { files: [] })
   //const [fileData, setFileData] = useState<{ [key: string]: string[] }>({})
 
-  const [search, setSearch] = useState("chr3:187462653-187462712")
+  const [search, setSearch] = useState('chr3:187462653-187462712')
   // Order the display based on the drag list re-ordering
 
-  const [rightTab, setRightTab] = useState("Search")
+  const [rightTab, setRightTab] = useState('Search')
 
   //const [colorMapName, setColorMap] = useState("Lymphgen")
   const [sampleColorMap, setSampleColorMap] = useState<
@@ -128,18 +128,18 @@ export function MutationsPage() {
   const [tab, setTab] = useState<ITab | undefined>(undefined)
   const [samples, setSamples] = useState<IMutationSample[]>([])
   const [datasetUseMap, setDatasetUseMap] = useState<Map<string, boolean>>(
-    new Map<string, boolean>(),
+    new Map<string, boolean>()
   )
 
-  const [assembly, setAssembly] = useState("hg19")
+  const [assembly, setAssembly] = useState('hg19')
 
   const { refreshAccessToken } = useEdbAuth()
 
   const [sampleMap, setSampleMap] = useState<Map<string, IMutationSample>>(
-    new Map<string, IMutationSample>(),
+    new Map<string, IMutationSample>()
   )
   const [foldersTab, setFoldersTab] = useState<ITab>({
-    ...makeFoldersRootNode("Datasets"),
+    ...makeFoldersRootNode('Datasets'),
   })
 
   //const [addChrPrefix, setAddChrPrefix] = useState(true)
@@ -188,7 +188,7 @@ export function MutationsPage() {
 
   async function loadDatasets() {
     const res = await queryClient.fetchQuery({
-      queryKey: ["datasets"],
+      queryKey: ['datasets'],
       queryFn: () => {
         return axios.post(
           `${API_MUTATIONS_DATASETS_URL}/${assembly}`,
@@ -196,9 +196,9 @@ export function MutationsPage() {
           {
             headers: {
               //Authorization: bearerTokenHeader(token),
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
-          },
+          }
         )
       },
     })
@@ -209,8 +209,8 @@ export function MutationsPage() {
 
     setDatasetUseMap(
       new Map<string, boolean>(
-        datasets.map(dataset => [dataset.publicId, true]),
-      ),
+        datasets.map(dataset => [dataset.publicId, true])
+      )
     )
   }
 
@@ -228,11 +228,11 @@ export function MutationsPage() {
         datasets
           .map(dataset =>
             dataset.samples.map(
-              sample => [sample.publicId, sample] as [string, IMutationSample],
-            ),
+              sample => [sample.publicId, sample] as [string, IMutationSample]
+            )
           )
-          .flat(),
-      ),
+          .flat()
+      )
     )
   }, [datasets])
 
@@ -252,7 +252,7 @@ export function MutationsPage() {
     })
 
     const tab: ITab = {
-      ...makeFoldersRootNode("Datasets"),
+      ...makeFoldersRootNode('Datasets'),
       children,
     }
 
@@ -272,18 +272,18 @@ export function MutationsPage() {
     let scm: Map<string, string> | null = null
 
     switch (displayProps.cmap) {
-      case "COO":
+      case 'COO':
         scm = new Map<string, string>(
           datasets
             .map(d => d.samples)
             .flat()
-            .map(s => [s.publicId, s.coo in cmap ? cmap[s.coo] : "black"]),
+            .map(s => [s.publicId, s.coo in cmap ? cmap[s.coo] : 'black'])
         )
 
         console.log(scm)
 
         break
-      case "Lymphgen":
+      case 'Lymphgen':
         scm = new Map<string, string>(
           datasets
 
@@ -291,8 +291,8 @@ export function MutationsPage() {
             .flat()
             .map(s => [
               s.publicId,
-              s.lymphgen in cmap ? cmap[s.lymphgen] : "black",
-            ]),
+              s.lymphgen in cmap ? cmap[s.lymphgen] : 'black',
+            ])
         )
 
         break
@@ -312,17 +312,17 @@ export function MutationsPage() {
         .filter(dataset => datasetUseMap.get(dataset.publicId))
         .map(d => d.samples)
         .flat()
-        .sort((sa, sb) => sa.name.localeCompare(sb.name)),
+        .sort((sa, sb) => sa.name.localeCompare(sb.name))
     )
   }, [datasets, datasetUseMap, tab])
 
   function loadTestData() {
-    setSearch("chr3:187462653-187462712")
+    setSearch('chr3:187462653-187462712')
   }
 
   async function fetchPileup(
     location: GenomicLocation,
-    datasets: IMutationDataset[],
+    datasets: IMutationDataset[]
   ): Promise<IPileupResults> {
     let ret: IPileupResults = { location, pileup: [] }
 
@@ -330,12 +330,12 @@ export function MutationsPage() {
 
     if (!accessToken) {
       alertDispatch({
-        type: "set",
+        type: 'set',
         alert: makeErrorAlert({
-          title: "WGS Mutations",
-          size: "dialog",
+          title: 'WGS Mutations',
+          size: 'dialog',
           content:
-            "You do not have permission to download data from this module. Please contact your adminstrator to get access.",
+            'You do not have permission to download data from this module. Please contact your adminstrator to get access.',
         }),
       })
 
@@ -346,7 +346,7 @@ export function MutationsPage() {
 
     try {
       const res = await queryClient.fetchQuery({
-        queryKey: ["pileup"],
+        queryKey: ['pileup'],
         queryFn: () => {
           return axios.post(
             `${API_MUTATIONS_PILEUP_URL}/${assembly}`,
@@ -356,7 +356,7 @@ export function MutationsPage() {
             },
             {
               headers: bearerHeaders(accessToken),
-            },
+            }
           )
         },
       })
@@ -376,12 +376,12 @@ export function MutationsPage() {
       return
     }
 
-    let dna: IDNA = { location, seq: "" }
+    let dna: IDNA = { location, seq: '' }
 
     try {
       dna = await fetchDNA(queryClient, location, {
-        format: "Upper",
-        assembly: "hg19",
+        format: 'Upper',
+        assembly: 'hg19',
       })
     } catch (e) {
       console.log(e)
@@ -395,13 +395,13 @@ export function MutationsPage() {
     try {
       pileup = await fetchPileup(
         location,
-        datasets.filter(dataset => datasetUseMap.get(dataset.publicId)),
+        datasets.filter(dataset => datasetUseMap.get(dataset.publicId))
       )
     } catch (e) {
       console.log(e)
     }
 
-    console.log("dl", pileup)
+    console.log('dl', pileup)
 
     setPileup({ dna, pileupResults: pileup })
   }
@@ -421,36 +421,36 @@ export function MutationsPage() {
       datasets
         .map(dataset =>
           dataset.samples.map(
-            sample => [sample.publicId, dataset.name] as [string, string],
-          ),
+            sample => [sample.publicId, dataset.name] as [string, string]
+          )
         )
-        .flat(),
+        .flat()
     )
 
     const cooMap = new Map<string, string>(
       datasets
         .map(dataset =>
           dataset.samples.map(
-            sample => [sample.publicId, sample.coo] as [string, string],
-          ),
+            sample => [sample.publicId, sample.coo] as [string, string]
+          )
         )
-        .flat(),
+        .flat()
     )
 
     const lymphgenMap = new Map<string, string>(
       datasets
         .map(dataset =>
           dataset.samples.map(
-            sample => [sample.publicId, sample.lymphgen] as [string, string],
-          ),
+            sample => [sample.publicId, sample.lymphgen] as [string, string]
+          )
         )
-        .flat(),
+        .flat()
     )
 
     const loc = parseLocation(search)
 
     const data = pileup.pileupResults?.pileup.flat().map(mutation => {
-      let chr = mutation.chr.replace("chr", "")
+      let chr = mutation.chr.replace('chr', '')
 
       if (displayProps.chrPrefix.show) {
         chr = `chr${chr}`
@@ -466,7 +466,7 @@ export function MutationsPage() {
         mutation.start - loc.start + 1,
         mutation.ref,
         // remove leading insertion caret
-        mutation.tum.replace("^", ""),
+        mutation.tum.replace('^', ''),
         mutation.type.slice(2),
         // remove 1:, 2:, 3: ordering info
         mutation.tDepth - mutation.tAltCount,
@@ -475,43 +475,43 @@ export function MutationsPage() {
 
         mutation.vaf,
         sampleMap.get(mutation.sample)!.pairedNormalDna,
-        datasetMap.get(mutation.sample) ?? "",
+        datasetMap.get(mutation.sample) ?? '',
         sampleMap.get(mutation.sample)!.institution,
         sampleMap.get(mutation.sample)!.sampleType,
-        cooMap.get(mutation.sample) ?? "",
-        lymphgenMap.get(mutation.sample) ?? "",
+        cooMap.get(mutation.sample) ?? '',
+        lymphgenMap.get(mutation.sample) ?? '',
       ]
     })
 
     const df = new DataFrame({
       data,
       columns: [
-        "Sample",
-        "Chromosome",
-        "Start_Position",
-        "End_Position",
-        "Offset",
-        "Reference_Allele",
-        "Tumor_Seq_Allele2",
-        "Variant_Type",
-        "t_ref_count",
-        "t_alt_count",
-        "t_depth",
-        "VAF",
+        'Sample',
+        'Chromosome',
+        'Start_Position',
+        'End_Position',
+        'Offset',
+        'Reference_Allele',
+        'Tumor_Seq_Allele2',
+        'Variant_Type',
+        't_ref_count',
+        't_alt_count',
+        't_depth',
+        'VAF',
 
-        "Paired_Normal_DNA",
-        "Dataset",
-        "Institution",
-        "Sample_Type",
-        "COO",
-        "Lymphgen",
+        'Paired_Normal_DNA',
+        'Dataset',
+        'Institution',
+        'Sample_Type',
+        'COO',
+        'Lymphgen',
       ],
     })
 
     historyDispatch({
-      type: "reset",
-      name: "Mutations",
-      sheets: [df.setName("Mutations")],
+      type: 'reset',
+      name: 'Mutations',
+      sheets: [df.setName('Mutations')],
     })
   }, [displayProps, pileup])
 
@@ -522,7 +522,7 @@ export function MutationsPage() {
       return
     }
 
-    const sep = format === "csv" ? "," : "\t"
+    const sep = format === 'csv' ? ',' : '\t'
 
     downloadDataFrame(df, downloadRef, {
       hasHeader: true,
@@ -537,7 +537,7 @@ export function MutationsPage() {
   const tabs: ITab[] = [
     {
       id: nanoid(),
-      name: "Home",
+      name: 'Home',
       content: (
         <>
           <BaseRow>
@@ -558,7 +558,7 @@ export function MutationsPage() {
               aria-label="Save matrix to local file"
               onClick={() =>
                 setShowDialog({
-                  name: makeRandId("export"),
+                  name: makeRandId('export'),
                 })
               }
             >
@@ -594,7 +594,7 @@ export function MutationsPage() {
     {
       id: nanoid(),
       icon: <SlidersIcon />,
-      name: "Display",
+      name: 'Display',
       content: (
         <PileupPropsPanel
           displayProps={displayProps}
@@ -608,7 +608,7 @@ export function MutationsPage() {
     {
       id: nanoid(),
       icon: <ClockRotateLeftIcon />,
-      name: "History",
+      name: 'History',
       content: <HistoryPanel />,
     },
   ]
@@ -640,7 +640,7 @@ export function MutationsPage() {
           <DropdownMenuItem
             aria-label="Download as TXT"
             onClick={() => {
-              save("txt")
+              save('txt')
             }}
           >
             <FileLinesIcon fill="" />
@@ -649,7 +649,7 @@ export function MutationsPage() {
           <DropdownMenuItem
             aria-label="Download as CSV"
             onClick={() => {
-              save("csv")
+              save('csv')
             }}
           >
             <span>Download as CSV</span>
@@ -659,7 +659,7 @@ export function MutationsPage() {
     },
     {
       id: nanoid(),
-      name: "Export",
+      name: 'Export',
       content: (
         <>
           <DropdownMenuItem
@@ -669,7 +669,7 @@ export function MutationsPage() {
                 svgRef,
                 canvasRef,
                 downloadRef,
-                `mutations.png`,
+                `mutations.png`
               )
             }}
           >
@@ -683,7 +683,7 @@ export function MutationsPage() {
                 svgRef,
                 canvasRef,
                 downloadRef,
-                `mutations.svg`,
+                `mutations.svg`
               )
             }}
           >
@@ -696,7 +696,7 @@ export function MutationsPage() {
 
   return (
     <>
-      {showDialog.name.includes("save") && (
+      {showDialog.name.includes('save') && (
         <SaveTxtDialog
           open={showDialog.name}
           onSave={format => {
@@ -707,7 +707,7 @@ export function MutationsPage() {
         />
       )}
 
-      {showDialog.name.includes("export") && (
+      {showDialog.name.includes('export') && (
         <SaveImageDialog
           open={showDialog.name}
           onSave={format => {
@@ -715,7 +715,7 @@ export function MutationsPage() {
               svgRef,
               canvasRef,
               downloadRef,
-              `mutations.${format.ext}`,
+              `mutations.${format.ext}`
             )
             setShowDialog(NO_DIALOG)
           }}
@@ -733,7 +733,7 @@ export function MutationsPage() {
             className="w-80 text-xs font-medium rounded-md bg-muted pl-8  hover:bg-white/40 fill-white/50 hover:fill-white/90 text-white trans-color"
             inputCls="text-center"
             onKeyDown={e => {
-              if (e.key === "Enter") {
+              if (e.key === 'Enter') {
                 try {
                   getPileup()
                 } catch (e) {
@@ -917,7 +917,7 @@ export function MutationsPage() {
                           title="Save mutation table"
                           onClick={() =>
                             setShowDialog({
-                              name: makeRandId("save"),
+                              name: makeRandId('save'),
                             })
                           }
                         >
@@ -931,7 +931,7 @@ export function MutationsPage() {
                         dataFrames={history.currentStep.sheets}
                         onTabChange={selectedTab => {
                           historyDispatch({
-                            type: "goto_sheet",
+                            type: 'goto_sheet',
                             sheetId: selectedTab.index,
                           })
                         }}
@@ -958,7 +958,7 @@ export function MutationsPage() {
             <SideToggleGroup
               type="single"
               value={assembly}
-              values={["hg19", "grch38"]}
+              values={['hg19', 'grch38']}
               onValueChange={setAssembly}
             >
               <ToggleGroupItem value="hg19">hg19</ToggleGroupItem>
@@ -982,7 +982,7 @@ export function MutationsPage() {
                   new Map<string, boolean>([
                     ...datasetUseMap.entries(),
                     [tabId, state],
-                  ]),
+                  ])
                 )
               }}
             />
@@ -1005,10 +1005,8 @@ export function MutationsPage() {
 
 export function MutationsQueryPage() {
   return (
-    <AlertsProvider>
-      <HistoryProvider>
-        <MutationsPage />
-      </HistoryProvider>
-    </AlertsProvider>
+    <CoreProviders>
+      <MutationsPage />
+    </CoreProviders>
   )
 }

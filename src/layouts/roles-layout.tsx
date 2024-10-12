@@ -1,23 +1,23 @@
-import { BaseCol } from "@components/base-col"
+import { BaseCol } from '@components/base-col'
 
-import { HCenterRow } from "@components/h-center-row"
+import { HCenterRow } from '@components/h-center-row'
 
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@components/shadcn/ui/themed/card"
+} from '@components/shadcn/ui/themed/card'
 
 import {
   getAccessTokenContents,
   isAdminFromAccessToken,
   type IAccessJwtPayload,
-} from "@modules/edb"
+} from '@modules/edb'
 
-import { useEdbAuth } from "@providers/edb-auth-provider"
-import { useEffect, useState } from "react"
-import { SignInLayout, type ISignInLayoutProps } from "./signin-layout"
+import { useEdbAuth } from '@providers/edb-auth-provider'
+import { useEffect, useState } from 'react'
+import { SignInLayout, type ISignInLayoutProps } from './signin-layout'
 
 function notAllowedContent() {
   return (
@@ -56,7 +56,7 @@ export function RolesLayout({
   //const { accessToken } = useAccessTokenStore()
   const { refreshAccessToken } = useEdbAuth()
 
-  const [accessToken, setAccessToken] = useState("")
+  const [accessToken, setAccessToken] = useState('')
   const [accessContents, setAccessContents] =
     useState<IAccessJwtPayload | null>(null)
 

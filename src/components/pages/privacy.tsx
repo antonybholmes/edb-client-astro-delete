@@ -1,10 +1,10 @@
 // 'use client'
 
-import { BaseCol } from "@components/base-col"
-import { ContentDiv } from "@components/content-div"
+import { BaseCol } from '@components/base-col'
+import { ContentDiv } from '@components/content-div'
 
-import { HeaderLayout } from "@layouts/header-layout"
-import { CoreProviders } from "@providers/core-providers"
+import { HeaderLayout } from '@layouts/header-layout'
+import { CoreProviders } from '@providers/core-providers'
 
 function PrivacyPage() {
   return (

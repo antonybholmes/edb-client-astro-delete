@@ -1,5 +1,5 @@
-import { BaseSeries } from "./base-series"
-import type { SeriesType } from "./dataframe-types"
+import { BaseSeries } from './base-series'
+import type { SeriesType } from './dataframe-types'
 
 export class InfSeries extends BaseSeries {
   protected _defaultValue: SeriesType

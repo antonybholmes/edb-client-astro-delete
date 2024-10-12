@@ -1,14 +1,13 @@
-import { Alerts } from "@components/alerts/alerts"
+import { Alerts } from '@components/alerts/alerts'
 import {
   AlertsContext,
-  AlertsProvider,
   makeAlertFromAxiosError,
   makeErrorAlert,
   makeInfoAlert,
-} from "@components/alerts/alerts-provider"
-import { BaseCol } from "@components/base-col"
-import { PrimaryButton } from "@components/button/primary-button"
-import { HCenterRow } from "@components/h-center-row"
+} from '@components/alerts/alerts-provider'
+import { BaseCol } from '@components/base-col'
+import { PrimaryButton } from '@components/button/primary-button'
+import { HCenterRow } from '@components/h-center-row'
 import {
   Card,
   CardContent,
@@ -16,48 +15,49 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@components/shadcn/ui/themed/card"
-import { HeaderLayout } from "@layouts/header-layout"
+} from '@components/shadcn/ui/themed/card'
+import { HeaderLayout } from '@layouts/header-layout'
 import {
   API_UPDATE_PASSWORD_URL,
   bearerHeaders,
   EDB_TOKEN_PARAM,
   type IResetJwtPayload,
-} from "@modules/edb"
+} from '@modules/edb'
 
-import { jwtDecode } from "jwt-decode"
+import { jwtDecode } from 'jwt-decode'
 import {
   useContext,
   useEffect,
   useRef,
   useState,
   type BaseSyntheticEvent,
-} from "react"
+} from 'react'
 
-import { WarningIcon } from "@components/icons/warning-icon"
-import { FormInputError } from "@components/input-error"
-import { Form, FormField, FormItem } from "@components/shadcn/ui/themed/form"
-import { Input5 } from "@components/shadcn/ui/themed/input5"
-import { TEXT_CONTINUE } from "@consts"
-import { AccountSettingsProvider } from "@providers/account-settings-provider"
+import { WarningIcon } from '@components/icons/warning-icon'
+import { FormInputError } from '@components/input-error'
+import { Form, FormField, FormItem } from '@components/shadcn/ui/themed/form'
+import { Input5 } from '@components/shadcn/ui/themed/input5'
+import { TEXT_CONTINUE } from '@consts'
+import { AccountSettingsProvider } from '@providers/account-settings-provider'
 
 import {
   SignInLink,
   TEXT_USERNAME_DESCRIPTION,
   TEXT_USERNAME_REQUIRED,
   USERNAME_PATTERN,
-} from "@layouts/signin-layout"
-import type { NullStr } from "@lib/text/text"
+} from '@layouts/signin-layout'
+import type { NullStr } from '@lib/text/text'
 
-import { useQueryClient } from "@tanstack/react-query"
-import axios, { AxiosError } from "axios"
-import { useForm } from "react-hook-form"
+import { CoreProviders } from '@providers/core-providers'
+import { useQueryClient } from '@tanstack/react-query'
+import axios, { AxiosError } from 'axios'
+import { useForm } from 'react-hook-form'
 import {
   MIN_PASSWORD_LENGTH,
   PASSWORD_PATTERN,
   TEXT_MIN_PASSWORD_LENGTH,
   TEXT_PASSWORD_DESCRIPTION,
-} from "../password-dialog"
+} from '../password-dialog'
 
 interface IFormInput {
   userId: string
@@ -86,7 +86,7 @@ function UpdatePasswordPage() {
         const d = jwtDecode<IResetJwtPayload>(j)
         setJwtData(d)
       } catch (error) {
-        console.error("jwt parse error")
+        console.error('jwt parse error')
       }
     }
   }, [])
@@ -106,13 +106,13 @@ function UpdatePasswordPage() {
   const userId = jwtData.publicId
 
   // try to get name from either account or token
-  const name = jwtData.data ?? "User"
+  const name = jwtData.data ?? 'User'
 
   const form = useForm<IFormInput>({
     defaultValues: {
       userId: userId,
-      password1: "",
-      password2: "",
+      password1: '',
+      password2: '',
       passwordless: false,
     },
   })
@@ -184,7 +184,7 @@ function UpdatePasswordPage() {
       data.password1.length < MIN_PASSWORD_LENGTH
     ) {
       alertDispatch({
-        type: "add",
+        type: 'add',
         alert: makeErrorAlert({
           title: TEXT_MIN_PASSWORD_LENGTH,
         }),
@@ -195,7 +195,7 @@ function UpdatePasswordPage() {
 
     try {
       await queryClient.fetchQuery({
-        queryKey: ["update"],
+        queryKey: ['update'],
         queryFn: () =>
           axios.post(
             API_UPDATE_PASSWORD_URL,
@@ -206,24 +206,24 @@ function UpdatePasswordPage() {
             },
             {
               headers: bearerHeaders(jwt),
-            },
+            }
           ),
       })
 
       if (data.password1.length === 0) {
         alertDispatch({
-          type: "add",
+          type: 'add',
           alert: makeInfoAlert({
-            title: "You have switched to passwordless login",
-            content: "Look for a passwordless email when you sign in.",
+            title: 'You have switched to passwordless login',
+            content: 'Look for a passwordless email when you sign in.',
           }),
         })
       } else {
         alertDispatch({
-          type: "add",
+          type: 'add',
           alert: makeInfoAlert({
-            title: "Your password was updated",
-            content: "Please use your new password to sign in.",
+            title: 'Your password was updated',
+            content: 'Please use your new password to sign in.',
           }),
         })
       }
@@ -231,7 +231,7 @@ function UpdatePasswordPage() {
       //setResetLinkSent(true)
     } catch (error) {
       alertDispatch({
-        type: "set",
+        type: 'set',
         alert: makeAlertFromAxiosError(error as AxiosError),
       })
 
@@ -326,12 +326,12 @@ function UpdatePasswordPage() {
                         <FormItem>
                           <Input5
                             id="userId"
-                            error={"userId" in form.formState.errors}
+                            error={'userId' in form.formState.errors}
                             placeholder="User Id"
                             disabled
                             {...field}
                           >
-                            {"userId" in form.formState.errors && (
+                            {'userId' in form.formState.errors && (
                               <WarningIcon />
                             )}
                           </Input5>
@@ -356,12 +356,12 @@ function UpdatePasswordPage() {
                             <FormItem>
                               <Input5
                                 id="password1"
-                                error={"password1" in form.formState.errors}
+                                error={'password1' in form.formState.errors}
                                 type="password"
                                 placeholder="Password"
                                 {...field}
                               >
-                                {"password1" in form.formState.errors && (
+                                {'password1' in form.formState.errors && (
                                   <WarningIcon />
                                 )}
                               </Input5>
@@ -408,7 +408,7 @@ function UpdatePasswordPage() {
                   onClick={() => btnRef.current?.click()}
                   className="w-full"
                 >
-                  {hasErrors ? "Re-send reset link" : TEXT_CONTINUE}
+                  {hasErrors ? 'Re-send reset link' : TEXT_CONTINUE}
                 </PrimaryButton>
               </CardFooter>
             </Card>
@@ -422,10 +422,10 @@ function UpdatePasswordPage() {
 
 export function UpdatePasswordQueryPage() {
   return (
-    <AlertsProvider>
-      <AccountSettingsProvider>
+    <CoreProviders>
+     
         <UpdatePasswordPage />
-      </AccountSettingsProvider>
-    </AlertsProvider>
+ 
+    </CoreProviders>
   )
 }

@@ -1,20 +1,20 @@
-import { type IChildrenProps } from "@interfaces/children-props"
+import { type IChildrenProps } from '@interfaces/children-props'
 import {
   DEFAULT_USER,
   fetchAccessTokenUsingSession,
   fetchUser,
   type IUser,
   validateToken,
-} from "@modules/edb"
+} from '@modules/edb'
 
-import { useQueryClient } from "@tanstack/react-query"
+import { useQueryClient } from '@tanstack/react-query'
 import {
   type Context,
   createContext,
   useCallback,
   useContext,
   useState,
-} from "react"
+} from 'react'
 
 export interface IEdbAuthContext {
   reloadUser: (accessToken?: string) => Promise<IUser>
@@ -34,7 +34,7 @@ export const EdbAuthContext = createContext<IEdbAuthContext>({
   updateUser: () => {},
   resetUser: () => {},
   refreshAccessToken: () => {
-    return new Promise(resolve => resolve(""))
+    return new Promise(resolve => resolve(''))
   },
 })
 
@@ -43,7 +43,7 @@ export function EdbAuthProvider({ children }: IChildrenProps) {
 
   const [user, setUser] = useState<IUser>({ ...DEFAULT_USER })
 
-  const [accessToken, setAccessToken] = useState("")
+  const [accessToken, setAccessToken] = useState('')
 
   /**
    * Attempts to return cached access token, but if it determines
@@ -68,7 +68,7 @@ export function EdbAuthProvider({ children }: IChildrenProps) {
    */
   const reloadUser = useCallback(
     async (accessToken?: string) => {
-      console.log("reload")
+      console.log('reload')
       if (!accessToken) {
         accessToken = await refreshAccessToken()
       }
@@ -78,7 +78,7 @@ export function EdbAuthProvider({ children }: IChildrenProps) {
 
       return ret
     },
-    [user],
+    [user]
   )
 
   /**
@@ -88,14 +88,14 @@ export function EdbAuthProvider({ children }: IChildrenProps) {
    */
   const getCachedUser = useCallback(
     async (accessToken?: string) => {
-      if (user.publicId !== "") {
+      if (user.publicId !== '') {
         return user
       }
 
       const u = await reloadUser(accessToken)
       return u
     },
-    [user],
+    [user]
   )
 
   // // first load in the default values from the store
@@ -145,7 +145,7 @@ export function EdbAuthProvider({ children }: IChildrenProps) {
 }
 
 export function useEdbAuth(
-  context: Context<IEdbAuthContext> = EdbAuthContext,
+  context: Context<IEdbAuthContext> = EdbAuthContext
 ): IEdbAuthContext {
   return useContext(context)
 }

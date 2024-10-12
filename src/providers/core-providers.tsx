@@ -1,10 +1,11 @@
 //'use client'
 
-import { AlertsProvider } from "@components/alerts/alerts-provider"
-import type { IChildrenProps } from "@interfaces/children-props"
-import { EdbAuthProvider } from "@providers/edb-auth-provider"
-import { QCP } from "@query"
-import { HistoryProvider } from "./history-provider"
+import { AlertsProvider } from '@components/alerts/alerts-provider'
+import type { IChildrenProps } from '@interfaces/children-props'
+import { EdbAuthProvider } from '@providers/edb-auth-provider'
+import { QCP } from '@query'
+import { AccountSettingsProvider } from './account-settings-provider'
+import { HistoryProvider } from './history-provider'
 
 export function CoreProviders({ children }: IChildrenProps) {
   // Add other providers nested here as needed
@@ -12,7 +13,9 @@ export function CoreProviders({ children }: IChildrenProps) {
     <QCP>
       <EdbAuthProvider>
         <HistoryProvider>
-          <AlertsProvider> {children}</AlertsProvider>
+          <AccountSettingsProvider>
+            <AlertsProvider> {children}</AlertsProvider>
+          </AccountSettingsProvider>
         </HistoryProvider>
       </EdbAuthProvider>
     </QCP>

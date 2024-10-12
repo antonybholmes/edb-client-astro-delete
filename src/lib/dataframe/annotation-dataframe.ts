@@ -1,10 +1,10 @@
-import { range } from "@lib/math/range"
-import { BaseDataFrame, type LocType } from "./base-dataframe"
+import { range } from '@lib/math/range'
+import { BaseDataFrame, type LocType } from './base-dataframe'
 
-import { BaseSeries } from "./base-series"
-import { DataFrame, _t, type IDataFrameOptions } from "./dataframe"
-import type { IndexType, SeriesType, Shape } from "./dataframe-types"
-import { Index, type IndexFromType } from "./index"
+import { BaseSeries } from './base-series'
+import { DataFrame, _t, type IDataFrameOptions } from './dataframe'
+import type { IndexType, SeriesType, Shape } from './dataframe-types'
+import { Index, type IndexFromType } from './index'
 
 export class AnnotationDataFrame extends BaseDataFrame {
   private _dataframe: DataFrame
@@ -33,7 +33,7 @@ export class AnnotationDataFrame extends BaseDataFrame {
 
     this._colDataFrame.setRow(
       this._dataframe.col(col)?.name,
-      range(0, this._colDataFrame.shape[1]).map(() => NaN),
+      range(0, this._colDataFrame.shape[1]).map(() => NaN)
     )
 
     return this
@@ -69,7 +69,7 @@ export class AnnotationDataFrame extends BaseDataFrame {
 
     this._rowDataFrame.setRow(
       this._dataframe.col(row)?.name,
-      range(0, this._rowDataFrame.shape[1]).map(() => NaN),
+      range(0, this._rowDataFrame.shape[1]).map(() => NaN)
     )
 
     return this
@@ -80,7 +80,7 @@ export class AnnotationDataFrame extends BaseDataFrame {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setIndex(index: IndexFromType, inplace = false): BaseDataFrame {
+  setIndex(index: IndexFromType): BaseDataFrame {
     this._dataframe.setIndex(index, true)
     this._rowDataFrame.setIndex(index, true)
 
@@ -114,7 +114,7 @@ export class AnnotationDataFrame extends BaseDataFrame {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setColNames(index: IndexFromType, inplace: boolean = true): BaseDataFrame {
+  setColNames(index: IndexFromType): BaseDataFrame {
     this._dataframe.setColNames(index, true)
     this._colDataFrame.setIndex(index, true)
     return this._dataframe
@@ -138,7 +138,7 @@ export class AnnotationDataFrame extends BaseDataFrame {
   }
 
   apply(
-    f: (v: SeriesType, row: number, col: number) => SeriesType,
+    f: (v: SeriesType, row: number, col: number) => SeriesType
   ): BaseDataFrame {
     return this._dataframe.apply(f)
   }
@@ -163,11 +163,11 @@ export class AnnotationDataFrame extends BaseDataFrame {
     return this._dataframe.colMap(f)
   }
 
-  iloc(rows: LocType = ":", cols: LocType = ":"): BaseDataFrame {
+  iloc(rows: LocType = ':', cols: LocType = ':'): BaseDataFrame {
     return this._dataframe.iloc(rows, cols)
   }
 
-  isin(rows: LocType = ":", cols: LocType = ":"): BaseDataFrame {
+  isin(rows: LocType = ':', cols: LocType = ':'): BaseDataFrame {
     return this._dataframe.isin(rows, cols)
   }
 

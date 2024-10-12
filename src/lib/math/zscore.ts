@@ -1,5 +1,5 @@
-import { mean } from "./mean"
-import { std } from "./stats"
+import { mean } from './mean'
+import { std } from './stats'
 
 export class ZScore {
   private _mean: number

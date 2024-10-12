@@ -1,11 +1,10 @@
-import { Alerts } from "@components/alerts/alerts"
+import { Alerts } from '@components/alerts/alerts'
 import {
   AlertsContext,
-  AlertsProvider,
   makeAlertFromAxiosError,
   makeInfoAlert,
-} from "@components/alerts/alerts-provider"
-import { PrimaryButton } from "@components/button/primary-button"
+} from '@components/alerts/alerts-provider'
+import { PrimaryButton } from '@components/button/primary-button'
 import {
   Card,
   CardContent,
@@ -14,7 +13,7 @@ import {
   CardHeader,
   CardTitle,
   CenteredCardContainer,
-} from "@components/shadcn/ui/themed/card"
+} from '@components/shadcn/ui/themed/card'
 import {
   API_UPDATE_EMAIL_URL,
   EDB_TOKEN_PARAM,
@@ -22,29 +21,30 @@ import {
   bearerHeaders,
   getJwtContents,
   type IResetJwtPayload,
-} from "@modules/edb"
+} from '@modules/edb'
 
-import { useContext, useRef, useState, type BaseSyntheticEvent } from "react"
+import { useContext, useRef, useState, type BaseSyntheticEvent } from 'react'
 
-import { FormInputError } from "@components/input-error"
-import { Form, FormField, FormItem } from "@components/shadcn/ui/themed/form"
-import { TEXT_CANCEL, TEXT_CONFIRM } from "@consts"
-import { AccountSettingsProvider } from "@providers/account-settings-provider"
+import { FormInputError } from '@components/input-error'
+import { Form, FormField, FormItem } from '@components/shadcn/ui/themed/form'
+import { TEXT_CANCEL, TEXT_CONFIRM } from '@consts'
+import { AccountSettingsProvider } from '@providers/account-settings-provider'
 
-import { WarningButtonLink } from "@components/link/warning-button-link"
-import { Input } from "@components/shadcn/ui/themed/input"
-import { Label } from "@components/shadcn/ui/themed/label"
-import { VCenterRow } from "@components/v-center-row"
+import { WarningButtonLink } from '@components/link/warning-button-link'
+import { Input } from '@components/shadcn/ui/themed/input'
+import { Label } from '@components/shadcn/ui/themed/label'
+import { VCenterRow } from '@components/v-center-row'
 import {
   EMAIL_PATTERN,
   FORWARD_DELAY_MS,
   SignInLayout,
   TEXT_EMAIL_ERROR,
-} from "@layouts/signin-layout"
-import { redirect } from "@lib/urls"
-import { useQueryClient } from "@tanstack/react-query"
-import axios, { AxiosError } from "axios"
-import { useForm } from "react-hook-form"
+} from '@layouts/signin-layout'
+import { redirect } from '@lib/urls'
+import { CoreProviders } from '@providers/core-providers'
+import { useQueryClient } from '@tanstack/react-query'
+import axios, { AxiosError } from 'axios'
+import { useForm } from 'react-hook-form'
 
 interface IFormInput {
   email1: string
@@ -56,7 +56,7 @@ function UpdateEmailPage() {
 
   const queryParameters = new URLSearchParams(window.location.search)
 
-  const accessToken = queryParameters.get(EDB_TOKEN_PARAM) ?? ""
+  const accessToken = queryParameters.get(EDB_TOKEN_PARAM) ?? ''
   //const url = queryParameters.get(EDB_URL_PARAM)
 
   const jwtData: IResetJwtPayload | null =
@@ -71,8 +71,8 @@ function UpdateEmailPage() {
 
   const form = useForm<IFormInput>({
     defaultValues: {
-      email1: jwtData ? jwtData.data! : "",
-      email2: "",
+      email1: jwtData ? jwtData.data! : '',
+      email2: '',
     },
   })
 
@@ -81,7 +81,7 @@ function UpdateEmailPage() {
   async function update(data: IFormInput) {
     try {
       await queryClient.fetchQuery({
-        queryKey: ["update"],
+        queryKey: ['update'],
         queryFn: () =>
           axios.post(
             API_UPDATE_EMAIL_URL,
@@ -90,15 +90,15 @@ function UpdateEmailPage() {
             },
             {
               headers: bearerHeaders(accessToken),
-            },
+            }
           ),
       })
 
       alertDispatch({
-        type: "add",
+        type: 'add',
         alert: makeInfoAlert({
-          title: "Your email address was updated",
-          content: "Please use your new email address to sign in.",
+          title: 'Your email address was updated',
+          content: 'Please use your new email address to sign in.',
         }),
       })
 
@@ -107,7 +107,7 @@ function UpdateEmailPage() {
       }, FORWARD_DELAY_MS)
     } catch (error) {
       alertDispatch({
-        type: "set",
+        type: 'set',
         alert: makeAlertFromAxiosError(error as AxiosError),
       })
 
@@ -153,7 +153,7 @@ function UpdateEmailPage() {
                       rules={{
                         required: {
                           value: true,
-                          message: "An email address is required",
+                          message: 'An email address is required',
                         },
                         pattern: {
                           value: EMAIL_PATTERN,
@@ -213,10 +213,10 @@ function UpdateEmailPage() {
 
 export function UpdateEmailQueryPage() {
   return (
-    <AlertsProvider>
-      <AccountSettingsProvider>
+    <CoreProviders>
+      
         <UpdateEmailPage />
-      </AccountSettingsProvider>
-    </AlertsProvider>
+ 
+    </CoreProviders>
   )
 }

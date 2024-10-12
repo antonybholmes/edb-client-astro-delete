@@ -1,22 +1,22 @@
-import { BaseCol } from "@components/base-col"
-import { Input } from "@components/shadcn/ui/themed/input"
-import { VCenterRow } from "@components/v-center-row"
-import { useMouseUpListener } from "@hooks/use-mouseup-listener"
-import { useResizeObserver } from "@hooks/use-resize-observer"
+import { BaseCol } from '@components/base-col'
+import { Input } from '@components/shadcn/ui/themed/input'
+import { VCenterRow } from '@components/v-center-row'
+import { useMouseUpListener } from '@hooks/use-mouseup-listener'
+import { useResizeObserver } from '@hooks/use-resize-observer'
 
-import { EDGE_SCROLL_ZONE, useScrollOnEdges } from "@hooks/use-scroll-on-edges"
-import { type ICell } from "@interfaces/cell"
-import { type IElementProps } from "@interfaces/element-props"
-import { setupCanvas } from "@lib/canvas"
-import { cn } from "@lib/class-names"
-import { findClosest } from "@lib/closest-search"
-import { NO_SHAPE, type BaseDataFrame } from "@lib/dataframe/base-dataframe"
-import { cellStr, getExcelColName } from "@lib/dataframe/cell"
-import { FOCUS_RING_CLS } from "@theme"
+import { EDGE_SCROLL_ZONE, useScrollOnEdges } from '@hooks/use-scroll-on-edges'
+import { type ICell } from '@interfaces/cell'
+import { type IElementProps } from '@interfaces/element-props'
+import { setupCanvas } from '@lib/canvas'
+import { cn } from '@lib/class-names'
+import { findClosest } from '@lib/closest-search'
+import { NO_SHAPE, type BaseDataFrame } from '@lib/dataframe/base-dataframe'
+import { cellStr, getExcelColName } from '@lib/dataframe/cell'
+import { FOCUS_RING_CLS } from '@theme'
 
-import type { Shape } from "@lib/dataframe/dataframe-types"
-import { range } from "@lib/math/range"
-import type { ChangeEvent, ForwardedRef, WheelEvent } from "react"
+import type { Shape } from '@lib/dataframe/dataframe-types'
+import { range } from '@lib/math/range'
+import type { ChangeEvent, ForwardedRef, WheelEvent } from 'react'
 import {
   forwardRef,
   useCallback,
@@ -28,13 +28,13 @@ import {
   type KeyboardEvent,
   type MouseEvent,
   type UIEvent,
-} from "react"
+} from 'react'
 import {
   NO_SELECTION,
   NO_SELECTION_RANGE,
   SelectionRangeContext,
   type ISelectionRange,
-} from "./use-selection-range"
+} from './use-selection-range'
 
 // function setDPI(canvas: HTMLCanvasElement, dpi: number) {
 //   // Set up CSS size.
@@ -51,12 +51,12 @@ import {
 
 const GAP = 4
 const GAP2 = GAP * 2
-const GRID_COLOR = "rgb(203 213 225)"
-const INDEX_BG_COLOR = "rgb(241 245 249)"
-const SELECTION_STROKE_COLOR = "rgb(59, 130, 246)"
+const GRID_COLOR = 'rgb(203 213 225)'
+const INDEX_BG_COLOR = 'rgb(241 245 249)'
+const SELECTION_STROKE_COLOR = 'rgb(59, 130, 246)'
 //const SELECTED_INDEX_FILL = "rgb(231 229 228)"
 const SELECTION_STROKE_WIDTH = 2
-const SELECTION_FILL = "rgba(147, 197, 253, 0.3)"
+const SELECTION_FILL = 'rgba(147, 197, 253, 0.3)'
 const BOLD_FONT = "normal 600 12px 'Plus Jakarta Sans',Arial,sans-serif"
 const NORMAL_FONT = "normal normal 12px 'Plus Jakarta Sans',Arial,sans-serif"
 const LINE_THICKNESS = 1
@@ -124,13 +124,13 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       editable = false,
       className,
     }: IProps,
-    outerRef: ForwardedRef<HTMLDivElement>,
+    outerRef: ForwardedRef<HTMLDivElement>
   ) {
     // determines which cell is selected. Setting one dimension to -1
     // allows either a row or col to be highlighed
 
-    const [editText, setEditText] = useState("")
-    const [selText, setSelectedCellRefText] = useState("")
+    const [editText, setEditText] = useState('')
+    const [selText, setSelectedCellRefText] = useState('')
 
     const [editCell, setEditCell] = useState<ICell>(NO_SELECTION)
 
@@ -151,7 +151,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
     // can change even when the selected cell does not
     const [focusCell, setFocusCell] = useState<ICell>(NO_SELECTION)
 
-    const isMouseDown = useRef("")
+    const isMouseDown = useRef('')
     //const mouseDown = useRef([-1, -1])
 
     const ref = useRef<HTMLDivElement>(null)
@@ -209,7 +209,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       const dim: Shape = [shape[1] * cellSize[0], shape[0] * cellSize[1]]
       //const hasRowIndex = df.rowIndex.length > 0
 
-      const rowIndexW = df.getRowName(0) !== "1" ? cellSize[0] : cellSize[1]
+      const rowIndexW = df.getRowName(0) !== '1' ? cellSize[0] : cellSize[1]
 
       const scaledDim: Shape = [dim[0] * scale, dim[1] * scale]
       const maxScaledDim: Shape = [
@@ -287,11 +287,11 @@ export const DataFrameSimpleCanvasUI = forwardRef(
      * Draw the index (left column) background.
      *
      * @param ctx
-     * @param normTop
+     * @param _normTop
      * @param h
      * @returns
      */
-    function drawIndexBg(ctx: ICtx, normTop: number, h: number) {
+    function drawIndexBg(ctx: ICtx, _normTop: number, h: number) {
       if (!ctx) {
         return
       }
@@ -358,14 +358,14 @@ export const DataFrameSimpleCanvasUI = forwardRef(
         ctx.fillRect(0, y1 - normTop, dfProps.rowIndexW, h + scale)
       }
 
-      ctx.fillStyle = "black"
+      ctx.fillStyle = 'black'
       ctx.font = BOLD_FONT
 
       // row index
 
-      ctx.textAlign = df.getRowName(0) !== "1" ? "left" : "center"
+      ctx.textAlign = df.getRowName(0) !== '1' ? 'left' : 'center'
 
-      const x = df.getRowName(0) !== "1" ? GAP : 0.5 * dfProps.rowIndexW
+      const x = df.getRowName(0) !== '1' ? GAP : 0.5 * dfProps.rowIndexW
 
       let py = (rowRange[0] + 1) * cellSize[1] - normTop
 
@@ -416,7 +416,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       //ctx.translate(0, -cellSize[1])
     }
 
-    function drawHeaderBg(ctx: ICtx, normLeft: number, w: number) {
+    function drawHeaderBg(ctx: ICtx, _normLeft: number, w: number) {
       if (!ctx) {
         return
       }
@@ -445,7 +445,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       ctx: ICtx,
       normLeft: number,
       w: number,
-      colRange: Shape,
+      colRange: Shape
     ) {
       if (!ctx) {
         return
@@ -481,8 +481,8 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       // col index
 
       ctx.font = BOLD_FONT
-      ctx.fillStyle = "black"
-      ctx.textAlign = "center"
+      ctx.fillStyle = 'black'
+      ctx.textAlign = 'center'
 
       let px: number = 0
       let px2: number
@@ -539,7 +539,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       left: number,
       top: number,
       rowRange: Shape,
-      colRange: Shape,
+      colRange: Shape
     ) {
       // const ctx = canvas.getContext("2d", { alpha: false })
 
@@ -601,7 +601,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       w: number,
       h: number,
       left: number,
-      top: number,
+      top: number
     ) {
       // const ctx = canvas.getContext("2d", { alpha: false })
 
@@ -659,7 +659,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
         rh = y4 - y3
 
         if (rw > 0 && rh > 0) {
-          ctx.fillStyle = "white"
+          ctx.fillStyle = 'white'
           ctx.fillRect(x3, y3, rw, rh)
         }
       }
@@ -670,7 +670,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       w: number,
       h: number,
       left: number,
-      top: number,
+      top: number
     ) {
       // const ctx = canvas.getContext("2d", { alpha: false })
 
@@ -723,7 +723,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
             x1 + 0.5 * SELECTION_STROKE_WIDTH,
             y1 + 0.5 * SELECTION_STROKE_WIDTH,
             rw,
-            rh,
+            rh
           )
         }
       }
@@ -736,12 +736,12 @@ export const DataFrameSimpleCanvasUI = forwardRef(
 
     function drawCells(
       ctx: ICtx,
-      w: number,
+      _w: number,
       h: number,
       left: number,
       top: number,
       rowRange: Shape,
-      colRange: Shape,
+      colRange: Shape
     ) {
       if (!ctx) {
         return
@@ -761,7 +761,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       //ctx.clearRect(0, 0, w, h)
 
       ctx.font = NORMAL_FONT
-      ctx.fillStyle = "black"
+      ctx.fillStyle = 'black'
 
       if (colRange[0] !== -1) {
         range(colRange[0], colRange[1] + 1).forEach(col => {
@@ -780,7 +780,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
 
               //console.log('here', row, col, v, typeof v)
 
-              const isNum = typeof v === "number"
+              const isNum = typeof v === 'number'
 
               if (isNum) {
                 if (Number.isInteger(v)) {
@@ -792,14 +792,14 @@ export const DataFrameSimpleCanvasUI = forwardRef(
 
               //console.log(v, row, col, typeof v, isNum)
 
-              ctx.textAlign = isNum ? "right" : "left"
+              ctx.textAlign = isNum ? 'right' : 'left'
 
               const py = (row + 1) * cellSize[1] - top
 
               ctx.fillText(
                 cellStr(v),
                 px1 + GAP + (isNum ? w - GAP2 : 0),
-                py - GAP2,
+                py - GAP2
               )
             })
           }
@@ -829,7 +829,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       left: number,
       top: number,
       row: number,
-      col: number,
+      col: number
     ) {
       if (!ctx) {
         return
@@ -844,25 +844,25 @@ export const DataFrameSimpleCanvasUI = forwardRef(
 
       const y = row * cellSize[1] - top
 
-      ctx.fillStyle = "white"
+      ctx.fillStyle = 'white'
       ctx.fillRect(px1 + 2, y + 2, w - 4, cellSize[1] - 4)
 
       ctx.font = NORMAL_FONT
-      ctx.fillStyle = "black"
+      ctx.fillStyle = 'black'
 
       let v = df.get(row, col)
-      const isNum = typeof v === "number"
+      const isNum = typeof v === 'number'
 
       if (isNum) {
         v = (v as number).toFixed(dp)
       }
 
-      ctx.textAlign = isNum ? "right" : "left"
+      ctx.textAlign = isNum ? 'right' : 'left'
 
       ctx.fillText(
         cellStr(v),
         px1 + GAP + (isNum ? w - GAP2 : 0),
-        y + cellSize[1] - GAP2,
+        y + cellSize[1] - GAP2
       )
 
       ctx.restore()
@@ -902,15 +902,15 @@ export const DataFrameSimpleCanvasUI = forwardRef(
     function getRowRange(top: number, h: number): Shape {
       const rowStart = Math.min(
         df.shape[0] - 1,
-        Math.max(0, Math.floor(top / dfProps.scaledCellSize[1])),
+        Math.max(0, Math.floor(top / dfProps.scaledCellSize[1]))
       )
 
       const rowEnd = Math.max(
         0,
         Math.min(
           df.shape[0],
-          Math.floor((top + h) / dfProps.scaledCellSize[1]) + 1,
-        ),
+          Math.floor((top + h) / dfProps.scaledCellSize[1]) + 1
+        )
       )
 
       return [rowStart, rowEnd]
@@ -925,17 +925,17 @@ export const DataFrameSimpleCanvasUI = forwardRef(
           df.shape[1] - 1,
           Math.max(
             0,
-            findClosest(colPositions.current, left / scale, true).index,
-          ),
-        ),
+            findClosest(colPositions.current, left / scale, true).index
+          )
+        )
       )
 
       const colEnd = Math.max(
         0,
         Math.min(
           df.shape[1],
-          findClosest(colPositions.current, (left + w) / scale, true).index + 1,
-        ),
+          findClosest(colPositions.current, (left + w) / scale, true).index + 1
+        )
       )
 
       return [colStart, colEnd]
@@ -963,7 +963,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
         return
       }
 
-      const ctx = tableCanvasRef.current.getContext("2d")
+      const ctx = tableCanvasRef.current.getContext('2d')
 
       if (!ctx) {
         return
@@ -1078,7 +1078,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
 
         const p = getRowColFromMouse(
           x + lastScroll.current.x,
-          y + lastScroll.current.y,
+          y + lastScroll.current.y
         )
 
         if (
@@ -1099,7 +1099,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
     } //, [scrollDirection, isMouseDown])
 
     function onIndexMouseMove(e: MouseEvent) {
-      if (isMouseDown.current !== "index") {
+      if (isMouseDown.current !== 'index') {
         return
       }
 
@@ -1113,7 +1113,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
 
       const p = getRowColFromMouse(
         0,
-        e.nativeEvent.offsetY - dfProps.scaledCellSize[1],
+        e.nativeEvent.offsetY - dfProps.scaledCellSize[1]
       )
 
       resizeSelection({
@@ -1138,7 +1138,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
 
       const colX = x - dfProps.scaledRowIndexW
 
-      if (isMouseDown.current === "header") {
+      if (isMouseDown.current === 'header') {
         // if the mouse is pressed, see if we are dragging
         // a columns
 
@@ -1173,7 +1173,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
           // if not dragging a column to resize, see if we are selecting
           const p = getRowColFromMouse(
             x - dfProps.scaledRowIndexW + lastScroll.current.x,
-            0,
+            0
           )
           resizeSelection({
             ...selection.current,
@@ -1195,9 +1195,9 @@ export const DataFrameSimpleCanvasUI = forwardRef(
 
         if (ref.current) {
           if (hoverCol.current !== -1) {
-            ref.current.classList.add("cursor-ew-resize")
+            ref.current.classList.add('cursor-ew-resize')
           } else {
-            ref.current.classList.remove("cursor-ew-resize")
+            ref.current.classList.remove('cursor-ew-resize')
           }
         }
       }
@@ -1211,11 +1211,11 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       }
 
       //mouseDown.current = [x, y]
-      isMouseDown.current = "index"
+      isMouseDown.current = 'index'
 
       const p = getRowColFromMouse(
         0,
-        y - dfProps.scaledCellSize[1] + lastScroll.current.y,
+        y - dfProps.scaledCellSize[1] + lastScroll.current.y
       )
 
       resizeSelection({
@@ -1250,7 +1250,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       const y = e.nativeEvent.offsetY
 
       //mouseDown.current = [x, y]
-      isMouseDown.current = "header"
+      isMouseDown.current = 'header'
 
       if (hoverCol.current !== -1) {
         // if we click mouse, clone position of columns so we can
@@ -1264,7 +1264,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
         if (y < dfProps.scaledCellSize[0]) {
           const p = getRowColFromMouse(
             x - dfProps.scaledRowIndexW + lastScroll.current.x,
-            0,
+            0
           )
 
           //setSelectedCell([-1, p.col])
@@ -1281,11 +1281,11 @@ export const DataFrameSimpleCanvasUI = forwardRef(
     function resizeSelection(s: ISelectionRange) {
       selection.current = s
 
-      selectionRangeDispatch({ type: "set", range: s })
+      selectionRangeDispatch({ type: 'set', range: s })
 
       if (s.start !== NO_SELECTION) {
         setEditText(
-          cellStr(df.get(selection.current.start.r, selection.current.start.c)),
+          cellStr(df.get(selection.current.start.r, selection.current.start.c))
         )
 
         setSelectedCellRefText(
@@ -1293,11 +1293,11 @@ export const DataFrameSimpleCanvasUI = forwardRef(
             Math.abs(selection.current.end.r - selection.current.start.r) + 1
           }R x ${
             Math.abs(selection.current.end.c - selection.current.start.c) + 1
-          }C`,
+          }C`
         )
       } else {
-        setEditText("")
-        setSelectedCellRefText("")
+        setEditText('')
+        setSelectedCellRefText('')
       }
 
       // modify selection rect to match selection or hide it
@@ -1306,7 +1306,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
           selection.current.start !== NO_SELECTION &&
           selection.current.start !== selection.current.end
         ) {
-          selectionRef.current.style.visibility = "visible"
+          selectionRef.current.style.visibility = 'visible'
           selectionRef.current.style.left = `${
             Math.min(selection.current.start.c, selection.current.end.c) *
             dfProps.scaledCellSize[0]
@@ -1331,7 +1331,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
             scale
           }px`
         } else {
-          selectionRef.current.style.visibility = "hidden"
+          selectionRef.current.style.visibility = 'hidden'
         }
       }
 
@@ -1343,7 +1343,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
           selection.current.start !== NO_SELECTION &&
           selection.current.start === selection.current.end
         ) {
-          selectionCellRef.current.style.visibility = "visible"
+          selectionCellRef.current.style.visibility = 'visible'
 
           selectionCellRef.current.style.left = `${
             selection.current.start.c * dfProps.scaledCellSize[0]
@@ -1354,7 +1354,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
           selectionCellRef.current.style.width = `${dfProps.scaledCellSize[0]}px`
           selectionCellRef.current.style.height = `${dfProps.scaledCellSize[1]}px`
         } else {
-          selectionCellRef.current.style.visibility = "hidden"
+          selectionCellRef.current.style.visibility = 'hidden'
         }
       }
 
@@ -1366,15 +1366,15 @@ export const DataFrameSimpleCanvasUI = forwardRef(
     function getRowColFromMouse(x: number, y: number): ICell {
       const row = Math.max(
         0,
-        Math.min(df.shape[0] - 1, Math.floor(y / dfProps.scaledCellSize[1])),
+        Math.min(df.shape[0] - 1, Math.floor(y / dfProps.scaledCellSize[1]))
       )
 
       const col = Math.max(
         0,
         Math.min(
           df.shape[1] - 1,
-          findClosest(colPositions.current, x / scale, true).index,
-        ),
+          findClosest(colPositions.current, x / scale, true).index
+        )
       )
 
       //console.log(row, col)
@@ -1398,7 +1398,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
 
       const cell = getRowColFromMouse(
         x + lastScroll.current.x,
-        y + lastScroll.current.y,
+        y + lastScroll.current.y
       )
 
       if (cell.r !== -1 && cell.c !== -1) {
@@ -1413,7 +1413,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
         return
       }
 
-      isMouseDown.current = "table"
+      isMouseDown.current = 'table'
 
       scrollOnEdgesMouseDown()
 
@@ -1423,7 +1423,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
 
     function onMouseUp() {
       //setIsMouseDown(false)
-      isMouseDown.current = ""
+      isMouseDown.current = ''
       //setVScroll(0)
       //setHScroll(0)
       dragCol.current = { col: -1, cols: [] }
@@ -1456,14 +1456,14 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       // when mouse over main table, change cursor
       // to default
       if (ref.current) {
-        if (ref.current.classList.contains("cursor-ew-resize")) {
-          ref.current.classList.remove("cursor-ew-resize")
+        if (ref.current.classList.contains('cursor-ew-resize')) {
+          ref.current.classList.remove('cursor-ew-resize')
         }
       }
 
       // console.log(isMouseDown.current)
 
-      if (isMouseDown.current !== "table") {
+      if (isMouseDown.current !== 'table') {
         return
       }
 
@@ -1498,7 +1498,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       if (e.ctrlKey) {
         switch (e.code) {
           // ctrl+c copy to clipboard
-          case "KeyC":
+          case 'KeyC':
             if (
               selection.current.start !== NO_SELECTION &&
               selection.current.end !== NO_SELECTION
@@ -1513,8 +1513,8 @@ export const DataFrameSimpleCanvasUI = forwardRef(
                 out.push(
                   range(
                     selection.current.start.c,
-                    selection.current.end.c + 1,
-                  ).map(col => df.colNames[col]),
+                    selection.current.end.c + 1
+                  ).map(col => df.colNames[col])
                 )
               }
 
@@ -1523,14 +1523,14 @@ export const DataFrameSimpleCanvasUI = forwardRef(
                   out.push([])
                   range(
                     selection.current.start.c,
-                    selection.current.end.c + 1,
+                    selection.current.end.c + 1
                   ).map(col => {
                     out[out.length - 1].push(df.get(row, col).toLocaleString())
                   })
-                },
+                }
               )
 
-              const s = out.map(r => r.join("\t")).join("\n")
+              const s = out.map(r => r.join('\t')).join('\n')
 
               navigator.clipboard.writeText(s)
             }
@@ -1542,7 +1542,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       }
 
       switch (e.code) {
-        case "Tab":
+        case 'Tab':
           // eslint-disable-next-line no-case-declarations
           const s1: ICell = {
             r: selection.current.start.r,
@@ -1556,7 +1556,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
 
           selectAndFocus(s1)
           break
-        case "ArrowLeft":
+        case 'ArrowLeft':
           if (e.shiftKey) {
             const end = {
               r: selection.current.start.r,
@@ -1574,7 +1574,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
             })
           }
           break
-        case "ArrowRight":
+        case 'ArrowRight':
           if (e.shiftKey && e.ctrlKey) {
             const end = { r: selection.current.start.r, c: df.shape[1] - 1 }
             resizeSelection({
@@ -1601,7 +1601,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
             })
           }
           break
-        case "ArrowUp":
+        case 'ArrowUp':
           if (e.shiftKey) {
             const end = {
               r: Math.max(0, selection.current.end.r - 1),
@@ -1619,7 +1619,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
             })
           }
           break
-        case "ArrowDown":
+        case 'ArrowDown':
           if (e.shiftKey && e.ctrlKey) {
             const end = { r: df.shape[0] - 1, c: selection.current.start.c }
             resizeSelection({
@@ -1644,13 +1644,13 @@ export const DataFrameSimpleCanvasUI = forwardRef(
             })
           }
           break
-        case "PageUp":
+        case 'PageUp':
           d.scrollTop -= d.clientHeight
           break
-        case "PageDown":
+        case 'PageDown':
           d.scrollTop += d.clientHeight
           break
-        case "Escape":
+        case 'Escape':
           resizeSelection(NO_SELECTION_RANGE)
 
           //onSelectionChange && onSelectionChange(NO_SELECTION_RANGE)
@@ -1658,7 +1658,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
           //setEditCell(NO_SELECTION)
           //res(NO_SELECTION)
           break
-        case "Enter":
+        case 'Enter':
           setEditCell(selection.current.start)
           break
         default:
@@ -1703,7 +1703,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
 
         const [, , normLeft, normTop] = getScrollProps(lastScroll.current)
 
-        const ctx = bgCanvasRef.current.getContext("2d")
+        const ctx = bgCanvasRef.current.getContext('2d')
 
         if (!ctx) {
           return
@@ -1716,7 +1716,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
 
         ctx.translate(dfProps.scaledRowIndexW, cellSize[1])
 
-        ctx.fillStyle = "white"
+        ctx.fillStyle = 'white'
         ctx.fillRect(0, 0, w, h)
 
         draw()
@@ -1752,7 +1752,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
         if (d) {
           //const [w, h] = getSize(d)
           const [l, t] = getScrollProps(lastScroll.current)
-          const ctx = tableCanvasRef?.current?.getContext("2d")
+          const ctx = tableCanvasRef?.current?.getContext('2d')
 
           drawCell(ctx, l, t, p.r, p.c)
         }
@@ -1765,12 +1765,12 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       }
 
       switch (e.code) {
-        case "Enter":
+        case 'Enter':
           if (selection.current.start.r !== -1) {
             df.set(
               selection.current.start.r,
               selection.current.start.c,
-              editText,
+              editText
             )
           }
 
@@ -1786,11 +1786,11 @@ export const DataFrameSimpleCanvasUI = forwardRef(
       }
 
       switch (e.code) {
-        case "Enter":
+        case 'Enter':
           df.set(
             selection.current.start.r,
             selection.current.start.c,
-            (e.target as HTMLInputElement).value,
+            (e.target as HTMLInputElement).value
           )
 
           updateCell(selection.current.start)
@@ -1800,12 +1800,12 @@ export const DataFrameSimpleCanvasUI = forwardRef(
           ref?.current && ref.current.focus()
 
           break
-        case "Escape":
+        case 'Escape':
           // reset the text to its original value
           setEditText(
             cellStr(
-              df.get(selection.current.start.r, selection.current.start.c),
-            ),
+              df.get(selection.current.start.r, selection.current.start.c)
+            )
           )
 
           // remove the selection
@@ -1820,7 +1820,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
     //const { events } = useDraggable(containerRef as MutableRefObject<HTMLElement>)
 
     return (
-      <BaseCol ref={ref} className={cn("grow gap-y-2", className)}>
+      <BaseCol ref={ref} className={cn('grow gap-y-2', className)}>
         <VCenterRow className="gap-x-3 text-sm">
           <Input
             value={selText}
@@ -1849,7 +1849,7 @@ export const DataFrameSimpleCanvasUI = forwardRef(
         </VCenterRow>
 
         <BaseCol
-          className={cn("relative z-50 grow overflow-hidden", FOCUS_RING_CLS)}
+          className={cn('relative z-50 grow overflow-hidden', FOCUS_RING_CLS)}
         >
           <BaseCol
             onKeyDown={onKeyDown}
@@ -1936,9 +1936,9 @@ export const DataFrameSimpleCanvasUI = forwardRef(
                   onMouseUp={(e: MouseEvent) => e.preventDefault()}
                 >
                   <input
-                    className={cn("w-full resize-none bg-white outline-none", [
+                    className={cn('w-full resize-none bg-white outline-none', [
                       !isNaN(parseFloat(editText)),
-                      "text-right",
+                      'text-right',
                     ])}
                     value={editText}
                     onKeyDown={onCellEditKeyDown}
@@ -1963,5 +1963,5 @@ export const DataFrameSimpleCanvasUI = forwardRef(
         </BaseCol>
       </BaseCol>
     )
-  },
+  }
 )

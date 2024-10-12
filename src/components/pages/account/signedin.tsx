@@ -1,6 +1,6 @@
 // 'use client'
 
-import { ThemeIndexLink } from "@components/link/theme-index-link"
+import { ThemeIndexLink } from '@components/link/theme-index-link'
 import {
   Card,
   CardContent,
@@ -8,38 +8,39 @@ import {
   CardHeader,
   CardTitle,
   CenteredCardContainer,
-} from "@components/shadcn/ui/themed/card"
-import { VCenterRow } from "@components/v-center-row"
-import { FORWARD_DELAY_MS, SignInLayout } from "@layouts/signin-layout"
-import { redirect } from "@lib/urls"
+} from '@components/shadcn/ui/themed/card'
+import { VCenterRow } from '@components/v-center-row'
+import { FORWARD_DELAY_MS, SignInLayout } from '@layouts/signin-layout'
+import { redirect } from '@lib/urls'
 import {
   CALLBACK_URL_PARAM,
   type IUser,
   MYACCOUNT_ROUTE,
   TEXT_MY_ACCOUNT,
-} from "@modules/edb"
-import { useEdbAuth } from "@providers/edb-auth-provider"
+} from '@modules/edb'
+import { CoreProviders } from '@providers/core-providers'
+import { useEdbAuth } from '@providers/edb-auth-provider'
 
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 
 function SignedInPage() {
   const { getCachedUser } = useEdbAuth()
 
   const [user, setUser] = useState<IUser | null>(null)
 
-  const [callbackUrl, setCallbackUrl] = useState("")
+  const [callbackUrl, setCallbackUrl] = useState('')
 
   useEffect(() => {
     async function fetch() {
       setUser(await getCachedUser())
     }
 
-    console.log(window.location.search, "ss")
+    console.log(window.location.search, 'ss')
 
     const queryParameters = new URLSearchParams(window.location.search)
 
     // used to reroute once authorized
-    setCallbackUrl(queryParameters.get(CALLBACK_URL_PARAM) ?? "") // ?? MYACCOUNT_ROUTE)
+    setCallbackUrl(queryParameters.get(CALLBACK_URL_PARAM) ?? '') // ?? MYACCOUNT_ROUTE)
 
     fetch()
   }, [])
@@ -63,9 +64,9 @@ function SignedInPage() {
         <Card>
           <CardHeader>
             <CardTitle>
-              {user.publicId !== ""
-                ? `Hi ${user.firstName !== "" ? user.firstName : user.email},`
-                : "There was an issue signing you in."}
+              {user.publicId !== ''
+                ? `Hi ${user.firstName !== '' ? user.firstName : user.email},`
+                : 'There was an issue signing you in.'}
             </CardTitle>
 
             <CardDescription>
@@ -90,5 +91,10 @@ function SignedInPage() {
 }
 
 export function SignedInQueryPage() {
-  return <SignedInPage />
+  return (
+    <CoreProviders>
+      {' '}
+      <SignedInPage />
+    </CoreProviders>
+  )
 }

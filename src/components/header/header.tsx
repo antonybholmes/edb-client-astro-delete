@@ -1,11 +1,11 @@
-import { VCenterRow } from "@components/v-center-row"
-import { cn } from "@lib/class-names"
-import { type ReactNode } from "react"
+import { VCenterRow } from '@components/v-center-row'
+import { cn } from '@lib/class-names'
+import { type ReactNode } from 'react'
 
-import { APP_NAME } from "@consts"
-import type { IChildrenProps } from "@interfaces/children-props"
-import { EDBSignedIn } from "@modules/edb-signedin"
-import { HeaderMenu } from "./header-menu"
+import { APP_NAME } from '@consts'
+import type { IChildrenProps } from '@interfaces/children-props'
+import { EDBSignedIn } from '@modules/edb-signedin'
+import { HeaderMenu } from './header-menu'
 
 export interface IHeaderChildrenProps {
   headerLeftChildren?: ReactNode
@@ -19,7 +19,7 @@ export interface IHeaderProps extends IHeaderChildrenProps, IChildrenProps {
 }
 
 export function Header({
-  className = "bg-gradient-to-r from-blue-500 to-indigo-500",
+  className = 'bg-gradient-to-r from-blue-500 to-indigo-500',
   headerLeftChildren,
   headerRightChildren,
   children,
@@ -45,7 +45,7 @@ export function Header({
   // }
 
   return (
-    <header className={cn("text-white grid grid-cols-3 h-12", className)}>
+    <header className={cn('text-white grid grid-cols-3 h-12', className)}>
       <VCenterRow className="gap-x-2">
         {/* <HeaderMenuPopover /> */}
         <HeaderMenu />

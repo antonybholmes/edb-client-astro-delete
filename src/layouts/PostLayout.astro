@@ -1,17 +1,14 @@
 ---
-import { Breadcrumb } from "@components/breadcrumb"
-
-import type { ILayoutProps } from "@interfaces/layout-props"
-import { createCrumbs, type ICrumbProps } from "@lib/crumbs"
+import type { ILayoutProps } from '@interfaces/layout-props'
+import { createCrumbs, type ICrumbProps } from '@lib/crumbs'
 //import { PageTitle } from "@components/page-title"
 
-import ContentLayout from "./ContentLayout.astro"
+import ContentLayout from './ContentLayout.astro'
 
 export interface Props extends ILayoutProps, ICrumbProps {}
 
 let {
   title,
-  showCrumbs = true,
 
   tab,
   crumbs,

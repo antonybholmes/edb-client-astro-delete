@@ -1,52 +1,51 @@
 import {
   OKCancelDialog,
   type IModalProps,
-} from "@components/dialog/ok-cancel-dialog"
-import axios, { AxiosError } from "axios"
+} from '@components/dialog/ok-cancel-dialog'
+import axios, { AxiosError } from 'axios'
 
 import {
   AlertsContext,
   makeAlertFromAxiosError,
   makeErrorAlertFromResp,
   makeInfoAlert,
-} from "@components/alerts/alerts-provider"
-import { STATUS_CODE_OK, TEXT_OK } from "@consts"
+} from '@components/alerts/alerts-provider'
+import { STATUS_CODE_OK, TEXT_OK } from '@consts'
 import {
   API_RESET_PASSWORD_URL,
   APP_RESET_PASSWORD_URL,
   bearerHeaders,
   type IUser,
-} from "@modules/edb"
+} from '@modules/edb'
 
 //import { AccountSettingsContext } from "@context/account-settings-context"
 
-import { useContext, useEffect, useState, type BaseSyntheticEvent } from "react"
+import { useContext, useEffect, useState } from 'react'
 
-import { AccountSettingsContext } from "@providers/account-settings-provider"
-import { useEdbAuth } from "@providers/edb-auth-provider"
-import { useQueryClient } from "@tanstack/react-query"
+import { useEdbAuth } from '@providers/edb-auth-provider'
+import { useQueryClient } from '@tanstack/react-query'
 
 export const MIN_PASSWORD_LENGTH = 8
 export const TEXT_MIN_PASSWORD_LENGTH =
-  "A password must contain at least 8 characters"
+  'A password must contain at least 8 characters'
 export const PASSWORD_PATTERN = /^[\w!@#$%^&*.?]{8,}/
 
 export const TEXT_PASSWORD_DESCRIPTION =
-  "For security, a link to change your password will be sent to your current email address."
+  'For security, a link to change your password will be sent to your current email address.'
 
-export const TEXT_PASSWORD_REQUIRED = "A password is required"
+export const TEXT_PASSWORD_REQUIRED = 'A password is required'
 
 export type IPasswordAction =
   | {
-      type: "password"
+      type: 'password'
       password: string
     }
   | {
-      type: "password1"
+      type: 'password1'
       password: string
     }
   | {
-      type: "password2"
+      type: 'password2'
       password: string
     }
 
@@ -89,8 +88,7 @@ export function PasswordDialog({
   //   password2: "",
   // })
 
-  const { settings } = useContext(AccountSettingsContext)
-  const [accessToken, setAccessToken] = useState<string>("")
+  const [accessToken, setAccessToken] = useState<string>('')
   const [user, setUser] = useState<IUser | null>(null)
 
   //const { accessToken } = useAccessTokenStore()
@@ -147,7 +145,7 @@ export function PasswordDialog({
 
     try {
       const res = await queryClient.fetchQuery({
-        queryKey: ["reset_password"],
+        queryKey: ['reset_password'],
         queryFn: () =>
           axios.post(
             API_RESET_PASSWORD_URL,
@@ -159,36 +157,30 @@ export function PasswordDialog({
             {
               //withCredentials: true,
               headers: bearerHeaders(accessToken),
-            },
+            }
           ),
       })
 
       if (res.status !== STATUS_CODE_OK) {
         alertDispatch({
-          type: "add",
+          type: 'add',
           alert: makeErrorAlertFromResp(res.data),
         })
         return
       }
 
       alertDispatch({
-        type: "set",
+        type: 'set',
         alert: makeInfoAlert({
-          title: "Please check your email for a link to reset your password",
+          title: 'Please check your email for a link to reset your password',
         }),
       })
     } catch (error) {
       alertDispatch({
-        type: "add",
+        type: 'add',
         alert: makeAlertFromAxiosError(error as AxiosError),
       })
     }
-  }
-
-  async function onSubmit(data: IFormInput, e: BaseSyntheticEvent | undefined) {
-    e?.preventDefault()
-
-    sendResetPasswordLink()
   }
 
   return (

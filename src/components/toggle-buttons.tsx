@@ -1,12 +1,12 @@
-import type { IChildrenProps } from "@interfaces/children-props"
-import type { IElementProps } from "@interfaces/element-props"
-import { cn } from "@lib/class-names"
-import { range } from "@lib/math/range"
-import { FOCUS_RING_CLS } from "@theme"
-import { motion } from "framer-motion"
-import { useContext, useEffect, useState } from "react"
-import { BaseCol } from "./base-col"
-import { BaseTabsList, BaseTabsTrigger, Tabs } from "./shadcn/ui/themed/tabs"
+import type { IChildrenProps } from '@interfaces/children-props'
+import type { IElementProps } from '@interfaces/element-props'
+import { cn } from '@lib/class-names'
+import { range } from '@lib/math/range'
+import { FOCUS_RING_CLS } from '@theme'
+import { motion } from 'framer-motion'
+import { useContext, useEffect, useState } from 'react'
+import { BaseCol } from './base-col'
+import { BaseTabsList, BaseTabsTrigger, Tabs } from './shadcn/ui/themed/tabs'
 import {
   getTabFromValue,
   getTabId,
@@ -14,21 +14,21 @@ import {
   TabProvider,
   type ITab,
   type TabChange,
-} from "./tab-provider"
+} from './tab-provider'
 
 const BUTTON_CLS = cn(
   FOCUS_RING_CLS,
-  "trans-color data-[state=active]:font-medium relative inline-flex flex-col justify-center items-center boldable-text-tab z-10",
+  'trans-color data-[state=active]:font-medium relative inline-flex flex-col justify-center items-center boldable-text-tab z-10'
 )
 
 const TOGGLE_VARIANT_DEFAULT_BUTTON_CLS = cn(
   BUTTON_CLS,
-  "data-[state=inactive]:hover:bg-background/75 h-full rounded-md",
+  'data-[state=inactive]:hover:bg-background/75 h-full rounded-md'
 )
 
 const TOGGLE_VARIANT_TOOLBAR_BUTTON_CLS = cn(
   BUTTON_CLS,
-  "border-l border-border first:border-transparent",
+  'border-l border-border first:border-transparent'
 )
 
 interface IToggleButtonsProps extends IChildrenProps {
@@ -264,27 +264,27 @@ interface IToggleButtonContentProps extends IElementProps {
 // }
 
 const TOGGLE_VARIANT_DEFAULT_LIST_CLS =
-  "relative bg-muted p-0.75 rounded-lg overflow-hidden h-8.5 gap-x-1"
+  'relative bg-muted p-0.75 rounded-lg overflow-hidden h-8.5 gap-x-1'
 
 const TOGGLE_VARIANT_TOOLBAR_LIST_CLS =
-  "relative rounded-md overflow-hidden border border-border box-border h-8"
+  'relative rounded-md overflow-hidden border border-border box-border h-8'
 
 const TOGGLE_VARIANT_DEFAULT_TAB_CLS =
-  "absolute left-0.75 top-0.75 bottom-0.75 z-0 bg-background rounded-md shadow"
+  'absolute left-0.75 top-0.75 bottom-0.75 z-0 bg-background rounded-md shadow'
 
 const TOGGLE_VARIANT_TOOLBAR_TAB_CLS =
-  "absolute left-0 top-0 h-full z-0 bg-muted"
+  'absolute left-0 top-0 h-full z-0 bg-muted'
 
 export function ToggleButtonTriggers({
   showLabels = true,
   defaultWidth = 3.5,
-  variant = "default",
+  variant = 'default',
   className,
 }: IToggleButtonContentProps) {
   const { selectedTab, onTabChange, tabs } = useContext(TabContext)!
 
   const [tabPos, setTabPos] = useState<{ x: string; width: string }>({
-    x: "0rem",
+    x: '0rem',
     width: `${defaultWidth}rem`,
   })
 
@@ -295,7 +295,7 @@ export function ToggleButtonTriggers({
 
     const x = range(0, selectedTab.index).reduce(
       (sum, index) => sum + (tabs[index].size ?? defaultWidth + 0.25),
-      0,
+      0
     )
 
     const width = tabs[selectedTab.index].size ?? defaultWidth
@@ -317,7 +317,7 @@ export function ToggleButtonTriggers({
   let tabButtonCls = TOGGLE_VARIANT_DEFAULT_BUTTON_CLS
   let tabCls = TOGGLE_VARIANT_DEFAULT_TAB_CLS
 
-  if (variant === "toolbar") {
+  if (variant === 'toolbar') {
     tabListCls = TOGGLE_VARIANT_TOOLBAR_LIST_CLS
     tabButtonCls = TOGGLE_VARIANT_TOOLBAR_BUTTON_CLS
     tabCls = TOGGLE_VARIANT_TOOLBAR_TAB_CLS
@@ -350,7 +350,7 @@ export function ToggleButtonTriggers({
           className={tabCls}
           initial={false}
           animate={{ ...tabPos }}
-          transition={{ ease: "easeInOut" }}
+          transition={{ ease: 'easeInOut' }}
         />
       </BaseTabsList>
     </Tabs>

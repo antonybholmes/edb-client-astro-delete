@@ -5,78 +5,77 @@ import {
   Toolbar,
   ToolbarMenu,
   ToolbarPanel,
-} from "@components/toolbar/toolbar"
+} from '@components/toolbar/toolbar'
 
-import { ToolbarOpenFile } from "@components/toolbar/toolbar-open-files"
+import { ToolbarOpenFile } from '@components/toolbar/toolbar-open-files'
 
-import { TableIcon } from "@components/icons/table-icon"
+import { TableIcon } from '@components/icons/table-icon'
 
-import { ToolbarButton } from "@components/toolbar/toolbar-button"
-import { ToolbarIconButton } from "@components/toolbar/toolbar-icon-button"
-import { ToolbarSeparator } from "@components/toolbar/toolbar-separator"
+import { ToolbarButton } from '@components/toolbar/toolbar-button'
+import { ToolbarIconButton } from '@components/toolbar/toolbar-icon-button'
+import { ToolbarSeparator } from '@components/toolbar/toolbar-separator'
 
-import { OpenIcon } from "@components/icons/open-icon"
-import { DataFrameReader } from "@lib/dataframe/dataframe-reader"
+import { OpenIcon } from '@components/icons/open-icon'
+import { DataFrameReader } from '@lib/dataframe/dataframe-reader'
 
 import {
   OpenFiles,
   filesToDataFrames,
   type IFileOpen,
   type IParseOptions,
-} from "@components/pages/open-files"
-import { ToolbarTabGroup } from "@components/toolbar/toolbar-tab-group"
-import { NO_DIALOG, TEXT_SAVE_AS, type IDialogParams } from "@consts"
+} from '@components/pages/open-files'
+import { ToolbarTabGroup } from '@components/toolbar/toolbar-tab-group'
+import { NO_DIALOG, TEXT_SAVE_AS, type IDialogParams } from '@consts'
 
-import { FileImageIcon } from "@components/icons/file-image-icon"
-import { FileLinesIcon } from "@components/icons/file-lines-icon"
-import { SaveIcon } from "@components/icons/save-icon"
+import { FileImageIcon } from '@components/icons/file-image-icon'
+import { FileLinesIcon } from '@components/icons/file-lines-icon'
+import { SaveIcon } from '@components/icons/save-icon'
 
-import { ToolbarTabButton } from "@components/toolbar/toolbar-tab-button"
-import { HistoryContext, HistoryProvider } from "@providers/history-provider"
-import { useContext, useEffect, useRef, useState } from "react"
+import { ToolbarTabButton } from '@components/toolbar/toolbar-tab-button'
+import { HistoryContext } from '@providers/history-provider'
+import { useContext, useEffect, useRef, useState } from 'react'
 
-import { ShortcutLayout } from "@layouts/shortcut-layout"
+import { ShortcutLayout } from '@layouts/shortcut-layout'
 
-import { AccountSettingsProvider } from "@providers/account-settings-provider"
-import axios from "axios"
+import axios from 'axios'
 
-import { AlertsProvider } from "@components/alerts/alerts-provider"
 import {
   MessageContext,
   MessagesProvider,
-} from "@components/pages/message-context"
+} from '@components/pages/message-context'
 import {
   SelectionRangeContext,
   SelectionRangeProvider,
-} from "@components/table/use-selection-range"
-import { UndoShortcuts } from "@components/toolbar/undo-shortcuts"
-import { findCol } from "@lib/dataframe/dataframe-utils"
-import { DataPanel } from "./data-panel"
-import { LollipopPanelWrapper } from "./lollipop-panel"
-import { makeLollipopData, type ILollipopColumns } from "./lollipop-utils"
-import { PlotsContext, PlotsProvider } from "./plots-context"
+} from '@components/table/use-selection-range'
+import { UndoShortcuts } from '@components/toolbar/undo-shortcuts'
+import { findCol } from '@lib/dataframe/dataframe-utils'
+import { DataPanel } from './data-panel'
+import { LollipopPanelWrapper } from './lollipop-panel'
+import { makeLollipopData, type ILollipopColumns } from './lollipop-utils'
+import { PlotsContext, PlotsProvider } from './plots-context'
 
-import { ChartIcon } from "@components/icons/chart-icon"
+import { ChartIcon } from '@components/icons/chart-icon'
 
-import { makeRandId, nanoid } from "@lib/utils"
+import { makeRandId, nanoid } from '@lib/utils'
 
-import { CollapseTree, makeFoldersRootNode } from "@components/collapse-tree"
-import { FolderIcon } from "@components/icons/folder-icon"
-import { UploadIcon } from "@components/icons/upload-icon"
-import { DropdownMenuItem } from "@components/shadcn/ui/themed/dropdown-menu"
-import { SlideBar, SlideBarContent } from "@components/slide-bar"
-import type { BaseDataFrame } from "@lib/dataframe/base-dataframe"
-import { range } from "@lib/math/range"
+import { CollapseTree, makeFoldersRootNode } from '@components/collapse-tree'
+import { FolderIcon } from '@components/icons/folder-icon'
+import { UploadIcon } from '@components/icons/upload-icon'
+import { DropdownMenuItem } from '@components/shadcn/ui/themed/dropdown-menu'
+import { SlideBar, SlideBarContent } from '@components/slide-bar'
+import type { BaseDataFrame } from '@lib/dataframe/base-dataframe'
+import { range } from '@lib/math/range'
 import {
   ProteinContext,
   ProteinProvider,
   searchProteins,
   type IProtein,
-} from "./protein-context"
+} from './protein-context'
 
-import type { ITab } from "@components/tab-provider"
-import { useQueryClient } from "@tanstack/react-query"
-import MODULE_INFO from "./module.json"
+import type { ITab } from '@components/tab-provider'
+import { CoreProviders } from '@providers/core-providers'
+import { useQueryClient } from '@tanstack/react-query'
+import MODULE_INFO from './module.json'
 
 function LollipopPage() {
   const queryClient = useQueryClient()
@@ -92,7 +91,7 @@ function LollipopPage() {
   const dataTab: ITab = {
     id: nanoid(),
     icon: <TableIcon />,
-    name: "Table 1",
+    name: 'Table 1',
     content: <DataPanel />,
     isOpen: true,
   }
@@ -100,9 +99,9 @@ function LollipopPage() {
   const [foldersTab, setFoldersTab] = useState<ITab>(dataTab)
   const [tab, setTab] = useState<ITab | undefined>(dataTab)
   const [foldersIsOpen, setFoldersIsOpen] = useState(true)
-  const [tabName] = useState("Table 1")
+  const [tabName] = useState('Table 1')
 
-  const [toolbarTab, setToolbarTab] = useState("Home")
+  const [toolbarTab, setToolbarTab] = useState('Home')
 
   //const [search] = useState<string[]>([])
   const canvasRef = useRef(null)
@@ -179,17 +178,17 @@ function LollipopPage() {
     //   console.log(error)
     // }
 
-    const gene = "BTG1"
+    const gene = 'BTG1'
 
     try {
       const proteins = await searchProteins(gene)
 
       const index = range(0, proteins.length).filter(
-        i => proteins[i].organism === "Human",
+        i => proteins[i].organism === 'Human'
       )[0]
 
       proteinDispatch({
-        type: "set",
+        type: 'set',
         search: { text: gene, results: proteins },
         index,
       })
@@ -199,8 +198,8 @@ function LollipopPage() {
 
     try {
       let res = await queryClient.fetchQuery({
-        queryKey: ["test_data"],
-        queryFn: () => axios.get("/data/test/btg1_coding_mutations.txt"),
+        queryKey: ['test_data'],
+        queryFn: () => axios.get('/data/test/btg1_coding_mutations.txt'),
       })
 
       let lines = res.data
@@ -210,14 +209,14 @@ function LollipopPage() {
       let table = new DataFrameReader().keepDefaultNA(false).read(lines)
 
       historyDispatch({
-        type: "reset",
+        type: 'reset',
         name: `Load mutations`,
-        sheets: [table.setName("Mutations")],
+        sheets: [table.setName('Mutations')],
       })
 
       res = await queryClient.fetchQuery({
-        queryKey: ["test_data"],
-        queryFn: () => axios.get("/data/test/btg1_features.txt"),
+        queryKey: ['test_data'],
+        queryFn: () => axios.get('/data/test/btg1_features.txt'),
       })
 
       lines = res.data
@@ -229,14 +228,14 @@ function LollipopPage() {
       table = new DataFrameReader().keepDefaultNA(false).read(lines)
 
       historyDispatch({
-        type: "replace_sheet",
-        sheetId: "Features",
+        type: 'replace_sheet',
+        sheetId: 'Features',
         //name: "Load features",
-        sheet: table.setName("Features"),
+        sheet: table.setName('Features'),
       })
 
       // get rid of the plot
-      plotDispatch({ type: "clear" })
+      plotDispatch({ type: 'clear' })
 
       // const table = new DataFrameReader() .read(lines)
 
@@ -252,7 +251,7 @@ function LollipopPage() {
 
   useEffect(() => {
     setTab(dataTab)
-    selectionRangeDispatch({ type: "clear" })
+    selectionRangeDispatch({ type: 'clear' })
   }, [historyState])
 
   // useEffect(() => {
@@ -283,9 +282,9 @@ function LollipopPage() {
         // then finish processing the file
         setTimeout(() => {
           const buffer: string =
-            typeof result === "string" ? result : Buffer.from(result).toString()
+            typeof result === 'string' ? result : Buffer.from(result).toString()
 
-          if (message.includes("location")) {
+          if (message.includes('location')) {
             const lines = buffer
               .split(/[\r\n]+/g)
               .filter((line: string) => line.length > 0)
@@ -295,10 +294,10 @@ function LollipopPage() {
               .read(lines)
 
             historyDispatch({
-              type: "replace_sheet",
-              sheetId: "Locations",
+              type: 'replace_sheet',
+              sheetId: 'Locations',
               //name: "Load locations",
-              sheet: locationTable.setName("Locations"),
+              sheet: locationTable.setName('Locations'),
             })
           } else {
             //setFilesToOpen([
@@ -308,17 +307,17 @@ function LollipopPage() {
             openFiles(
               [
                 {
-                  name: "Mutations",
+                  name: 'Mutations',
                   text: buffer,
-                  ext: name.split(".").pop() || "",
+                  ext: name.split('.').pop() || '',
                 },
               ],
               {
                 colNames: 1,
                 indexCols: 0,
-                sep: "\t",
+                sep: '\t',
                 keepDefaultNA: true,
-              },
+              }
             )
           }
           // historyState.current = {
@@ -343,12 +342,12 @@ function LollipopPage() {
   }
 
   function lollipopPlot() {
-    const mutDf = historyState.currentStep.getSheet("Mutations") //history.currentStep.currentSheet
+    const mutDf = historyState.currentStep.getSheet('Mutations') //history.currentStep.currentSheet
 
     let featuresDf: BaseDataFrame | null = null
 
     try {
-      featuresDf = historyState.currentStep.getSheet("Features")
+      featuresDf = historyState.currentStep.getSheet('Features')
     } catch (e) {
       // ignore error
     }
@@ -360,9 +359,9 @@ function LollipopPage() {
     }
 
     const colMap: ILollipopColumns = {
-      sample: findCol(mutDf, "Sample"),
-      aa: findCol(mutDf, "protein_change"),
-      variant: findCol(mutDf, "Variant_Classification"),
+      sample: findCol(mutDf, 'Sample'),
+      aa: findCol(mutDf, 'protein_change'),
+      variant: findCol(mutDf, 'Variant_Classification'),
     }
 
     const df = makeLollipopData(protein, mutDf, featuresDf, colMap)
@@ -372,27 +371,27 @@ function LollipopPage() {
         id: nanoid(),
         name: `${protein.seq[0]}1`,
         start: 1,
-        color: "#000000",
+        color: '#000000',
         show: true,
       },
       {
         id: nanoid(),
         name: `${protein.seq[1]}2`,
         start: 2,
-        color: "#000000",
+        color: '#000000',
         show: true,
       },
       {
         id: nanoid(),
         name: `${protein.seq[9]}10`,
         start: 10,
-        color: "#000000",
+        color: '#000000',
         show: true,
       },
     ]
 
     plotDispatch({
-      type: "set",
+      type: 'set',
       plot: {
         df,
       },
@@ -408,7 +407,7 @@ function LollipopPage() {
   const tabs: ITab[] = [
     {
       id: nanoid(),
-      name: "Home",
+      name: 'Home',
       size: 2.1,
       content: (
         <>
@@ -417,7 +416,7 @@ function LollipopPage() {
               onOpenChange={open => {
                 if (open) {
                   setShowDialog({
-                    name: makeRandId("open"),
+                    name: makeRandId('open'),
                   })
                 }
               }}
@@ -429,11 +428,11 @@ function LollipopPage() {
               onClick={() => {
                 //save("txt")
                 messageDispatch({
-                  type: "set",
+                  type: 'set',
                   message: {
-                    source: "lollipop",
+                    source: 'lollipop',
                     target: tabName,
-                    text: "save",
+                    text: 'save',
                   },
                 })
               }}
@@ -446,7 +445,7 @@ function LollipopPage() {
             <ToolbarButton
               aria-label="Open location data"
               onClick={() =>
-                setShowDialog({ name: makeRandId("location"), params: {} })
+                setShowDialog({ name: makeRandId('location'), params: {} })
               }
             >
               Locations
@@ -454,7 +453,7 @@ function LollipopPage() {
             <ToolbarButton
               aria-label="Open features"
               onClick={() =>
-                setShowDialog({ name: makeRandId("features"), params: {} })
+                setShowDialog({ name: makeRandId('features'), params: {} })
               }
             >
               Features
@@ -584,7 +583,7 @@ function LollipopPage() {
         id: nanoid(),
         name: plot.name,
         icon: <ChartIcon className="fill-theme" />,
-        onDelete: () => plotDispatch({ type: "remove", id: plot.id }),
+        onDelete: () => plotDispatch({ type: 'remove', id: plot.id }),
         content: (
           <LollipopPanelWrapper
             panelId={plot.name}
@@ -601,14 +600,14 @@ function LollipopPage() {
       children: [
         {
           //id: nanoid(),
-          name: "Data Tables",
+          name: 'Data Tables',
           icon: <FolderIcon />,
           isOpen: true,
           children: [dataTab],
         },
         {
           //id: nanoid(),
-          name: "Plots",
+          name: 'Plots',
           icon: <FolderIcon />,
           isOpen: true,
           children: plotChildren,
@@ -832,13 +831,13 @@ function LollipopPage() {
   const fileMenuTabs: ITab[] = [
     {
       //id: nanoid(),
-      name: "Open",
+      name: 'Open',
       icon: <OpenIcon fill="" />,
       content: (
         <DropdownMenuItem
           aria-label="Open file on your computer"
           onClick={() =>
-            setShowDialog({ name: makeRandId("open"), params: {} })
+            setShowDialog({ name: makeRandId('open'), params: {} })
           }
         >
           <UploadIcon fill="" />
@@ -849,7 +848,7 @@ function LollipopPage() {
     },
     {
       //id: nanoid(),
-      name: "<divider>",
+      name: '<divider>',
     },
     {
       //id: nanoid(),
@@ -860,11 +859,11 @@ function LollipopPage() {
             aria-label="Download as TXT"
             onClick={() => {
               messageDispatch({
-                type: "set",
+                type: 'set',
                 message: {
-                  source: "matcalc",
-                  target: "Data",
-                  text: "save:txt",
+                  source: 'matcalc',
+                  target: 'Data',
+                  text: 'save:txt',
                 },
               })
               // save("txt")}
@@ -877,11 +876,11 @@ function LollipopPage() {
             aria-label="Download as CSV"
             onClick={() => {
               messageDispatch({
-                type: "set",
+                type: 'set',
                 message: {
-                  source: "matcalc",
-                  target: "Data",
-                  text: "save:csv",
+                  source: 'matcalc',
+                  target: 'Data',
+                  text: 'save:csv',
                 },
               })
               // save("txt")}
@@ -894,18 +893,18 @@ function LollipopPage() {
     },
     {
       //id: nanoid(),
-      name: "Export",
+      name: 'Export',
       content: (
         <>
           <DropdownMenuItem
             aria-label="Download as PNG"
             onClick={() => {
               messageDispatch({
-                type: "set",
+                type: 'set',
                 message: {
-                  source: "matcalc",
+                  source: 'matcalc',
                   target: tabName,
-                  text: "save:png",
+                  text: 'save:png',
                 },
               })
               // save("txt")}
@@ -918,11 +917,11 @@ function LollipopPage() {
             aria-label=" Download as CSV"
             onClick={() => {
               messageDispatch({
-                type: "set",
+                type: 'set',
                 message: {
-                  source: "matcalc",
+                  source: 'matcalc',
                   target: tabName,
-                  text: "save:svg",
+                  text: 'save:svg',
                 },
               })
               // save("txt")}
@@ -988,11 +987,11 @@ function LollipopPage() {
                 onClick={() => {
                   //save("txt")
                   messageDispatch({
-                    type: "set",
+                    type: 'set',
                     message: {
-                      source: "lollipop",
+                      source: 'lollipop',
                       target: tabName,
-                      text: "show-sidebar",
+                      text: 'show-sidebar',
                     },
                   })
                 }}
@@ -1054,11 +1053,11 @@ function LollipopPage() {
 
         <OpenFiles
           open={
-            showDialog.name.includes("open") ||
-            showDialog.name.includes("location") ||
-            showDialog.name.includes("clinical")
+            showDialog.name.includes('open') ||
+            showDialog.name.includes('location') ||
+            showDialog.name.includes('clinical')
               ? showDialog.name
-              : ""
+              : ''
           }
           //onOpenChange={() => setShowDialog(NO_DIALOG)}
           onFileChange={onFileChange}
@@ -1075,20 +1074,16 @@ function LollipopPage() {
 /** client:only component */
 export function LollipopQueryPage() {
   return (
-    <AlertsProvider>
-      <AccountSettingsProvider>
-        <HistoryProvider>
-          <MessagesProvider>
-            <SelectionRangeProvider>
-              <ProteinProvider>
-                <PlotsProvider>
-                  <LollipopPage />
-                </PlotsProvider>
-              </ProteinProvider>
-            </SelectionRangeProvider>
-          </MessagesProvider>
-        </HistoryProvider>
-      </AccountSettingsProvider>
-    </AlertsProvider>
+    <CoreProviders>
+      <MessagesProvider>
+        <SelectionRangeProvider>
+          <ProteinProvider>
+            <PlotsProvider>
+              <LollipopPage />
+            </PlotsProvider>
+          </ProteinProvider>
+        </SelectionRangeProvider>
+      </MessagesProvider>
+    </CoreProviders>
   )
 }

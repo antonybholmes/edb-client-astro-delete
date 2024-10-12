@@ -5,63 +5,63 @@ import {
   MotifSvg,
   type IDisplayProps,
   type Mode,
-} from "@components/pages/modules/gene/motifs/motif-svg"
-import { TabbedDataFrames } from "@components/table/tabbed-dataframes"
+} from '@components/pages/modules/gene/motifs/motif-svg'
+import { TabbedDataFrames } from '@components/table/tabbed-dataframes'
 
-import { ToolbarFooter } from "@components/toolbar/toolbar-footer"
-import { ToolbarOpenFile } from "@components/toolbar/toolbar-open-files"
-import { ZoomSlider } from "@components/toolbar/zoom-slider"
+import { ToolbarFooter } from '@components/toolbar/toolbar-footer'
+import { ToolbarOpenFile } from '@components/toolbar/toolbar-open-files'
+import { ZoomSlider } from '@components/toolbar/zoom-slider'
 
-import { BaseRow } from "@components/base-row"
+import { BaseRow } from '@components/base-row'
 
-import { Toolbar, ToolbarMenu, ToolbarPanel } from "@components/toolbar/toolbar"
-import { ToolbarIconButton } from "@components/toolbar/toolbar-icon-button"
-import { ToolbarSeparator } from "@components/toolbar/toolbar-separator"
+import { Toolbar, ToolbarMenu, ToolbarPanel } from '@components/toolbar/toolbar'
+import { ToolbarIconButton } from '@components/toolbar/toolbar-icon-button'
+import { ToolbarSeparator } from '@components/toolbar/toolbar-separator'
 
-import { ArrowRightArrowLeftIcon } from "@components/icons/arrow-right-arrow-left-icon"
-import { SlidersIcon } from "@components/icons/sliders-icon"
-import { TableIcon } from "@components/icons/table-icon"
-import { ToolbarTabButton } from "@components/toolbar/toolbar-tab-button"
-import { ChartIcon } from "@icons/chart-icon"
-import { ClockRotateLeftIcon } from "@icons/clock-rotate-left-icon"
-import { SearchIcon } from "@icons/search-icon"
-import { getDataFrameInfo } from "@lib/dataframe/dataframe-utils"
-import { HistoryContext, HistoryProvider } from "@providers/history-provider"
+import { ArrowRightArrowLeftIcon } from '@components/icons/arrow-right-arrow-left-icon'
+import { SlidersIcon } from '@components/icons/sliders-icon'
+import { TableIcon } from '@components/icons/table-icon'
+import { ToolbarTabButton } from '@components/toolbar/toolbar-tab-button'
+import { ChartIcon } from '@icons/chart-icon'
+import { ClockRotateLeftIcon } from '@icons/clock-rotate-left-icon'
+import { SearchIcon } from '@icons/search-icon'
+import { getDataFrameInfo } from '@lib/dataframe/dataframe-utils'
+import { HistoryContext } from '@providers/history-provider'
 
-import { useContext, useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from 'react'
 
-import { HistoryPanel } from "@components/pages/history-panel"
+import { HistoryPanel } from '@components/pages/history-panel'
 
-import { AlertsProvider } from "@components/alerts/alerts-provider"
-import { BaseCol } from "@components/base-col"
-import { FileImageIcon } from "@components/icons/file-image-icon"
-import { FileLinesIcon } from "@components/icons/file-lines-icon"
-import { SaveIcon } from "@components/icons/save-icon"
-import { SaveImageDialog } from "@components/pages/save-image-dialog"
-import { SearchBox } from "@components/search-box"
-import { DropdownMenuItem } from "@components/shadcn/ui/themed/dropdown-menu"
+import { BaseCol } from '@components/base-col'
+import { FileImageIcon } from '@components/icons/file-image-icon'
+import { FileLinesIcon } from '@components/icons/file-lines-icon'
+import { SaveIcon } from '@components/icons/save-icon'
+import { SaveImageDialog } from '@components/pages/save-image-dialog'
+import { SearchBox } from '@components/search-box'
+import { DropdownMenuItem } from '@components/shadcn/ui/themed/dropdown-menu'
 import {
   ToggleGroup,
   ToggleGroupItem,
-} from "@components/shadcn/ui/themed/toggle-group"
-import { TabContentPanel } from "@components/tab-content-panel"
-import { TabProvider, type ITab } from "@components/tab-provider"
-import { TabSlideBar } from "@components/tab-slide-bar"
-import { Shortcuts } from "@components/toolbar/shortcuts"
-import { NO_DIALOG, TEXT_SAVE_AS, type IDialogParams } from "@consts"
-import { ShortcutLayout } from "@layouts/shortcut-layout"
-import type { BaseDataFrame } from "@lib/dataframe/base-dataframe"
-import { DataFrame } from "@lib/dataframe/dataframe"
-import { downloadDataFrame } from "@lib/dataframe/dataframe-utils"
-import { downloadImageAutoFormat } from "@lib/image-utils"
-import { makeRandId } from "@lib/utils"
-import { API_MOTIF_DATASETS_URL, JSON_HEADERS } from "@modules/edb"
-import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
-import { DisplayPropsPanel } from "./display-props-panel"
-import MODULE_INFO from "./module.json"
-import { MotifsPropsPanel } from "./motifs-props-panel"
-import { MotifsContext, MotifsProvider } from "./motifs-provider"
+} from '@components/shadcn/ui/themed/toggle-group'
+import { TabContentPanel } from '@components/tab-content-panel'
+import { TabProvider, type ITab } from '@components/tab-provider'
+import { TabSlideBar } from '@components/tab-slide-bar'
+import { Shortcuts } from '@components/toolbar/shortcuts'
+import { NO_DIALOG, TEXT_SAVE_AS, type IDialogParams } from '@consts'
+import { ShortcutLayout } from '@layouts/shortcut-layout'
+import type { BaseDataFrame } from '@lib/dataframe/base-dataframe'
+import { DataFrame } from '@lib/dataframe/dataframe'
+import { downloadDataFrame } from '@lib/dataframe/dataframe-utils'
+import { downloadImageAutoFormat } from '@lib/image-utils'
+import { makeRandId } from '@lib/utils'
+import { API_MOTIF_DATASETS_URL, JSON_HEADERS } from '@modules/edb'
+import { CoreProviders } from '@providers/core-providers'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
+import { DisplayPropsPanel } from './display-props-panel'
+import MODULE_INFO from './module.json'
+import { MotifsPropsPanel } from './motifs-props-panel'
+import { MotifsContext, MotifsProvider } from './motifs-provider'
 
 export function MotifsPage() {
   //const [fileStore, filesDispatch] = useReducer(filesReducer, { files: [] })
@@ -71,13 +71,13 @@ export function MotifsPage() {
   //const search = useContext(MotifSearchContext)!
 
   //const searchRef = useRef<HTMLTextAreaElement>(null)
-  const [selectedTab, setSelectedTab] = useState("Plot")
+  const [selectedTab, setSelectedTab] = useState('Plot')
 
   const canvasRef = useRef(null)
   const downloadRef = useRef<HTMLAnchorElement>(null)
   const svgRef = useRef<SVGSVGElement>(null)
   const [revComp, setRevComp] = useState(false)
-  const [mode, setMode] = useState<Mode>("Bits")
+  const [mode, setMode] = useState<Mode>('Bits')
   const [showFileMenu, setShowFileMenu] = useState(false)
   const [scale, setScale] = useState(1)
   const [showDialog, setShowDialog] = useState<IDialogParams>(NO_DIALOG)
@@ -87,7 +87,7 @@ export function MotifsPage() {
   //const [, setSelection] = useContext(SelectionRangeContext)
 
   const [displayProps, setDisplayProps] = useState<IDisplayProps>(
-    DEFAULT_DISPLAY_PROPS,
+    DEFAULT_DISPLAY_PROPS
   )
 
   function adjustScale(scale: number) {
@@ -96,7 +96,7 @@ export function MotifsPage() {
   }
 
   function loadTestData() {
-    setSearch({ search: "BCL6", reverse: revComp, complement: revComp })
+    setSearch({ search: 'BCL6', reverse: revComp, complement: revComp })
   }
 
   function save(format: string) {
@@ -106,7 +106,7 @@ export function MotifsPage() {
       return
     }
 
-    const sep = format === "csv" ? "," : "\t"
+    const sep = format === 'csv' ? ',' : '\t'
 
     downloadDataFrame(df, downloadRef, {
       hasHeader: true,
@@ -119,7 +119,7 @@ export function MotifsPage() {
   }
 
   const datasetsQuery = useQuery({
-    queryKey: ["datasets"],
+    queryKey: ['datasets'],
     queryFn: async () => {
       //const token = await loadAccessToken()
       console.log(API_MOTIF_DATASETS_URL)
@@ -128,7 +128,7 @@ export function MotifsPage() {
 
         {
           headers: JSON_HEADERS,
-        },
+        }
       )
 
       return res.data.data
@@ -140,8 +140,8 @@ export function MotifsPage() {
       //console.log(datasetsQuery.data)
       setDatasets(
         new Map<string, boolean>(
-          datasetsQuery.data.map((dataset: string) => [dataset, true]),
-        ),
+          datasetsQuery.data.map((dataset: string) => [dataset, true])
+        )
       )
     }
   }, [datasetsQuery.data])
@@ -169,7 +169,7 @@ export function MotifsPage() {
       const df = new DataFrame({
         name: motif.motifName,
         data: motif.weights,
-        columns: ["A", "C", "G", "T"],
+        columns: ['A', 'C', 'G', 'T'],
       }).t()
 
       return df
@@ -177,7 +177,7 @@ export function MotifsPage() {
 
     if (dataframes.length > 0) {
       historyDispatch({
-        type: "reset",
+        type: 'reset',
         name: `Load`,
         sheets: dataframes,
       })
@@ -193,7 +193,7 @@ export function MotifsPage() {
           <DropdownMenuItem
             aria-label="Download as TXT"
             onClick={() => {
-              save("txt")
+              save('txt')
             }}
           >
             <FileLinesIcon fill="" />
@@ -202,7 +202,7 @@ export function MotifsPage() {
           <DropdownMenuItem
             aria-label="Download as CSV"
             onClick={() => {
-              save("csv")
+              save('csv')
             }}
           >
             <span>Download as CSV</span>
@@ -212,7 +212,7 @@ export function MotifsPage() {
     },
     {
       //id: nanoid(),
-      name: "Export",
+      name: 'Export',
       content: (
         <>
           <DropdownMenuItem
@@ -222,7 +222,7 @@ export function MotifsPage() {
                 svgRef,
                 canvasRef,
                 downloadRef,
-                `motifs.png`,
+                `motifs.png`
               )
             }}
           >
@@ -236,7 +236,7 @@ export function MotifsPage() {
                 svgRef,
                 canvasRef,
                 downloadRef,
-                `motifs.svg`,
+                `motifs.svg`
               )
             }}
           >
@@ -250,7 +250,7 @@ export function MotifsPage() {
   const tabs: ITab[] = [
     {
       //id: nanoid(),
-      name: "Home",
+      name: 'Home',
       content: (
         <>
           <BaseRow>
@@ -264,14 +264,14 @@ export function MotifsPage() {
                 }
               }}
               multiple={true}
-              fileTypes={["motif", "motifs"]}
+              fileTypes={['motif', 'motifs']}
             />
 
             <ToolbarIconButton
               title="Save mutation table"
               onClick={() =>
                 setShowDialog({
-                  name: makeRandId("save"),
+                  name: makeRandId('save'),
                 })
               }
             >
@@ -348,7 +348,7 @@ export function MotifsPage() {
   const rightTabs: ITab[] = [
     {
       //id: nanoid(),
-      name: "History",
+      name: 'History',
       icon: <ClockRotateLeftIcon />,
 
       content: <HistoryPanel />,
@@ -358,14 +358,14 @@ export function MotifsPage() {
   const chartTabs: ITab[] = [
     {
       //id: nanoid(),
-      name: "Motifs",
+      name: 'Motifs',
       icon: <SearchIcon />,
 
       content: <MotifsPropsPanel />,
     },
     {
       //id: nanoid(),
-      name: "Display",
+      name: 'Display',
       icon: <SlidersIcon />,
 
       content: (
@@ -380,14 +380,14 @@ export function MotifsPage() {
   const sideTabs: ITab[] = [
     {
       //id: nanoid(),
-      name: "Plot",
+      name: 'Plot',
       icon: <ChartIcon fill="" w="w-5" />,
 
       content: (
         <TabSlideBar tabs={chartTabs} side="right">
           <div
             className={
-              "custom-scrollbar relative overflow-scroll bg-background grow m-1"
+              'custom-scrollbar relative overflow-scroll bg-background grow m-1'
             }
           >
             <MotifSvg
@@ -425,7 +425,7 @@ export function MotifsPage() {
     },
     {
       //id: nanoid(),
-      name: "Table",
+      name: 'Table',
       icon: <TableIcon stroke="" fill="" w="w-5" />,
 
       content: (
@@ -435,7 +435,7 @@ export function MotifsPage() {
             dataFrames={history.currentStep.sheets}
             onTabChange={selectedTab => {
               historyDispatch({
-                type: "goto_sheet",
+                type: 'goto_sheet',
                 sheetId: selectedTab.index,
               })
             }}
@@ -468,7 +468,7 @@ export function MotifsPage() {
 
   return (
     <>
-      {showDialog.name.includes("save") && (
+      {showDialog.name.includes('save') && (
         <SaveImageDialog
           open="open"
           onSave={format => {
@@ -476,7 +476,7 @@ export function MotifsPage() {
               svgRef,
               canvasRef,
               downloadRef,
-              `motifs.${format.ext}`,
+              `motifs.${format.ext}`
             )
             setShowDialog(NO_DIALOG)
           }}
@@ -499,14 +499,14 @@ export function MotifsPage() {
               })
             }
             onSearch={(event, value) => {
-              if (event === "search") {
+              if (event === 'search') {
                 setSearch({
                   search: value,
                   reverse: revComp,
                   complement: revComp,
                 })
               } else {
-                setSearch({ search: "", reverse: revComp, complement: revComp })
+                setSearch({ search: '', reverse: revComp, complement: revComp })
               }
             }}
             className="w-80 text-xs font-medium"
@@ -562,12 +562,10 @@ export function MotifsPage() {
 
 export function MotifsQueryPage() {
   return (
-    <AlertsProvider>
-      <HistoryProvider>
-        <MotifsProvider>
-          <MotifsPage />
-        </MotifsProvider>
-      </HistoryProvider>
-    </AlertsProvider>
+    <CoreProviders>
+      <MotifsProvider>
+        <MotifsPage />
+      </MotifsProvider>
+    </CoreProviders>
   )
 }

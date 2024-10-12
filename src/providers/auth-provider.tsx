@@ -1,5 +1,5 @@
-import { Auth0Provider } from "@auth0/auth0-react"
-import type { IChildrenProps } from "@interfaces/children-props"
+import { Auth0Provider } from '@auth0/auth0-react'
+import type { IChildrenProps } from '@interfaces/children-props'
 
 const AUTH0_DOMAIN = import.meta.env.PUBLIC_AUTH0_DOMAIN!
 const AUTH0_CLIENT_ID = import.meta.env.PUBLIC_AUTH0_CLIENT_ID!
@@ -22,7 +22,7 @@ export function AuthProvider({ callbackUrl, children }: IProps) {
         redirect_uri: callbackUrl,
         // this is needed to force passwordless login, otherwise
         // the default social login page is shown
-        connection: "email",
+        connection: 'email',
       }}
     >
       {children}

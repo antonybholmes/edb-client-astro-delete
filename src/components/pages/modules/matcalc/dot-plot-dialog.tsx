@@ -1,29 +1,29 @@
 import {
   OKCancelDialog,
   type IModalProps,
-} from "@components/dialog/ok-cancel-dialog"
-import { dfRowZScore } from "@components/pages/plot/dataframe-ui"
+} from '@components/dialog/ok-cancel-dialog'
+import { dfRowZScore } from '@components/pages/plot/dataframe-ui'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@components/shadcn/ui/themed/accordion"
-import { Checkbox } from "@components/shadcn/ui/themed/check-box"
-import { TEXT_CANCEL } from "@consts"
-import { getColIdxFromGroup, type IClusterGroup } from "@lib/cluster-group"
-import { type BaseDataFrame } from "@lib/dataframe/base-dataframe"
-import { DataFrame } from "@lib/dataframe/dataframe"
-import { rowMean } from "@lib/dataframe/dataframe-utils"
+} from '@components/shadcn/ui/themed/accordion'
+import { Checkbox } from '@components/shadcn/ui/themed/check-box'
+import { TEXT_CANCEL } from '@consts'
+import { getColIdxFromGroup, type IClusterGroup } from '@lib/cluster-group'
+import { type BaseDataFrame } from '@lib/dataframe/base-dataframe'
+import { DataFrame } from '@lib/dataframe/dataframe'
+import { rowMean } from '@lib/dataframe/dataframe-utils'
 import {
   HCluster,
   type ClusterFrame,
   type IClusterTree,
-} from "@lib/math/hcluster"
-import { HistoryContext } from "@providers/history-provider"
-import { useContext } from "react"
-import { MAX_CLUSTER_ITEMS } from "./heatmap-dialog"
-import { MatcalcSettingsContext } from "./matcalc-settings-provider"
+} from '@lib/math/hcluster'
+import { HistoryContext } from '@providers/history-provider'
+import { useContext } from 'react'
+import { MAX_CLUSTER_ITEMS } from './heatmap-dialog'
+import { MatcalcSettingsContext } from './matcalc-settings-provider'
 
 export interface IProps extends IModalProps {
   open?: boolean
@@ -63,13 +63,13 @@ export function DotPlotDialog({
     groups.forEach(group => {
       const colIdx = getColIdxFromGroup(df, group)
 
-      const dfg = df!.iloc(":", colIdx)
+      const dfg = df!.iloc(':', colIdx)
       means.push(rowMean(dfg))
 
       // percentage in each group
       const p: number[] = df!.rowMap(
         row =>
-          (row as number[]).filter(x => x > minThreshold).length / row.length,
+          (row as number[]).filter(x => x > minThreshold).length / row.length
       )
 
       percents.push(p)
@@ -78,22 +78,22 @@ export function DotPlotDialog({
     const index = groups.map(g => g.name)
     // build group mean row centric then transpose
     const groupMeanDf = new DataFrame({
-      name: "Group means",
+      name: 'Group means',
       data: means,
       index,
       columns: df.index,
     }).t()
 
     const groupPercentDf = new DataFrame({
-      name: "Group percentages",
+      name: 'Group percentages',
       data: percents,
       index,
       columns: df.index,
     }).t()
 
     historyDispatch({
-      type: "add_step",
-      name: "Dot stats",
+      type: 'add_step',
+      name: 'Dot stats',
       sheets: [groupMeanDf, groupPercentDf],
     })
 
@@ -143,7 +143,7 @@ export function DotPlotDialog({
       }}
       //className="w-3/4 text-sm md:w-1/2 lg:w-1/3 xl:w-1/4"
     >
-      <Accordion type="multiple" value={["transform", "cluster"]}>
+      <Accordion type="multiple" value={['transform', 'cluster']}>
         <AccordionItem value="transform">
           <AccordionTrigger>Transform</AccordionTrigger>
           <AccordionContent innerClassName="flex flex-col gap-y-2">

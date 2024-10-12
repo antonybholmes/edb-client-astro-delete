@@ -1,13 +1,13 @@
-import { type IElementProps } from "@interfaces/element-props"
-import { cn } from "@lib/class-names"
-import { useContext, useEffect, useState } from "react"
+import { type IElementProps } from '@interfaces/element-props'
+import { cn } from '@lib/class-names'
+import { useContext, useEffect, useState } from 'react'
 
-import { type ITooltipSide } from "@interfaces/tooltip-side-props"
+import { type ITooltipSide } from '@interfaces/tooltip-side-props'
 
-import { TabContext, TabProvider } from "@components/tab-provider"
-import { range } from "@lib/math/range"
-import { motion } from "framer-motion"
-import { type IToolbarProps } from "./toolbar"
+import { TabContext, TabProvider } from '@components/tab-provider'
+import { range } from '@lib/math/range'
+import { motion } from 'framer-motion'
+import { type IToolbarProps } from './toolbar'
 
 interface IShortcutProps extends IToolbarProps {
   defaultWidth?: number
@@ -40,7 +40,7 @@ export function ShortcutContent({
   const w = `${defaultWidth}rem`
 
   const [tabPos, setTabPos] = useState<{ y: string; height: string }>({
-    y: "0rem",
+    y: '0rem',
     height: `${defaultWidth}rem`,
   })
 
@@ -51,7 +51,7 @@ export function ShortcutContent({
 
     const x = range(0, selectedTab.index).reduce(
       (sum, index) => sum + (tabs[index].size ?? defaultWidth),
-      0,
+      0
     )
 
     const width = tabs[selectedTab.index].size ?? defaultWidth
@@ -62,8 +62,8 @@ export function ShortcutContent({
   return (
     <div
       className={cn(
-        "relative flex shrink-0 flex-col items-center my-2 w-12",
-        className,
+        'relative flex shrink-0 flex-col items-center my-2 w-12',
+        className
       )}
       {...props}
     >
@@ -86,7 +86,7 @@ export function ShortcutContent({
       <motion.span
         className="absolute left-0 w-[3px] z-0 bg-theme rounded-md"
         animate={{ ...tabPos }}
-        transition={{ ease: "easeInOut" }}
+        transition={{ ease: 'easeInOut' }}
       />
     </div>
   )

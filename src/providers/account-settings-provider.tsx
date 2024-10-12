@@ -1,11 +1,11 @@
-import { type IChildrenProps } from "@interfaces/children-props"
+import { type IChildrenProps } from '@interfaces/children-props'
 
 import {
   DEFAULT_SETTINGS,
   useSettingsStore,
   type ISettings,
-} from "@stores/use-settings-store"
-import { createContext } from "react"
+} from '@stores/use-settings-store'
+import { createContext } from 'react'
 
 export const AccountSettingsContext = createContext<{
   settings: ISettings

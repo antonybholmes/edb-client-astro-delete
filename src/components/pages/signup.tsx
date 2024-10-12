@@ -1,6 +1,6 @@
-import { Alerts } from "@components/alerts/alerts"
+import { Alerts } from '@components/alerts/alerts'
 
-import { Switch } from "@components/shadcn/ui/themed/switch"
+import { Switch } from '@components/shadcn/ui/themed/switch'
 
 import {
   Card,
@@ -10,43 +10,40 @@ import {
   CardHeader,
   CardTitle,
   CenteredCardContainer,
-} from "@components/shadcn/ui/themed/card"
+} from '@components/shadcn/ui/themed/card'
 
 import {
   AlertsContext,
-  AlertsProvider,
   makeAlertFromAxiosError,
   makeErrorAlert,
   makeInfoAlert,
-} from "@components/alerts/alerts-provider"
-import { HeaderLayout } from "@layouts/header-layout"
+} from '@components/alerts/alerts-provider'
+import { HeaderLayout } from '@layouts/header-layout'
 
 import {
   API_SIGNUP_URL,
   APP_VERIFY_EMAIL_URL,
   TEXT_PASSWORDLESS,
-} from "@modules/edb"
+} from '@modules/edb'
 
-import { useContext, useRef, type BaseSyntheticEvent } from "react"
+import { useContext, useRef, type BaseSyntheticEvent } from 'react'
 
-import { Button } from "@components/shadcn/ui/themed/button"
-import { Form, FormField, FormItem } from "@components/shadcn/ui/themed/form"
-import { Input } from "@components/shadcn/ui/themed/input"
-import { Label } from "@components/shadcn/ui/themed/label"
-import { VCenterRow } from "@components/v-center-row"
-import { TEXT_CONTINUE } from "@consts"
-import { SignInLink } from "@layouts/signin-layout"
-import {
-  AccountSettingsContext,
-  AccountSettingsProvider,
-} from "@providers/account-settings-provider"
-import { useQueryClient } from "@tanstack/react-query"
-import axios, { AxiosError } from "axios"
-import { useForm } from "react-hook-form"
+import { Button } from '@components/shadcn/ui/themed/button'
+import { Form, FormField, FormItem } from '@components/shadcn/ui/themed/form'
+import { Input } from '@components/shadcn/ui/themed/input'
+import { Label } from '@components/shadcn/ui/themed/label'
+import { VCenterRow } from '@components/v-center-row'
+import { TEXT_CONTINUE } from '@consts'
+import { SignInLink } from '@layouts/signin-layout'
+import { AccountSettingsContext } from '@providers/account-settings-provider'
+import { CoreProviders } from '@providers/core-providers'
+import { useQueryClient } from '@tanstack/react-query'
+import axios, { AxiosError } from 'axios'
+import { useForm } from 'react-hook-form'
 import {
   MIN_PASSWORD_LENGTH,
   TEXT_MIN_PASSWORD_LENGTH,
-} from "./account/password-dialog"
+} from './account/password-dialog'
 
 interface IFormInput {
   firstName: string
@@ -71,11 +68,11 @@ function SignUpPage({ allowPassword = true }: ISignupProps) {
 
   const form = useForm<IFormInput>({
     defaultValues: {
-      firstName: process.env.NODE_ENV === "development" ? "Antony" : "",
-      lastName: "",
+      firstName: process.env.NODE_ENV === 'development' ? 'Antony' : '',
+      lastName: '',
       email:
-        process.env.NODE_ENV === "development" ? "antony@antonyholmes.com" : "",
-      password1: "",
+        process.env.NODE_ENV === 'development' ? 'antony@antonyholmes.com' : '',
+      password1: '',
       //passwordless: true, //settings.passwordless,
     },
   })
@@ -91,7 +88,7 @@ function SignUpPage({ allowPassword = true }: ISignupProps) {
 
     if (!settings.passwordless && data.password1.length < MIN_PASSWORD_LENGTH) {
       alertDispatch({
-        type: "add",
+        type: 'add',
         alert: makeErrorAlert({
           content: TEXT_MIN_PASSWORD_LENGTH,
         }),
@@ -102,29 +99,29 @@ function SignUpPage({ allowPassword = true }: ISignupProps) {
 
     try {
       await queryClient.fetchQuery({
-        queryKey: ["update"],
+        queryKey: ['update'],
         queryFn: () =>
           axios.post(API_SIGNUP_URL, {
             email: data.email,
             username: data.email,
             firstName: data.firstName,
             lastName: data.lastName,
-            password: settings.passwordless ? "" : data.password1,
+            password: settings.passwordless ? '' : data.password1,
             callbackUrl: APP_VERIFY_EMAIL_URL,
           }),
       })
 
       alertDispatch({
-        type: "set",
+        type: 'set',
         alert: makeInfoAlert({
           content:
-            "Your account was created. Please check your email to continue.",
+            'Your account was created. Please check your email to continue.',
         }),
       })
     } catch (error) {
-      console.log(error, "error")
+      console.log(error, 'error')
       alertDispatch({
-        type: "add",
+        type: 'add',
         alert: makeAlertFromAxiosError(error as AxiosError),
       })
     }
@@ -304,10 +301,8 @@ function SignUpPage({ allowPassword = true }: ISignupProps) {
 
 export function SignUpQueryPage() {
   return (
-    <AlertsProvider>
-      <AccountSettingsProvider>
-        <SignUpPage />
-      </AccountSettingsProvider>
-    </AlertsProvider>
+    <CoreProviders>
+      <SignUpPage />
+    </CoreProviders>
   )
 }

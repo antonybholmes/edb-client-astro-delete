@@ -1,16 +1,16 @@
-import { Button, type IButtonProps } from "@components/shadcn/ui/themed/button"
-import { forwardRef, type ForwardedRef } from "react"
+import { Button, type IButtonProps } from '@components/shadcn/ui/themed/button'
+import { forwardRef, type ForwardedRef } from 'react'
 
 export const IconButton = forwardRef(function IconButton(
   {
-    variant = "accent",
-    multiProps = "icon",
+    variant = 'accent',
+    multiProps = 'icon',
     ripple = false,
     className,
     children,
     ...props
   }: IButtonProps,
-  ref: ForwardedRef<HTMLButtonElement>,
+  ref: ForwardedRef<HTMLButtonElement>
 ) {
   return (
     <Button

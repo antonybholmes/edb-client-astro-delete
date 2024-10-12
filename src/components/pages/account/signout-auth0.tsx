@@ -7,9 +7,9 @@ import {
   CardHeader,
   CardTitle,
   CenteredCardContainer,
-} from "@components/shadcn/ui/themed/card"
+} from '@components/shadcn/ui/themed/card'
 
-import { HeaderLayout } from "@layouts/header-layout"
+import { HeaderLayout } from '@layouts/header-layout'
 
 import {
   APP_ACCOUNT_SIGNED_OUT_URL,
@@ -19,21 +19,19 @@ import {
   SESSION_SIGNOUT_URL,
   SIGN_IN_ROUTE,
   TEXT_SIGN_IN,
-} from "@modules/edb"
+} from '@modules/edb'
 
-import { useAuth0 } from "@auth0/auth0-react"
-import { ButtonLink } from "@components/link/button-link"
-import { AuthProvider } from "@providers/auth-provider"
+import { useAuth0 } from '@auth0/auth0-react'
+import { ButtonLink } from '@components/link/button-link'
+import { AuthProvider } from '@providers/auth-provider'
 
-import { CoreProviders } from "@providers/core-providers"
-import { useEdbAuth } from "@providers/edb-auth-provider"
-import { useQueryClient } from "@tanstack/react-query"
-import axios from "axios"
-import Cookies from "js-cookie"
-import { useEffect, useState } from "react"
+import { CoreProviders } from '@providers/core-providers'
+import { useEdbAuth } from '@providers/edb-auth-provider'
+import axios from 'axios'
+import Cookies from 'js-cookie'
+import { useEffect, useState } from 'react'
 
 function SignOutPage() {
-  const queryClient = useQueryClient()
   const { resetUser } = useEdbAuth()
 
   const { logout } = useAuth0()
@@ -89,14 +87,14 @@ function SignOutPage() {
 }
 
 export function SignOutQueryPage() {
-  const [url, setUrl] = useState("")
+  const [url, setUrl] = useState('')
 
   useEffect(() => {
     setUrl(window.location.href)
   }, [])
 
   if (!url) {
-    return "Getting page url..."
+    return 'Getting page url...'
   }
 
   return (

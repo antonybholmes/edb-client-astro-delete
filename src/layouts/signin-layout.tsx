@@ -1,8 +1,8 @@
-import { Alerts } from "@components/alerts/alerts"
+import { Alerts } from '@components/alerts/alerts'
 
-import { makeInfoAlert } from "@components/alerts/alerts-provider"
+import { makeInfoAlert } from '@components/alerts/alerts-provider'
 
-import { HeaderLayout, type IHeaderLayoutProps } from "@layouts/header-layout"
+import { HeaderLayout, type IHeaderLayoutProps } from '@layouts/header-layout'
 
 import {
   type IUser,
@@ -10,13 +10,13 @@ import {
   SIGN_UP_ROUTE,
   TEXT_SIGN_IN,
   TEXT_SIGN_UP,
-} from "@modules/edb"
+} from '@modules/edb'
 
-import { ThemeIndexLink } from "@components/link/theme-index-link"
-import { useEffect, useState } from "react"
+import { ThemeIndexLink } from '@components/link/theme-index-link'
+import { useEffect, useState } from 'react'
 
-import { redirect } from "@lib/urls"
-import { useEdbAuth } from "@providers/edb-auth-provider"
+import { redirect } from '@lib/urls'
+import { useEdbAuth } from '@providers/edb-auth-provider'
 
 export const FORWARD_DELAY_MS = 2000
 
@@ -27,16 +27,16 @@ export const USERNAME_PATTERN = /^[\w@.]{4,}/
 
 export const NAME_PATTERN = /^[\w ]*/
 
-export const TEXT_USERNAME_REQUIRED = "A username is required"
-export const TEXT_NAME_REQUIRED = "A first name is required"
+export const TEXT_USERNAME_REQUIRED = 'A username is required'
+export const TEXT_NAME_REQUIRED = 'A first name is required'
 export const TEXT_USERNAME_DESCRIPTION =
-  "A username must contain at least 3 characters, which can be letters, numbers, and any of @.-"
-export const TEXT_EMAIL_ERROR = "This does not seem like a valid email address"
+  'A username must contain at least 3 characters, which can be letters, numbers, and any of @.-'
+export const TEXT_EMAIL_ERROR = 'This does not seem like a valid email address'
 
 export function CreateAccountLink() {
   return (
     <span className="w-full">
-      Don&apos;t have an account?{" "}
+      Don&apos;t have an account?{' '}
       <ThemeIndexLink href={SIGN_UP_ROUTE} aria-label={TEXT_SIGN_UP}>
         Create an account
       </ThemeIndexLink>
@@ -47,7 +47,7 @@ export function CreateAccountLink() {
 export function SignInLink() {
   return (
     <span className="w-full">
-      Already have an account?{" "}
+      Already have an account?{' '}
       <ThemeIndexLink href={SIGN_IN_ROUTE} aria-label={TEXT_SIGN_IN}>
         {TEXT_SIGN_IN}
       </ThemeIndexLink>
@@ -57,7 +57,7 @@ export function SignInLink() {
 
 export function makeSignedInAlert() {
   return makeInfoAlert({
-    title: "You are signed in",
+    title: 'You are signed in',
   })
 }
 
@@ -88,7 +88,7 @@ export function SignInLayout({
   const [user, setUser] = useState<IUser | null>(null)
 
   const [_callbackUrl, setCallbackUrl] = useState<string | undefined>(
-    callbackUrl,
+    callbackUrl
   )
 
   //const queryClient = useQueryClient()
@@ -121,10 +121,10 @@ export function SignInLayout({
     return null // 'Checking callback url...'
   }
 
-  const signInRequired = signInEnabled && user.publicId === ""
+  const signInRequired = signInEnabled && user.publicId === ''
 
   if (signInRequired) {
-    console.log("redirect", _callbackUrl)
+    console.log('redirect', _callbackUrl)
     redirect(`${SIGN_IN_ROUTE}?callbackUrl=${_callbackUrl}`)
   }
 

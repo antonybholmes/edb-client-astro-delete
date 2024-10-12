@@ -1,4 +1,4 @@
-import { Switch } from "@components/shadcn/ui/themed/switch"
+import { Switch } from '@components/shadcn/ui/themed/switch'
 
 import {
   Card,
@@ -8,16 +8,16 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@components/shadcn/ui/themed/card"
+} from '@components/shadcn/ui/themed/card'
 
-import { VCenterRow } from "@components/v-center-row"
+import { VCenterRow } from '@components/v-center-row'
 
 import {
   AlertsContext,
   makeAlertFromAxiosError,
   makeErrorAlert,
   makeInfoAlert,
-} from "@components/alerts/alerts-provider"
+} from '@components/alerts/alerts-provider'
 
 import {
   APP_SIGNIN_URL,
@@ -28,39 +28,39 @@ import {
   TEXT_PASSWORDLESS,
   TEXT_SIGN_IN,
   TEXT_SIGN_UP,
-} from "@modules/edb"
+} from '@modules/edb'
 
-import { ThemeIndexLink } from "@components/link/theme-index-link"
+import { ThemeIndexLink } from '@components/link/theme-index-link'
 import {
   MIN_PASSWORD_LENGTH,
   PASSWORD_PATTERN,
   TEXT_MIN_PASSWORD_LENGTH,
   TEXT_PASSWORD_DESCRIPTION,
   TEXT_PASSWORD_REQUIRED,
-} from "@components/pages/account/password-dialog"
-import axios, { AxiosError } from "axios"
-import { useContext, useEffect, useRef, type BaseSyntheticEvent } from "react"
+} from '@components/pages/account/password-dialog'
+import axios, { AxiosError } from 'axios'
+import { useContext, useEffect, useRef, type BaseSyntheticEvent } from 'react'
 
-import { BaseCol } from "@components/base-col"
-import { FormInputError } from "@components/input-error"
-import { ThemeLink } from "@components/link/theme-link"
-import { Button } from "@components/shadcn/ui/themed/button"
+import { BaseCol } from '@components/base-col'
+import { FormInputError } from '@components/input-error'
+import { ThemeLink } from '@components/link/theme-link'
+import { Button } from '@components/shadcn/ui/themed/button'
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@components/shadcn/ui/themed/form"
-import { Input } from "@components/shadcn/ui/themed/input"
-import { Label } from "@components/shadcn/ui/themed/label"
-import { AccountSettingsContext } from "@providers/account-settings-provider"
+} from '@components/shadcn/ui/themed/form'
+import { Input } from '@components/shadcn/ui/themed/input'
+import { Label } from '@components/shadcn/ui/themed/label'
+import { AccountSettingsContext } from '@providers/account-settings-provider'
 
-import type { IElementProps } from "@interfaces/element-props"
+import type { IElementProps } from '@interfaces/element-props'
 
-import { useEdbAuth } from "@providers/edb-auth-provider"
-import { useQueryClient } from "@tanstack/react-query"
-import { useForm } from "react-hook-form"
+import { useEdbAuth } from '@providers/edb-auth-provider'
+import { useQueryClient } from '@tanstack/react-query'
+import { useForm } from 'react-hook-form'
 
 export const FORWARD_DELAY_MS = 2000
 
@@ -71,16 +71,16 @@ export const USERNAME_PATTERN = /^[\w@.]{4,}/
 
 export const NAME_PATTERN = /^[\w ]*/
 
-export const TEXT_USERNAME_REQUIRED = "A username is required"
-export const TEXT_NAME_REQUIRED = "A first name is required"
+export const TEXT_USERNAME_REQUIRED = 'A username is required'
+export const TEXT_NAME_REQUIRED = 'A first name is required'
 export const TEXT_USERNAME_DESCRIPTION =
-  "A username must contain at least 3 characters, which can be letters, numbers, and any of @.-"
-export const TEXT_EMAIL_ERROR = "This does not seem like a valid email address"
+  'A username must contain at least 3 characters, which can be letters, numbers, and any of @.-'
+export const TEXT_EMAIL_ERROR = 'This does not seem like a valid email address'
 
 export function CreateAccountLink() {
   return (
     <span className="w-full">
-      Don&apos;t have an account?{" "}
+      Don&apos;t have an account?{' '}
       <ThemeIndexLink href={SIGN_UP_ROUTE} aria-label={TEXT_SIGN_UP}>
         Create an account
       </ThemeIndexLink>
@@ -91,7 +91,7 @@ export function CreateAccountLink() {
 export function SignInLink() {
   return (
     <span className="w-full">
-      Already have an account?{" "}
+      Already have an account?{' '}
       <ThemeIndexLink href={SIGN_IN_ROUTE} aria-label={TEXT_SIGN_IN}>
         {TEXT_SIGN_IN}
       </ThemeIndexLink>
@@ -101,7 +101,7 @@ export function SignInLink() {
 
 export function makeSignedInAlert() {
   return makeInfoAlert({
-    title: "You are signed in",
+    title: 'You are signed in',
   })
 }
 
@@ -149,8 +149,8 @@ export function SignIn({ allowPassword = true, visitUrl }: ISignInProps) {
 
   const form = useForm<IFormInput>({
     defaultValues: {
-      username: "",
-      password1: "",
+      username: '',
+      password1: '',
       //passwordless: settings.passwordless,
       staySignedIn: settings.staySignedIn,
     },
@@ -166,8 +166,8 @@ export function SignIn({ allowPassword = true, visitUrl }: ISignInProps) {
 
   useEffect(() => {
     form.reset({
-      username: "",
-      password1: "",
+      username: '',
+      password1: '',
       //passwordless: settings.passwordless,
       staySignedIn: settings.staySignedIn,
     })
@@ -185,10 +185,10 @@ export function SignIn({ allowPassword = true, visitUrl }: ISignInProps) {
 
     if (data.username.length < 3) {
       alertDispatch({
-        type: "add",
+        type: 'add',
         alert: makeErrorAlert({
-          title: "Username must be at least 3 characters",
-          content: "Please enter a valid username or create an account.",
+          title: 'Username must be at least 3 characters',
+          content: 'Please enter a valid username or create an account.',
         }),
       })
 
@@ -199,7 +199,7 @@ export function SignIn({ allowPassword = true, visitUrl }: ISignInProps) {
 
     if (!settings.passwordless && data.password1.length < MIN_PASSWORD_LENGTH) {
       alertDispatch({
-        type: "add",
+        type: 'add',
         alert: makeErrorAlert({
           title: TEXT_MIN_PASSWORD_LENGTH,
         }),
@@ -213,29 +213,29 @@ export function SignIn({ allowPassword = true, visitUrl }: ISignInProps) {
       console.log(SESSION_SIGNIN_URL)
 
       const res = await queryClient.fetchQuery({
-        queryKey: ["signin"],
+        queryKey: ['signin'],
         queryFn: () =>
           axios.post(
             SESSION_SIGNIN_URL,
             {
               username: data.username,
-              password: settings.passwordless ? "" : data.password1,
+              password: settings.passwordless ? '' : data.password1,
               staySignedIn: data.staySignedIn,
               callbackUrl: APP_SIGNIN_URL,
               visitUrl,
             },
-            { withCredentials: true },
+            { withCredentials: true }
           ),
       })
 
-      if (res.data.message.includes("email")) {
+      if (res.data.message.includes('email')) {
         alertDispatch({
-          type: "set",
+          type: 'set',
           alert: makeInfoAlert({
-            title: "Please check your email",
+            title: 'Please check your email',
             content:
-              "We sent you an email containing a link you can use to sign in.",
-            size: "dialog",
+              'We sent you an email containing a link you can use to sign in.',
+            size: 'dialog',
           }),
         })
 
@@ -244,7 +244,7 @@ export function SignIn({ allowPassword = true, visitUrl }: ISignInProps) {
     } catch (error) {
       console.log(error)
       alertDispatch({
-        type: "add",
+        type: 'add',
         alert: makeAlertFromAxiosError(error as AxiosError),
       })
     }
@@ -272,8 +272,8 @@ export function SignIn({ allowPassword = true, visitUrl }: ISignInProps) {
           </VCenterRow>
           <CardDescription>
             {settings.passwordless
-              ? "Enter your username or email address to sign in."
-              : "Enter your username and password to sign in."}
+              ? 'Enter your username or email address to sign in.'
+              : 'Enter your username and password to sign in.'}
           </CardDescription>
         </CardHeader>
         <CardContent>

@@ -2,31 +2,30 @@ import {
   BaseTabsList,
   BaseTabsTrigger,
   Tabs,
-} from "@components/shadcn/ui/themed/tabs"
-import { VCenterRow } from "@components/v-center-row"
-import { ChevronRightIcon } from "@icons/chevron-right-icon"
-import type { TabsProps } from "@radix-ui/react-tabs"
+} from '@components/shadcn/ui/themed/tabs'
+import { VCenterRow } from '@components/v-center-row'
+import { ChevronRightIcon } from '@icons/chevron-right-icon'
+import type { TabsProps } from '@radix-ui/react-tabs'
 import {
   forwardRef,
   useEffect,
   useMemo,
-  useRef,
   useState,
   type ForwardedRef,
   type ReactNode,
-} from "react"
-import { ToolbarIconButton } from "./toolbar-icon-button"
-import { ToolbarTabGroup } from "./toolbar-tab-group"
+} from 'react'
+import { ToolbarIconButton } from './toolbar-icon-button'
+import { ToolbarTabGroup } from './toolbar-tab-group'
 
-import { Button } from "@components/shadcn/ui/themed/button"
-import { cn } from "@lib/class-names"
-import { motion } from "framer-motion"
+import { Button } from '@components/shadcn/ui/themed/button'
+import { cn } from '@lib/class-names'
+import { motion } from 'framer-motion'
 import {
   getTabFromValue,
   getTabId,
   type ITab,
   type ITabProvider,
-} from "../tab-provider"
+} from '../tab-provider'
 
 // const LINE_CLS =
 //   "tab-line absolute bottom-0 left-0 block h-0.5 bg-theme"
@@ -53,7 +52,7 @@ export const BottomBar = forwardRef(function BottomBar(
     rightContent,
     className,
   }: IProps,
-  ref: ForwardedRef<HTMLDivElement>,
+  ref: ForwardedRef<HTMLDivElement>
 ) {
   //const [tabUnderlineProps, setTabUnderlineProps] = useState<ITabProps[]>([])
   const [_scale, setScale] = useState(1)
@@ -62,16 +61,13 @@ export const BottomBar = forwardRef(function BottomBar(
   //const tabLineRef1 = useRef<HTMLSpanElement>(null)
   //const tabLineRef2 = useRef<HTMLSpanElement>(null)
 
-  const lineRef = useRef<SVGLineElement>(null)
-  const currentTab = useRef<number>(-1)
-  const initial = useRef(true)
   const selectedTab = useMemo(() => getTabFromValue(value, tabs), [value, tabs])
   const [tabPos, setTabPos] = useState<{
     x: string
     width: string
   }>({
-    x: "0rem",
-    width: "0rem",
+    x: '0rem',
+    width: '0rem',
   })
 
   if (!selectedTab) {
@@ -110,9 +106,9 @@ export const BottomBar = forwardRef(function BottomBar(
           }
           totalW += width
           return [tabId, ret]
-        }),
+        })
       ),
-    [tabs, defaultWidth, padding],
+    [tabs, defaultWidth, padding]
   )
 
   useEffect(() => {
@@ -236,7 +232,7 @@ export const BottomBar = forwardRef(function BottomBar(
       ref={ref}
       value={tabId}
       onValueChange={_onValueChange}
-      className={cn("flex grow flex-col ", className)}
+      className={cn('flex grow flex-col ', className)}
     >
       {/* <TabPanels className="grow">{c}</TabPanels> */}
 
@@ -266,7 +262,7 @@ export const BottomBar = forwardRef(function BottomBar(
                   tabs
                     .map((t, ti) => [t, ti] as [ITab, number])
                     .filter(t => t[0].id === getTabId(selectedTab?.tab))
-                    .map(t => t[1])[0] - 1,
+                    .map(t => t[1])[0] - 1
                 )
 
                 _onValueChange(getTabId(tabs[i]))
@@ -284,7 +280,7 @@ export const BottomBar = forwardRef(function BottomBar(
                   tabs
                     .map((t, ti) => [t, ti] as [ITab, number])
                     .filter(t => t[0].id === getTabId(selectedTab?.tab))
-                    .map(t => t[1])[0] + 1,
+                    .map(t => t[1])[0] + 1
                 )
 
                 _onValueChange(getTabId(tabs[i]))
@@ -303,7 +299,7 @@ export const BottomBar = forwardRef(function BottomBar(
             //   setScale(1)
             // }}
           >
-            {tabs.map((tab, ti) => {
+            {tabs.map(tab => {
               //const id = makeTabId(tab, ti)
 
               const tabId = getTabId(tab)
@@ -361,8 +357,8 @@ export const BottomBar = forwardRef(function BottomBar(
 
             <motion.span
               className="absolute top-0 h-[2px] z-0 bg-theme rounded-md"
-              animate={{ ...tabPos, transformOrigin: "center" }}
-              transition={{ ease: "easeOut", duration: 0.2 }}
+              animate={{ ...tabPos, transformOrigin: 'center' }}
+              transition={{ ease: 'easeOut', duration: 0.2 }}
               initial={false}
               //transition={{ type: "spring" }}
             />

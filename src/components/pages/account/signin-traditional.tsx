@@ -4,27 +4,28 @@ import {
   AlertsContext,
   AlertsProvider,
   makeAlertFromAxiosError,
-} from "@components/alerts/alerts-provider"
-import { FORWARD_DELAY_MS, makeSignedInAlert } from "@layouts/signin-layout"
+} from '@components/alerts/alerts-provider'
+import { FORWARD_DELAY_MS, makeSignedInAlert } from '@layouts/signin-layout'
 import {
   bearerHeaders,
   EDB_TOKEN_PARAM as EDB_JWT_PARAM,
   SESSION_PASSWORDLESS_SIGNIN_URL,
   SIGNEDIN_ROUTE,
-} from "@modules/edb"
+} from '@modules/edb'
 
-import { AccountSettingsProvider } from "@providers/account-settings-provider"
-import { AuthProvider } from "@providers/auth-provider"
+import { AccountSettingsProvider } from '@providers/account-settings-provider'
+import { AuthProvider } from '@providers/auth-provider'
 
-import { SignIn } from "@components/auth/signin"
-import { VCenterCol } from "@components/v-center-col"
-import { useQueryClient } from "@tanstack/react-query"
-import axios, { AxiosError } from "axios"
-import { jwtDecode } from "jwt-decode"
+import { SignIn } from '@components/auth/signin'
+import { VCenterCol } from '@components/v-center-col'
+import { useQueryClient } from '@tanstack/react-query'
+import axios, { AxiosError } from 'axios'
+import { jwtDecode } from 'jwt-decode'
 
-import { redirect } from "@lib/urls"
-import { useContext, useEffect, useState } from "react"
-import type { ICallbackJwtPayload } from "./verify"
+import { redirect } from '@lib/urls'
+import { useContext, useEffect, useState } from 'react'
+import type { ICallbackJwtPayload } from './verify'
+import { CoreProviders } from '@providers/core-providers'
 
 // async function signIn(jwt: string): Promise<AxiosResponse> {
 //   console.log("signin")
@@ -54,7 +55,7 @@ function SignInPage() {
 
   async function signin() {
     const queryParameters = new URLSearchParams(window.location.search)
-    const jwt = queryParameters.get(EDB_JWT_PARAM) ?? ""
+    const jwt = queryParameters.get(EDB_JWT_PARAM) ?? ''
 
     if (!jwt) {
       return
@@ -63,7 +64,7 @@ function SignInPage() {
     try {
       // first validate jwt and ensure no errors
       await queryClient.fetchQuery({
-        queryKey: ["signin"],
+        queryKey: ['signin'],
         queryFn: () =>
           axios.post(
             SESSION_PASSWORDLESS_SIGNIN_URL,
@@ -72,12 +73,12 @@ function SignInPage() {
             {
               headers: bearerHeaders(jwt),
               withCredentials: true,
-            },
+            }
           ),
       })
 
       alertDispatch({
-        type: "set",
+        type: 'set',
         alert: makeSignedInAlert(),
       })
 
@@ -89,12 +90,12 @@ function SignInPage() {
       const visitUrl = jwtData.url
 
       setTimeout(() => {
-        redirect(`${SIGNEDIN_ROUTE}${visitUrl ? `?url=${visitUrl}` : ""}`)
+        redirect(`${SIGNEDIN_ROUTE}${visitUrl ? `?url=${visitUrl}` : ''}`)
       }, FORWARD_DELAY_MS)
     } catch (error) {
       // we encounted a login error
       alertDispatch({
-        type: "add",
+        type: 'add',
         alert: makeAlertFromAxiosError(error as AxiosError),
       })
     }
@@ -112,23 +113,23 @@ function SignInPage() {
 }
 
 export function SignInQueryPage() {
-  const [url, setUrl] = useState("")
+  const [url, setUrl] = useState('')
 
   useEffect(() => {
     setUrl(window.location.href)
   }, [])
 
   if (!url) {
-    return "Getting page url..."
+    return 'Getting page url...'
   }
 
   return (
     <AuthProvider callbackUrl={url}>
-      <AlertsProvider>
-        <AccountSettingsProvider>
+      <CoreProviders>
+ 
           <SignInPage />
-        </AccountSettingsProvider>
-      </AlertsProvider>
+ 
+      </CoreProviders>
     </AuthProvider>
   )
 }

@@ -1,30 +1,30 @@
-import type { IStringMap } from "@interfaces/string-map"
-import { cn } from "@lib/class-names"
-import * as RadioGroupPrimitive from "@radix-ui/react-radio-group"
+import type { IStringMap } from '@interfaces/string-map'
+import { cn } from '@lib/class-names'
+import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 import {
   CENTERED_ROW_CLS,
   FOCUS_RING_CLS,
   TRANS_COLOR_CLS,
   V_CENTERED_ROW_CLS,
-} from "@theme"
+} from '@theme'
 import {
   forwardRef,
   type ComponentPropsWithoutRef,
   type ElementRef,
-} from "react"
+} from 'react'
 
 const RADIO_CLS = cn(
   V_CENTERED_ROW_CLS,
-  "group gap-x-1.5 text-primary disabled:cursor-not-allowed disabled:opacity-50 min-w-0",
+  'group gap-x-1.5 text-primary disabled:cursor-not-allowed disabled:opacity-50 min-w-0'
 )
 
 const RADIO_BUTTON_CLS = cn(
   FOCUS_RING_CLS,
   CENTERED_ROW_CLS,
-  "aspect-square h-5 w-5 rounded-full bg-background border-2",
-  "data-[state=unchecked]:border-border data-[state=checked]:border-theme",
-  "data-[state=unchecked]:group-hover:border-theme/50",
-  "trans-color",
+  'aspect-square h-5 w-5 rounded-full bg-background border-2',
+  'data-[state=unchecked]:border-border data-[state=checked]:border-theme',
+  'data-[state=unchecked]:group-hover:border-theme/50',
+  'trans-color'
 )
 
 const RadioGroup = forwardRef<
@@ -65,20 +65,20 @@ interface SideRadioGroupItemProps
 
 const BASE_SIDE_CLS = cn(
   TRANS_COLOR_CLS,
-  "relative aspect-square bg-background z-0 border border-dashed border-primary border-primary/50",
+  'relative aspect-square bg-background z-0 border border-dashed border-primary border-primary/50'
 )
 
 const SIDE_BUTTON_CLS = cn(
   TRANS_COLOR_CLS,
-  "relative aspect-square overflow-hidden rounded border p-1 data-[state=checked]:border-border data-[state=unchecked]:border-transparent data-[state=checked]:bg-muted data-[state=unchecked]:hover:border-border data-[state=unchecked]:hover:bg-muted",
+  'relative aspect-square overflow-hidden rounded border p-1 data-[state=checked]:border-border data-[state=unchecked]:border-transparent data-[state=checked]:bg-muted data-[state=unchecked]:hover:border-border data-[state=unchecked]:hover:bg-muted'
 )
 
 const BORDER_MAP: IStringMap = {
-  Off: "",
-  Top: "-rotate-90",
-  Bottom: "rotate-90",
-  Left: "rotate-180",
-  Right: "",
+  Off: '',
+  Top: '-rotate-90',
+  Bottom: 'rotate-90',
+  Left: 'rotate-180',
+  Right: '',
 }
 
 export const SideRadioGroupItem = forwardRef<
@@ -98,12 +98,12 @@ export const SideRadioGroupItem = forwardRef<
       <div className={cn(BASE_SIDE_CLS, BORDER_MAP[value], className)}>
         {/* <span className="absolute left-0 top-0 z-10 border border-dashed border-primary border-primary/50 h-full" /> */}
 
-        {value !== "Off" && (
+        {value !== 'Off' && (
           <span
-            data-state={value === currentValue ? "checked" : "unchecked"}
+            data-state={value === currentValue ? 'checked' : 'unchecked'}
             className={cn(
-              "absolute -right-px top-0 z-20 w-[3px]  bg-foreground",
-              [value.includes("Upper"), "h-1/2", "h-full"],
+              'absolute -right-px top-0 z-20 w-[3px]  bg-foreground',
+              [value.includes('Upper'), 'h-1/2', 'h-full']
             )}
           ></span>
         )}

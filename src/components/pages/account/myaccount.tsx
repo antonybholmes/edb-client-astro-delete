@@ -7,14 +7,13 @@ import {
   CardHeader,
   CardTitle,
   CenteredCardContainer,
-} from "@components/shadcn/ui/themed/card"
+} from '@components/shadcn/ui/themed/card'
 
 import {
   AlertsContext,
-  AlertsProvider,
   makeAlertFromAxiosError,
   makeInfoAlert,
-} from "@components/alerts/alerts-provider"
+} from '@components/alerts/alerts-provider'
 import {
   EMAIL_PATTERN,
   NAME_PATTERN,
@@ -24,7 +23,7 @@ import {
   TEXT_USERNAME_DESCRIPTION,
   TEXT_USERNAME_REQUIRED,
   USERNAME_PATTERN,
-} from "@layouts/signin-layout"
+} from '@layouts/signin-layout'
 
 import {
   API_UPDATE_USER_URL,
@@ -33,7 +32,7 @@ import {
   rolesFromAccessToken,
   TEXT_MY_ACCOUNT,
   type IUser,
-} from "@modules/edb"
+} from '@modules/edb'
 
 import {
   useContext,
@@ -41,28 +40,29 @@ import {
   useRef,
   useState,
   type BaseSyntheticEvent,
-} from "react"
+} from 'react'
 
-import { PasswordDialog } from "./password-dialog"
+import { PasswordDialog } from './password-dialog'
 
-import { FormInputError } from "@components/input-error"
-import { Button } from "@components/shadcn/ui/themed/button"
-import { Form, FormField, FormItem } from "@components/shadcn/ui/themed/form"
-import { VCenterRow } from "@components/v-center-row"
-import { AccountSettingsProvider } from "@providers/account-settings-provider"
+import { FormInputError } from '@components/input-error'
+import { Button } from '@components/shadcn/ui/themed/button'
+import { Form, FormField, FormItem } from '@components/shadcn/ui/themed/form'
+import { VCenterRow } from '@components/v-center-row'
+import { AccountSettingsProvider } from '@providers/account-settings-provider'
 
-import { Input } from "@components/shadcn/ui/themed/input"
-import { Label } from "@components/shadcn/ui/themed/label"
+import { Input } from '@components/shadcn/ui/themed/input'
+import { Label } from '@components/shadcn/ui/themed/label'
 
-import { CenterRow } from "@components/center-row"
-import { ReloadIcon } from "@components/icons/reload-icon"
+import { CenterRow } from '@components/center-row'
+import { ReloadIcon } from '@components/icons/reload-icon'
 
-import { useEdbAuth } from "@providers/edb-auth-provider"
-import { useQueryClient } from "@tanstack/react-query"
-import axios, { AxiosError } from "axios"
-import { useForm } from "react-hook-form"
-import type { IUserAdminView } from "../admin/edit-user-dialog"
-import { EmailDialog } from "./email-dialog"
+import { CoreProviders } from '@providers/core-providers'
+import { useEdbAuth } from '@providers/edb-auth-provider'
+import { useQueryClient } from '@tanstack/react-query'
+import axios, { AxiosError } from 'axios'
+import { useForm } from 'react-hook-form'
+import type { IUserAdminView } from '../admin/edit-user-dialog'
+import { EmailDialog } from './email-dialog'
 
 // interface IFormInput {
 //   publicId: string
@@ -120,7 +120,7 @@ function MyAccountPage() {
   // },[accessToken])
 
   useEffect(() => {
-    if (user && user.publicId !== "" && roles.length > 0) {
+    if (user && user.publicId !== '' && roles.length > 0) {
       form.reset({
         ...user,
         roles,
@@ -131,7 +131,7 @@ function MyAccountPage() {
   async function updateRemoteUser(
     username: string,
     firstName: string,
-    lastName: string,
+    lastName: string
   ) {
     // force load of token in case it expired and needs
     // refresh
@@ -140,7 +140,7 @@ function MyAccountPage() {
     try {
       // write update to remote
       const res = await queryClient.fetchQuery({
-        queryKey: ["update"],
+        queryKey: ['update'],
         queryFn: () =>
           axios.post(
             API_UPDATE_USER_URL, //SESSION_UPDATE_USER_URL,
@@ -152,7 +152,7 @@ function MyAccountPage() {
             {
               headers: bearerHeaders(accessToken),
               //withCredentials: true,
-            },
+            }
           ),
       })
 
@@ -163,16 +163,16 @@ function MyAccountPage() {
       updateUser(user)
 
       alertDispatch({
-        type: "set",
+        type: 'set',
         alert: makeInfoAlert({
-          title: "Your account information was updated",
+          title: 'Your account information was updated',
         }),
       })
     } catch (err) {
-      console.log("update err", err)
+      console.log('update err', err)
 
       alertDispatch({
-        type: "add",
+        type: 'add',
         alert: makeAlertFromAxiosError(err as AxiosError),
       })
     }
@@ -202,7 +202,7 @@ function MyAccountPage() {
   //   setAccount(account)
   // }
 
-  console.log("my account")
+  console.log('my account')
 
   return (
     <SignInLayout title={TEXT_MY_ACCOUNT} signInEnabled={true}>
@@ -263,7 +263,7 @@ function MyAccountPage() {
                         },
                         pattern: {
                           value: NAME_PATTERN,
-                          message: "This does not seem like a valid name",
+                          message: 'This does not seem like a valid name',
                         },
                       }}
                       render={({ field }) => (
@@ -295,7 +295,7 @@ function MyAccountPage() {
                       rules={{
                         pattern: {
                           value: NAME_PATTERN,
-                          message: "This does not seem like a valid name",
+                          message: 'This does not seem like a valid name',
                         },
                       }}
                       render={({ field }) => (
@@ -364,7 +364,7 @@ function MyAccountPage() {
                         rules={{
                           required: {
                             value: true,
-                            message: "An email address is required",
+                            message: 'An email address is required',
                           },
                           pattern: {
                             value: EMAIL_PATTERN,
@@ -406,7 +406,7 @@ function MyAccountPage() {
                         <FormItem className="col-span-1">
                           <Input
                             id="roles"
-                            value={field.value.join(", ")}
+                            value={field.value.join(', ')}
                             className="w-full rounded-md"
                             placeholder="Roles"
                             readOnly
@@ -495,10 +495,10 @@ function MyAccountPage() {
 
 export function MyAccountQueryPage() {
   return (
-    <AlertsProvider>
-      <AccountSettingsProvider>
+    <CoreProviders>
+ 
         <MyAccountPage />
-      </AccountSettingsProvider>
-    </AlertsProvider>
+ 
+    </CoreProviders>
   )
 }

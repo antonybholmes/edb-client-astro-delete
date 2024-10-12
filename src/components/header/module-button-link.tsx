@@ -1,6 +1,6 @@
-import { ButtonLink } from "@components/link/button-link"
-import { type ILinkProps } from "@interfaces/link-props"
-import { cn } from "@lib/class-names"
+import { ButtonLink } from '@components/link/button-link'
+import { type ILinkProps } from '@interfaces/link-props'
+import { cn } from '@lib/class-names'
 
 export function ModuleButtonLink({
   className,
@@ -15,8 +15,8 @@ export function ModuleButtonLink({
       items="start"
       pad="sm"
       className={cn(
-        "h-full justify-start gap-x-2 py-2 data-[selected=true]:bg-muted data-[selected=false]:hover:bg-muted",
-        className,
+        'h-full justify-start gap-x-2 py-2 data-[selected=true]:bg-muted data-[selected=false]:hover:bg-muted',
+        className
       )}
       {...props}
     >
