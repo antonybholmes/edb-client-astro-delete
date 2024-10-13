@@ -30,12 +30,12 @@ export const inputVariants = cva(PLACEHOLDER_CLS, {
     },
     h: {
       sm: 'h-8',
-      base: 'h-9'
-    }
+      base: 'h-9',
+    },
   },
   defaultVariants: {
     variant: 'default',
-    h: 'base'
+    h: 'base',
   },
 })
 

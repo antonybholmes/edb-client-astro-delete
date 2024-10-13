@@ -180,15 +180,14 @@ export interface IDataFrameCanvasProps extends IElementProps {
   editable?: boolean
 }
 
-export function DataFrameCanvas(
-  {
-    df,
-    cellSize = DEFAULT_CELL_SIZE,
-    dp = 3,
-    scale = 1,
-    editable = false,
-    className,
-  }: IDataFrameCanvasProps) {
+export function DataFrameCanvas({
+  df,
+  cellSize = DEFAULT_CELL_SIZE,
+  dp = 3,
+  scale = 1,
+  editable = false,
+  className,
+}: IDataFrameCanvasProps) {
   // determines which cell is selected. Setting one dimension to -1
   // allows either a row or col to be highlighed
 
@@ -1367,10 +1366,8 @@ export function DataFrameCanvas(
       )
 
       setSelectedCellRefText(
-        `${
-          selection.current.start.row + 1
-        }R x ${
-           selection.current.start.col  + 1
+        `${selection.current.start.row + 1}R x ${
+          selection.current.start.col + 1
         }C`
       )
     } else {

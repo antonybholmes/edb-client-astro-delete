@@ -1,4 +1,4 @@
-import { useRef,  type RefObject } from 'react'
+import { useRef, type RefObject } from 'react'
 
 interface IProps {
   canAnimate?: boolean
@@ -12,7 +12,7 @@ export const EDGE_SCROLL_ZONE = 20
 // converted from https://github.com/07harish/React-scroll-on-edges/blob/master/src/hooks/useScrollOnEdges.js
 
 export function useScrollOnEdges(
-  ref:  RefObject<HTMLElement|null>,
+  ref: RefObject<HTMLElement | null>,
   props: IProps = {}
 ) {
   const { canAnimate, edgeSize, scrollSpeed, onMouseUp } = {

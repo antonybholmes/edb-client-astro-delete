@@ -3,10 +3,10 @@ import { cn } from '@lib/class-names'
 import { type ReactNode } from 'react'
 
 import { APP_NAME } from '@consts'
- 
+
+import type { IElementProps } from '@interfaces/element-props'
 import { EDBSignedIn } from '@modules/edb-signedin'
 import { HeaderMenu } from './header-menu'
-import type { IElementProps } from '@interfaces/element-props'
 
 export interface IHeaderChildrenProps {
   headerLeftChildren?: ReactNode
@@ -22,7 +22,9 @@ export function Header({
   headerRightChildren,
   children,
 }: IHeaderProps) {
-   className = className?className:'bg-gradient-to-r from-blue-500 to-indigo-500'
+  className = className
+    ? className
+    : 'bg-gradient-to-r from-blue-500 to-indigo-500'
   console.log(className, 'Asdasdasd ssssss')
 
   return (

@@ -20,7 +20,7 @@ export function HeaderLayout({
       <Header
         headerLeftChildren={headerLeftChildren}
         headerRightChildren={headerRightChildren}
-         className={headerClassName}
+        className={headerClassName}
       >
         {headerCenterChildren}
       </Header>

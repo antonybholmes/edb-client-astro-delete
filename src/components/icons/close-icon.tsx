@@ -21,5 +21,4 @@ export function CloseIcon({
       <path d="M 1,1 L 15,15 M 15,1 L 1,15" />
     </svg>
   )
- 
 }

@@ -27,7 +27,7 @@ import {
   getNumCol,
 } from '@lib/dataframe/dataframe-utils'
 import { downloadImageAutoFormat } from '@lib/image-utils'
- 
+
 import { HistoryContext } from '@providers/history-provider'
 
 import { range } from '@lib/math/range'
