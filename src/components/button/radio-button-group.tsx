@@ -19,7 +19,7 @@ export function RadioButtonGroup({
   const [, setIndex] = useState(selected)
 
   function _onRadioClick(index: number) {
-    setIndex(items[index])
+    setIndex(items[index]!)
 
     onRadioClick(index)
   }

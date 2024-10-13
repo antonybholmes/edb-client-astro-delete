@@ -149,8 +149,8 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
       ? _displayProps.colorbar.width + _displayProps.padding
       : 0)
 
-  const innerWidth = cf.dataframes['main'].shape[1] * blockSize.w
-  const innerHeight = cf.dataframes['main'].shape[0] * blockSize.h
+  const innerWidth = cf.dataframes['main']!.shape[1] * blockSize.w
+  const innerHeight = cf.dataframes['main']!.shape[0] * blockSize.h
   const width = innerWidth + marginLeft + marginRight
   const height = innerHeight + marginTop + marginBottom
 
@@ -183,10 +183,10 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
     //   // @ts-ignore
     //   .range(["blue", "white", "red"])
 
-    const dfMain = cf.dataframes['main']
-    const dfPercent = cf.dataframes['percent']
+    const dfMain = cf.dataframes['main']!
+    const dfPercent = cf.dataframes['percent']!
 
-    const s = cf.dataframes['main'].shape
+    const s = cf.dataframes['main']!.shape
 
     const rowLeaves = cf.rowTree ? cf.rowTree.leaves : range(0, s[0])
     const colLeaves = cf.colTree ? cf.colTree.leaves : range(0, s[1])
@@ -194,7 +194,7 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
     const colColorMap = Object.fromEntries(
       groups
         .map(group =>
-          getColIdxFromGroup(cf.dataframes['main'], group).map(c => [
+          getColIdxFromGroup(cf.dataframes['main']!, group).map(c => [
             c,
             group.color,
           ])
@@ -228,15 +228,15 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
                 return (
                   <line
                     key={ri * 3 + i}
-                    x1={coords[i][0] * innerWidth}
+                    x1={coords[i]![0]! * innerWidth}
                     y1={
                       _displayProps.colTree.width -
-                      coords[i][1] * _displayProps.colTree.width
+                      coords[i]![1]! * _displayProps.colTree.width
                     }
-                    x2={coords[i + 1][0] * innerWidth}
+                    x2={coords[i + 1]![0]! * innerWidth}
                     y2={
                       _displayProps.colTree.width -
-                      coords[i + 1][1] * _displayProps.colTree.width
+                      coords[i + 1]![1]! * _displayProps.colTree.width
                     }
                     stroke="black"
                   />
@@ -277,15 +277,15 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
                 return (
                   <line
                     key={ri * 3 + i}
-                    y1={coords[i][0] * innerHeight}
+                    y1={coords[i]![0]! * innerHeight}
                     x1={
                       _displayProps.rowTree.width -
-                      coords[i][1] * _displayProps.rowTree.width
+                      coords[i]![1]! * _displayProps.rowTree.width
                     }
-                    y2={coords[i + 1][0] * innerHeight}
+                    y2={coords[i + 1]![0]! * innerHeight}
                     x2={
                       _displayProps.rowTree.width -
-                      coords[i + 1][1] * _displayProps.rowTree.width
+                      coords[i + 1]![1]! * _displayProps.rowTree.width
                     }
                     stroke="black"
                   />
@@ -311,10 +311,10 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
                 return (
                   <line
                     key={ri * 3 + i}
-                    y1={coords[i][0] * innerHeight}
-                    x1={coords[i][1] * _displayProps.rowTree.width}
-                    y2={coords[i + 1][0] * innerHeight}
-                    x2={coords[i + 1][1] * _displayProps.rowTree.width}
+                    y1={coords[i]![0]! * innerHeight}
+                    x1={coords[i]![1]! * _displayProps.rowTree.width}
+                    y2={coords[i + 1]![0]! * innerHeight}
+                    x2={coords[i + 1]![1]! * _displayProps.rowTree.width}
                     stroke="black"
                   />
                 )
@@ -333,7 +333,7 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
                 : margin.left
             }, ${marginTop})`}
           >
-            {cf.dataframes['main'].rowNames.map((index, ri) => {
+            {cf.dataframes['main']!.rowNames.map((index, ri) => {
               return (
                 <text
                   key={ri}
@@ -366,7 +366,7 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
                   dominantBaseline="central"
                   fontSize="smaller"
                 >
-                  {cf.dataframes['main'].rowNames[ri]}
+                  {cf.dataframes['main']!.rowNames[ri]}
                 </text>
               )
             })}
@@ -447,7 +447,7 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
                 : 0)
             })`}
           >
-            {cf.dataframes['main'].colNames.map((index, ri) => {
+            {cf.dataframes['main']!.colNames.map((index, ri) => {
               return (
                 <text
                   key={ri}
@@ -483,7 +483,7 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
                   textAnchor="end"
                   fontSize="smaller"
                 >
-                  {cf.dataframes['main'].getColName(ci)}
+                  {cf.dataframes['main']!.getColName(ci)}
                 </text>
               )
             })}
@@ -608,7 +608,7 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
         (blockSize.w * _displayProps.scale)
     )
 
-    if (c < 0 || c > cf.dataframes['main'].shape[1] - 1) {
+    if (c < 0 || c > cf.dataframes['main']!.shape[1]! - 1) {
       c = -1
     }
 
@@ -622,7 +622,7 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
         (blockSize.h * _displayProps.scale)
     )
 
-    if (r < 0 || r > cf.dataframes['main'].shape[0] - 1) {
+    if (r < 0 || r > cf.dataframes['main']!.shape[0] - 1) {
       r = -1
     }
 
@@ -640,7 +640,7 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
     }
   }
 
-  const inBlock = highlightCol[0] > -1 && highlightCol[1] > -1
+  const inBlock = highlightCol[0]! > -1 && highlightCol[1]! > -1
 
   return (
     <>
@@ -657,11 +657,14 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
         {inBlock && (
           <>
             <p className="font-semibold">
-              {cf.dataframes['main'].getColName(toolTipInfo.pos)}
+              {cf.dataframes['main']!.getColName(toolTipInfo.pos)}
             </p>
             <p>
               {cellStr(
-                cf.dataframes['main'].get(toolTipInfo.seqIndex, toolTipInfo.pos)
+                cf.dataframes['main']!.get(
+                  toolTipInfo.seqIndex,
+                  toolTipInfo.pos
+                )
               )}
             </p>
             <p>
@@ -680,11 +683,12 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
         ])}
         style={{
           top: `${
-            (marginTop + highlightCol[0] * blockSize.h) * _displayProps.scale -
+            (marginTop + highlightCol[0]! * blockSize.h) * _displayProps.scale -
             1
           }px`,
           left: `${
-            (marginLeft + highlightCol[1] * blockSize.w) * _displayProps.scale -
+            (marginLeft + highlightCol[1]! * blockSize.w) *
+              _displayProps.scale -
             1
           }px`,
           width: `${blockSize.w * _displayProps.scale + 1}px`,

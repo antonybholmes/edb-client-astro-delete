@@ -74,7 +74,7 @@ export const GexPropsPanel = forwardRef(function GexPropsPanel(
       <OKCancelDialog
         open={confirmClear}
         title={INFO.name}
-        onReponse={r => {
+        onReponse={() => {
           setConfirmClear(false)
         }}
       >
@@ -218,7 +218,7 @@ export const GexPropsPanel = forwardRef(function GexPropsPanel(
                 <SwitchPropRow
                   title="Box & whiskers"
                   labelClassName="font-medium"
-                  checked={showAll['box']}
+                  checked={showAll['box']!}
                   onCheckedChange={state => {
                     updateGexPlotSettings(
                       Object.fromEntries(
@@ -240,8 +240,8 @@ export const GexPropsPanel = forwardRef(function GexPropsPanel(
                 <VCenterRow className="gap-y-1 gap-x-4 pl-4">
                   <CheckPropRow
                     title="Fill"
-                    checked={fillAll['box']}
-                    disabled={!showAll['box']}
+                    checked={fillAll['box']!}
+                    disabled={!showAll['box']!}
                     onCheckedChange={state => {
                       updateGexPlotSettings(
                         Object.fromEntries(
@@ -269,8 +269,8 @@ export const GexPropsPanel = forwardRef(function GexPropsPanel(
 
                   <CheckPropRow
                     title="Stroke"
-                    checked={strokeAll['box']}
-                    disabled={!showAll['box']}
+                    checked={strokeAll['box']!}
+                    disabled={!showAll['box']!}
                     onCheckedChange={state => {
                       updateGexPlotSettings(
                         Object.fromEntries(
@@ -302,7 +302,7 @@ export const GexPropsPanel = forwardRef(function GexPropsPanel(
                 <SwitchPropRow
                   title="Violins"
                   labelClassName="font-medium"
-                  checked={showAll['violin']}
+                  checked={showAll['violin']!}
                   onCheckedChange={state => {
                     updateGexPlotSettings(
                       Object.fromEntries(
@@ -325,8 +325,8 @@ export const GexPropsPanel = forwardRef(function GexPropsPanel(
                 <VCenterRow className="gap-y-1 gap-x-4 pl-4">
                   <CheckPropRow
                     title="Fill"
-                    checked={fillAll['violin']}
-                    disabled={!showAll['violin']}
+                    checked={fillAll['violin']!}
+                    disabled={!showAll['violin']!}
                     onCheckedChange={state => {
                       updateGexPlotSettings(
                         Object.fromEntries(
@@ -354,8 +354,8 @@ export const GexPropsPanel = forwardRef(function GexPropsPanel(
 
                   <CheckPropRow
                     title="Stroke"
-                    checked={strokeAll['violin']}
-                    disabled={!showAll['violin']}
+                    checked={strokeAll['violin']!}
+                    disabled={!showAll['violin']!}
                     onCheckedChange={state => {
                       updateGexPlotSettings(
                         Object.fromEntries(
@@ -387,7 +387,7 @@ export const GexPropsPanel = forwardRef(function GexPropsPanel(
                 <SwitchPropRow
                   title="Swarms"
                   labelClassName="font-medium"
-                  checked={showAll['swarm']}
+                  checked={showAll['swarm']!}
                   onCheckedChange={state => {
                     updateGexPlotSettings(
                       Object.fromEntries(
@@ -409,8 +409,8 @@ export const GexPropsPanel = forwardRef(function GexPropsPanel(
                 <VCenterRow className="gap-y-1 gap-x-4 pl-4">
                   <CheckPropRow
                     title="Fill"
-                    checked={fillAll['swarm']}
-                    disabled={!showAll['swarm']}
+                    checked={fillAll['swarm']!}
+                    disabled={!showAll['swarm']!}
                     onCheckedChange={state => {
                       updateGexPlotSettings(
                         Object.fromEntries(
@@ -438,8 +438,8 @@ export const GexPropsPanel = forwardRef(function GexPropsPanel(
 
                   <CheckPropRow
                     title="Stroke"
-                    checked={strokeAll['swarm']}
-                    disabled={!showAll['swarm']}
+                    checked={strokeAll['swarm']!}
+                    disabled={!showAll['swarm']!}
                     onCheckedChange={state => {
                       updateGexPlotSettings(
                         Object.fromEntries(

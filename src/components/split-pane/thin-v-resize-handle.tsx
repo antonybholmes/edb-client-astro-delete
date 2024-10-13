@@ -6,7 +6,7 @@ const CLS =
   'group flex shrink-0 grow-0 cursor-ns-resize flex-row items-center justify-center outline-none'
 
 export function ThinVResizeHandle({
-  id,
+  id = '',
   h = 'py-4',
   lineClassName,
   className,

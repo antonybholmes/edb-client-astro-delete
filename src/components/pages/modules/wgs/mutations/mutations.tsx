@@ -116,9 +116,9 @@ export function MutationsPage() {
   const [rightTab, setRightTab] = useState('Search')
 
   //const [colorMapName, setColorMap] = useState("Lymphgen")
-  const [sampleColorMap, setSampleColorMap] = useState<
-    Map<string, string> | undefined
-  >(undefined)
+  const [sampleColorMap, setSampleColorMap] = useState<Map<string, string>>(
+    new Map<string, string>()
+  )
 
   //const [databases, setDatabases] = useState<IMutationDB[]>([])
 
@@ -277,7 +277,7 @@ export function MutationsPage() {
           datasets
             .map(d => d.samples)
             .flat()
-            .map(s => [s.publicId, s.coo in cmap ? cmap[s.coo] : 'black'])
+            .map(s => [s.publicId, s.coo in cmap ? cmap[s.coo]! : 'black'])
         )
 
         console.log(scm)
@@ -291,7 +291,7 @@ export function MutationsPage() {
             .flat()
             .map(s => [
               s.publicId,
-              s.lymphgen in cmap ? cmap[s.lymphgen] : 'black',
+              s.lymphgen in cmap ? cmap[s.lymphgen]! : 'black',
             ])
         )
 
@@ -481,7 +481,7 @@ export function MutationsPage() {
         cooMap.get(mutation.sample) ?? '',
         lymphgenMap.get(mutation.sample) ?? '',
       ]
-    })
+    })!
 
     const df = new DataFrame({
       data,
@@ -970,7 +970,7 @@ export function MutationsPage() {
 
             <CollapseTree
               tab={foldersTab}
-              value={tab}
+              value={tab!}
               onValueChange={t => {
                 // only use tabs from the tree that have content, otherwise
                 // the ui will appear empty

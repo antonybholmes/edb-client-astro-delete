@@ -19,25 +19,25 @@ export class DataIndex extends Index {
   //   return this
   // }
 
-  get name(): IndexType {
+  override get name(): IndexType {
     return this._name
   }
 
-  get values(): IndexType[] {
+  override get values(): IndexType[] {
     return [...this._data]
   }
 
-  get(index: number): IndexType {
+  override get(index: number): IndexType {
     return this._data[index] ?? NaN
   }
 
-  get size(): number {
+  override get size(): number {
     return this._data.length
   }
 
-  filter(idx: number[]): Index {
+  override filter(idx: number[]): Index {
     return new DataIndex(
-      idx.map(i => this._data[i]),
+      idx.map(i => this._data[i]!),
       { name: this._name }
     )
   }
@@ -50,7 +50,7 @@ export class DataIndex extends Index {
     )
   }
 
-  find(t: IndexType): number[] {
+  override find(t: IndexType): number[] {
     const s = t.toString().toLowerCase()
 
     // console.log(
@@ -69,7 +69,7 @@ export class DataIndex extends Index {
       .map((x: [string, number]) => x[1])
   }
 
-  copy(): Index {
+  override copy(): Index {
     console.log('copy index', this._name)
     return new DataIndex([...this._data], { name: this._name })
   }

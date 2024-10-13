@@ -88,8 +88,8 @@ export function VolcanoDialog({ open = true, df, onPlot, onCancel }: IProps) {
 
   const form = useForm<IFormInput>({
     defaultValues: {
-      foldChangeCol: findFoldChangeCol(df),
-      pValueCol: findPValueCol(df),
+      foldChangeCol: findFoldChangeCol(df)!,
+      pValueCol: findPValueCol(df)!,
       applyLog2ToFoldChange: settings.volcano.log2FC,
       applyLog10ToPValue: settings.volcano.log10P,
     },
@@ -108,7 +108,7 @@ export function VolcanoDialog({ open = true, df, onPlot, onCancel }: IProps) {
       return
     }
 
-    let foldChanges: SeriesType[] = df.col(idx[0])!.values
+    let foldChanges: SeriesType[] = df.col(idx[0]!)!.values
 
     idx = findCols(df, data.pValueCol)
 
@@ -116,7 +116,7 @@ export function VolcanoDialog({ open = true, df, onPlot, onCancel }: IProps) {
       return
     }
 
-    let pvalues: SeriesType[] = df.col(idx[0])!.values
+    let pvalues: SeriesType[] = df.col(idx[0]!)!.values
 
     // remove na
     idx = filterNA(pvalues)

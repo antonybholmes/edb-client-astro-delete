@@ -74,8 +74,8 @@ export function GeneConvertDialog({
       ...settings,
       geneConvert: {
         ...settings.geneConvert,
-        convertIndex: selection.start.c === -1,
-        useSelectedColumns: selection.start.c !== -1,
+        convertIndex: selection.start.col === -1,
+        useSelectedColumns: selection.start.col !== -1,
       },
     })
   }, [df, selection])
@@ -116,7 +116,7 @@ export function GeneConvertDialog({
         // })
       } else {
         searches = df.col(
-          settings.geneConvert.useSelectedColumns ? selection.start.c : 0
+          settings.geneConvert.useSelectedColumns ? selection.start.col : 0
         )!.strs
       }
 
@@ -209,7 +209,7 @@ export function GeneConvertDialog({
         }
 
         range(0, df_out.shape[0]).forEach(rowid => {
-          const ids = idCol[rowid].split(settings.geneConvert.delimiter)
+          const ids = idCol[rowid]!.split(settings.geneConvert.delimiter)
 
           let origRow = df_out.row(rowid)!.values
 

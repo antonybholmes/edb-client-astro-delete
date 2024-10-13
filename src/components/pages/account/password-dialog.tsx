@@ -79,8 +79,8 @@ export interface IPasswordDialogProps extends IModalProps {}
 
 export function PasswordDialog({
   open = false,
-  onOpenChange,
-  onReponse,
+  onOpenChange = () => {},
+  onReponse = () => {},
 }: IPasswordDialogProps) {
   // const [passwords, passwordDispatch] = useReducer(passwordReducer, {
   //   password: "",
@@ -197,9 +197,10 @@ export function PasswordDialog({
             //update()
             //btnRef.current?.click()
             sendResetPasswordLink()
-
+            break
           default:
             _resp(response)
+            break
         }
       }}
     >

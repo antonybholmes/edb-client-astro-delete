@@ -17,11 +17,11 @@ export interface IProps extends IElementProps {
 }
 
 export function SaveAsDialog({
-  open,
-  title,
+  open = '',
+  title = '',
   formats: types,
-  onSave,
-  onCancel,
+  onSave = () => {},
+  onCancel = () => {},
 }: IProps) {
   return (
     <OKCancelDialog

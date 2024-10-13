@@ -32,7 +32,7 @@ export async function loadGMT(file: IGeneSetFile): Promise<IGeneSet[]> {
       const tokens = line.split('\t')
 
       geneSets.push({
-        name: tokens[0],
+        name: tokens[0]!,
         genes: tokens.slice(2),
       })
 

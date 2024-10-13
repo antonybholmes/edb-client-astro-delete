@@ -15,7 +15,7 @@ export class InfDataFrame extends BaseDataFrame {
     this._cols = cols
   }
 
-  get shape(): Shape {
+  override get shape(): Shape {
     return [this._rows, this._cols]
   }
 

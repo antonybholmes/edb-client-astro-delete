@@ -21,7 +21,7 @@ export class InfSeries extends BaseSeries {
     return this
   }
 
-  get size(): number {
+  override get size(): number {
     return this._size
   }
 }

@@ -11,7 +11,7 @@ export class BaseSeries extends BaseIndex {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setIndex(index: IndexFromType, inplace: boolean = false): BaseSeries {
+  setIndex(_index: IndexFromType, _inplace: boolean = false): BaseSeries {
     return this
   }
 
@@ -31,12 +31,12 @@ export class BaseSeries extends BaseIndex {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  set(index: number, v: SeriesType): BaseSeries {
+  set(_index: number, _v: SeriesType): BaseSeries {
     return this
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  get(index: number): SeriesType {
+  get(_index: number): SeriesType {
     return NaN
   }
 
@@ -45,7 +45,7 @@ export class BaseSeries extends BaseIndex {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  filter(idx: number[]): BaseSeries {
+  filter(_idx: number[]): BaseSeries {
     return this
   }
 

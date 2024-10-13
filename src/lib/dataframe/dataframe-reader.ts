@@ -103,8 +103,7 @@ export class DataFrameReader {
 
     let colNames: string[] = []
 
-    tokens = lines[this._skipRows]
-      .trimEnd()
+    tokens = lines[this._skipRows]!.trimEnd()
       .replaceAll('"', '')
       .split(this._sep)
 
@@ -113,7 +112,7 @@ export class DataFrameReader {
 
     if (this._colNames > 0) {
       if (this._indexCols > 0) {
-        rowIndexName = tokens[0]
+        rowIndexName = tokens[0]!
       }
 
       colNames = tokens.slice(this._indexCols)
@@ -132,7 +131,7 @@ export class DataFrameReader {
 
           if (tokens.length > 0) {
             if (this._indexCols > 0) {
-              index.push(tokens[0])
+              index.push(tokens[0]!)
             }
 
             // tokens.slice(this._indexCols).forEach((token, ci) => {

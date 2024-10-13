@@ -79,10 +79,10 @@ interface ISlideBarProps extends ISlidebarContext, IElementProps {
 
 export const SlideBar = forwardRef(function SlideBar(
   {
-    title,
+    title = '',
     side = 'left',
     open = true,
-    onOpenChange,
+    onOpenChange = () => {},
     position = 80,
     limits = [5, 85],
     mainContent,

@@ -86,7 +86,7 @@ export class ClinicalDataTrack {
     // scan all samples and find highest n
     return [...this._samples.entries()]
       .map(entry => entry[1].maxEvent)
-      .sort((a, b) => b[1] - a[1])[0]
+      .sort((a, b) => b[1]! - a[1]!)[0]!
   }
 
   getClinicalData(sample: string): [string, number][] {
@@ -130,7 +130,7 @@ export function makeClinicalTracks(
 
     if (matcher) {
       // remove whitespace from name
-      name = matcher[1].trim()
+      name = matcher[1]!.trim()
 
       //events = [name]
 
@@ -142,10 +142,10 @@ export function makeClinicalTracks(
 
         params = matcher[2].split(',')
 
-        const tokens = params[0].split(':')
+        const tokens = params[0]!.split(':')
 
-        if (tokens.length > 1 && COLOR_REGEX.test(tokens[1])) {
-          color = tokens[1]
+        if (tokens.length > 1 && COLOR_REGEX.test(tokens[1]!)) {
+          color = tokens[1]!
         }
 
         // change type if necessary
@@ -171,12 +171,12 @@ export function makeClinicalTracks(
 
       if (type === 'dist') {
         if (params.length > 0 && !multi) {
-          params[0].split(/[\/\|]/).forEach(id => {
+          params[0]!.split(/[\/\|]/).forEach(id => {
             const tokens = id.split(':')
-            const event: string = tokens[0]
+            const event: string = tokens[0]!
 
-            if (tokens.length > 1 && COLOR_REGEX.test(tokens[1])) {
-              colorMap.set(event, tokens[1])
+            if (tokens.length > 1 && COLOR_REGEX.test(tokens[1]!)) {
+              colorMap.set(event, tokens[1]!)
             }
 
             events.push(event)
@@ -195,14 +195,14 @@ export function makeClinicalTracks(
   // load some values
 
   tracks.forEach((track, ti) => {
-    const multi = df.colNames[ti + 1].toLowerCase().includes('multi=t')
+    const multi = df.colNames[ti + 1]!.toLowerCase().includes('multi=t')
 
     const categories = new Set([...track.categories])
 
     range(0, df.shape[0]).forEach(row => {
-      const v: SeriesType = df.col(ti + 1).values[row]
+      const v: SeriesType = df.col(ti + 1).values[row]!
 
-      const sample: string = df.col(0).values[row].toString()
+      const sample: string = df.col(0).values[row]!.toString()
 
       switch (track.type) {
         case 'number':
@@ -282,11 +282,11 @@ export function makeClinicalTracks(
       // for labels or dist, use multiple colors
 
       categories.forEach((category, ci) => {
-        if (!tracksProps[ti].colorMap.has(category)) {
+        if (!tracksProps[ti]!.colorMap.has(category)) {
           // default to mediumseagreen
-          tracksProps[ti].colorMap.set(
+          tracksProps[ti]!.colorMap.set(
             category,
-            COLOR_PALETTE[ci % COLOR_PALETTE.length]
+            COLOR_PALETTE[ci % COLOR_PALETTE.length]!
           )
         }
       })

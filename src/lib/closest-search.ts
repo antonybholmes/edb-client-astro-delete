@@ -16,12 +16,12 @@ export function findClosest(
   const n = arr.length
 
   // Corner cases
-  if (target <= arr[0]) {
-    return { index: 0, value: arr[0] }
+  if (target <= arr[0]!) {
+    return { index: 0, value: arr[0]! }
   }
 
-  if (target >= arr[n - 1]) {
-    return { index: n - 1, value: arr[n - 1] }
+  if (target >= arr[n - 1]!) {
+    return { index: n - 1, value: arr[n - 1]! }
   }
 
   // Doing binary search
@@ -33,25 +33,25 @@ export function findClosest(
     mid = Math.floor(0.5 * (i + j))
 
     if (arr[mid] == target) {
-      return { index: mid, value: arr[mid] }
-    } else if (target < arr[mid]) {
+      return { index: mid, value: arr[mid]! }
+    } else if (target < arr[mid]!) {
       // If target is less than array
       // element,then search in left
 
       // If target is greater than previous
       // to mid, return closest of two
-      if (mid > 0 && target > arr[mid - 1]) {
+      if (mid > 0 && target > arr[mid - 1]!) {
         return lower
-          ? { index: mid - 1, value: arr[mid - 1] }
+          ? { index: mid - 1, value: arr[mid - 1]! }
           : getClosest(arr, mid - 1, mid, target)
       }
 
       // Repeat for left half
       j = mid
     } else {
-      if (mid < n - 1 && target < arr[mid + 1]) {
+      if (mid < n - 1 && target < arr[mid + 1]!) {
         return lower
-          ? { index: mid, value: arr[mid] }
+          ? { index: mid, value: arr[mid]! }
           : getClosest(arr, mid, mid + 1, target)
       }
 
@@ -60,7 +60,7 @@ export function findClosest(
   }
 
   // Only single element left after search
-  return { index: mid, value: arr[mid] }
+  return { index: mid, value: arr[mid]! }
 }
 
 // Method to compare which one is the more close
@@ -74,9 +74,9 @@ function getClosest(
   i2: number,
   target: number
 ): IClosest {
-  if (target - arr[i1] >= arr[i2] - target) {
-    return { index: i2, value: arr[i2] }
+  if (target - arr[i1]! >= arr[i2]! - target) {
+    return { index: i2, value: arr[i2]! }
   } else {
-    return { index: i1, value: arr[i1] }
+    return { index: i1, value: arr[i1]! }
   }
 }

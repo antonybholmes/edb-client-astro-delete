@@ -125,7 +125,7 @@ function AnnotationPage() {
       return
     }
 
-    const file: File = files[0] // OR const file = files.item(i);
+    const file: File = files[0]! // OR const file = files.item(i);
     const name = file.name
 
     const fileReader = new FileReader()
@@ -142,16 +142,16 @@ function AnnotationPage() {
 
         //const locs = parseLocations(lines)
         const retMap: { [key: string]: Set<string> } = {}
-        const geneSets: string[] = lines[0].split('\t')
+        const geneSets: string[] = lines[0]!.split('\t')
 
-        lines[0].split('\t').forEach(gs => {
+        lines[0]!.split('\t').forEach(gs => {
           retMap[gs] = new Set<string>()
         })
 
         lines.slice(1).forEach(line => {
           line.split('\t').forEach((gene, genei) => {
             if (gene.length > 0 && gene !== '----') {
-              retMap[geneSets[genei]].add(gene)
+              retMap[geneSets[genei]!]!.add(gene)
             }
           })
         })
@@ -180,7 +180,7 @@ function AnnotationPage() {
       }
     }
 
-    fileReader.readAsText(files[0])
+    fileReader.readAsText(files[0]!)
   }
 
   async function annotate() {

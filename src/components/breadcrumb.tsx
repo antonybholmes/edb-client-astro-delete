@@ -37,7 +37,7 @@ export function Breadcrumb({ crumbs, className }: IBreadcrumbProps) {
   // ret.push(<li key={`crumb-${ret.length}`}>{getCrumbLink(["Home", "/"], mode)}</li>)
 
   for (let i = 0; i < crumbs.length; ++i) {
-    const crumb = crumbs[i]
+    const crumb = crumbs[i]!
 
     ret.push(
       <li key={`divider-${i}`} className="group flex flex-row gap-x-2">

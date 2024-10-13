@@ -13,7 +13,7 @@ export function getLn(x: number): number {
   }
 
   if (x < LN_LOOKUP.length) {
-    return LN_LOOKUP[x - 1]
+    return LN_LOOKUP[x - 1]!
   } else {
     return Math.log(x)
   }

@@ -186,13 +186,13 @@ export const HeatMapSvg = forwardRef<SVGElement, IProps>(function HeatMapSvg(
       ? _displayProps.colorbar.width + _displayProps.padding
       : 0)
 
-  const innerWidth = cf.dataframes[MAIN_CLUSTER_FRAME].shape[1] * blockSize.w
-  const innerHeight = cf.dataframes[MAIN_CLUSTER_FRAME].shape[0] * blockSize.h
+  const innerWidth = cf.dataframes[MAIN_CLUSTER_FRAME]!.shape[1] * blockSize.w
+  const innerHeight = cf.dataframes[MAIN_CLUSTER_FRAME]!.shape[0] * blockSize.h
   const width = innerWidth + marginLeft + marginRight
   const height =
     Math.max(MIN_INNER_HEIGHT, innerHeight) + marginTop + marginBottom
 
-  const dfMain = cf.dataframes[MAIN_CLUSTER_FRAME]
+  const dfMain = cf.dataframes[MAIN_CLUSTER_FRAME]!
   const dfPercent = cf.dataframes['percent']
 
   // const NO_TOOLTIP = {
@@ -268,7 +268,7 @@ export const HeatMapSvg = forwardRef<SVGElement, IProps>(function HeatMapSvg(
 
     if (_displayProps.legend.position.includes('Right')) {
       dotLegendPos = [
-        legendPos[0],
+        legendPos[0]!,
         legendTop +
           (_displayProps.groups.show
             ? (legendBlockSize + _displayProps.padding) * (groups.length + 1)
@@ -297,15 +297,15 @@ export const HeatMapSvg = forwardRef<SVGElement, IProps>(function HeatMapSvg(
                 return (
                   <line
                     key={ri * 3 + i}
-                    x1={coords[i][0] * innerWidth}
+                    x1={coords[i]![0]! * innerWidth}
                     y1={
                       _displayProps.colTree.width -
-                      coords[i][1] * _displayProps.colTree.width
+                      coords[i]![1]! * _displayProps.colTree.width
                     }
-                    x2={coords[i + 1][0] * innerWidth}
+                    x2={coords[i + 1]![0]! * innerWidth}
                     y2={
                       _displayProps.colTree.width -
-                      coords[i + 1][1] * _displayProps.colTree.width
+                      coords[i + 1]![1]! * _displayProps.colTree.width
                     }
                     stroke="black"
                     shapeRendering="crispEdges"
@@ -348,15 +348,15 @@ export const HeatMapSvg = forwardRef<SVGElement, IProps>(function HeatMapSvg(
                 return (
                   <line
                     key={ri * 3 + i}
-                    y1={coords[i][0] * innerHeight}
+                    y1={coords[i]![0]! * innerHeight}
                     x1={
                       _displayProps.rowTree.width -
-                      coords[i][1] * _displayProps.rowTree.width
+                      coords[i]![1]! * _displayProps.rowTree.width
                     }
-                    y2={coords[i + 1][0] * innerHeight}
+                    y2={coords[i + 1]![0]! * innerHeight}
                     x2={
                       _displayProps.rowTree.width -
-                      coords[i + 1][1] * _displayProps.rowTree.width
+                      coords[i + 1]![1]! * _displayProps.rowTree.width
                     }
                     stroke="black"
                     shapeRendering="crispEdges"
@@ -383,10 +383,10 @@ export const HeatMapSvg = forwardRef<SVGElement, IProps>(function HeatMapSvg(
                 return (
                   <line
                     key={ri * 3 + i}
-                    y1={coords[i][0] * innerHeight}
-                    x1={coords[i][1] * _displayProps.rowTree.width}
-                    y2={coords[i + 1][0] * innerHeight}
-                    x2={coords[i + 1][1] * _displayProps.rowTree.width}
+                    y1={coords[i]![0]! * innerHeight}
+                    x1={coords[i]![1] * _displayProps.rowTree.width}
+                    y2={coords[i + 1]![0]! * innerHeight}
+                    x2={coords[i + 1]![1]! * _displayProps.rowTree.width}
                     stroke="black"
                     shapeRendering="crispEdges"
                   />
@@ -417,7 +417,7 @@ export const HeatMapSvg = forwardRef<SVGElement, IProps>(function HeatMapSvg(
                   fontSize="smaller"
                   textAnchor="end"
                 >
-                  {cf.dataframes['main'].rowNames[row]}
+                  {cf.dataframes['main']!.rowNames[row]}
                 </text>
               )
             })}
@@ -440,7 +440,7 @@ export const HeatMapSvg = forwardRef<SVGElement, IProps>(function HeatMapSvg(
                   dominantBaseline="central"
                   fontSize="smaller"
                 >
-                  {cf.dataframes['main'].rowNames[row]}
+                  {cf.dataframes['main']!.rowNames[row]}
                 </text>
               )
             })}
@@ -559,7 +559,7 @@ export const HeatMapSvg = forwardRef<SVGElement, IProps>(function HeatMapSvg(
                   dominantBaseline="central"
                   fontSize="smaller"
                 >
-                  {cf.dataframes['main'].getColName(col)}
+                  {cf.dataframes['main']!.getColName(col)}
                 </text>
               )
             })}
@@ -588,7 +588,7 @@ export const HeatMapSvg = forwardRef<SVGElement, IProps>(function HeatMapSvg(
                   textAnchor="end"
                   fontSize="smaller"
                 >
-                  {cf.dataframes['main'].getColName(col)}
+                  {cf.dataframes['main']!.getColName(col)}
                 </text>
               )
             })}
@@ -927,7 +927,7 @@ export const HeatMapSvg = forwardRef<SVGElement, IProps>(function HeatMapSvg(
           x: (marginLeft + c * blockSize.w) * _displayProps.scale,
           y: (marginTop + r * blockSize.h) * _displayProps.scale,
         },
-        cell: { r, c },
+        cell: { row: r, col: c },
       })
     }
   }
@@ -949,9 +949,11 @@ export const HeatMapSvg = forwardRef<SVGElement, IProps>(function HeatMapSvg(
             }}
           >
             <p className="font-semibold">{`${dfMain.getColName(
-              toolTipInfo.cell.c
-            )} (${toolTipInfo.cell.r + 1}, ${toolTipInfo.cell.c + 1})`}</p>
-            <p>{cellStr(dfMain.get(toolTipInfo.cell.r, toolTipInfo.cell.c))}</p>
+              toolTipInfo.cell.col
+            )} (${toolTipInfo.cell.row + 1}, ${toolTipInfo.cell.col + 1})`}</p>
+            <p>
+              {cellStr(dfMain.get(toolTipInfo.cell.row, toolTipInfo.cell.col))}
+            </p>
             {/* <p>
           row: {toolTipInfo.cell.r + 1}, col: {toolTipInfo.cell.c + 1}
         </p> */}

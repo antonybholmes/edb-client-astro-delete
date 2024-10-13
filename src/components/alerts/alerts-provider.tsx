@@ -109,12 +109,12 @@ export function makeErrorAlertFromResp(message: string): IAlert {
 
     if (tokens.length > 1) {
       return makeErrorAlert({
-        title: capitalizeSentence(tokens[0]),
-        content: `${capitalizeSentence(tokens[1])}.`,
+        title: capitalizeSentence(tokens[0]!),
+        content: `${capitalizeSentence(tokens[1]!)}.`,
       })
     } else {
       return makeErrorAlert({
-        title: capitalizeSentence(tokens[0]),
+        title: capitalizeSentence(tokens[0]!),
       })
     }
   }

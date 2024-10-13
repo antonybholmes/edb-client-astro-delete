@@ -431,7 +431,7 @@ function RevCompPage() {
           open={showDialog.name.includes('open') ? showDialog.name : ''}
           onFileChange={(_, files) =>
             onFileChange(files, files => {
-              setText(files[0].text)
+              setText(files[0]!.text)
             })
           }
           fileTypes={['fasta']}

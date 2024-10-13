@@ -40,8 +40,8 @@ export function MotifToGeneDialog({
   const [, historyDispatch] = useContext(HistoryContext)
 
   useEffect(() => {
-    setUseIndex(selection.start.c === -1)
-    setUseColumns(selection.start.c !== -1)
+    setUseIndex(selection.start.col === -1)
+    setUseColumns(selection.start.col !== -1)
   }, [df, selection])
 
   // const dbQuery = useQuery({
@@ -70,7 +70,7 @@ export function MotifToGeneDialog({
         // convert index
         rename = df.index.strs
       } else {
-        rename = df.col(useColumns ? selection.start.c : 0)!.strs
+        rename = df.col(useColumns ? selection.start.col : 0)!.strs
       }
 
       const table: SeriesType[][] = []

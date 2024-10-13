@@ -68,7 +68,7 @@ export function SeqViewPage() {
 
     for (let i = 0; i < files.length; i++) {
       const lines: string[] = await new Promise(resolve => {
-        const file: File = files[i] // OR const file = files.item(i);
+        const file: File = files[i]! // OR const file = files.item(i);
 
         const fileReader = new FileReader()
 

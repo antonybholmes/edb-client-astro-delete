@@ -63,8 +63,8 @@ export interface IEmailDialogProps extends IModalProps {}
 
 export function EmailDialog({
   open = false,
-  onOpenChange,
-  onReponse,
+  onOpenChange = () => {},
+  onReponse = () => {},
 }: IEmailDialogProps) {
   const queryClient = useQueryClient()
 
@@ -151,9 +151,10 @@ export function EmailDialog({
           case TEXT_OK:
             //update()
             btnRef.current?.click()
-
+            break
           default:
             _resp(response)
+            break
         }
       }}
     >

@@ -67,10 +67,10 @@ export const SwarmPlotSvg = forwardRef<SVGElement, IProps>(
               let values = bin.values.toReversed()
 
               values = range(0, values.length, 2)
-                .map(i => values[i])
+                .map(i => values[i]!)
                 .concat(
                   range(1, values.length, 2)
-                    .map(i => values[i])
+                    .map(i => values[i]!)
                     .toReversed()
                 )
 

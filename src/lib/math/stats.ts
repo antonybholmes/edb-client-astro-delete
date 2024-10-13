@@ -13,7 +13,7 @@ export function covariance(
   return (
     sum(
       a.map((x, xi) => {
-        return (x - _ma) * (b[xi] - _mb)
+        return (x - _ma) * (b[xi]! - _mb)
       })
     ) /
     (a.length - 1)

@@ -184,8 +184,8 @@ function LollipopPage() {
       const proteins = await searchProteins(gene)
 
       const index = range(0, proteins.length).filter(
-        i => proteins[i].organism === 'Human'
-      )[0]
+        i => proteins[i]!.organism === 'Human'
+      )[0]!
 
       proteinDispatch({
         type: 'set',
@@ -265,7 +265,7 @@ function LollipopPage() {
       return
     }
 
-    const file = files[0]
+    const file = files[0]!
     const name = file.name
 
     //setFile(files[0])
@@ -1035,7 +1035,7 @@ function LollipopPage() {
           sideContent={
             <CollapseTree
               tab={foldersTab}
-              value={tab}
+              value={tab!}
               onValueChange={t => {
                 if (t && t.content) {
                   // only use tabs from the tree that have content, otherwise

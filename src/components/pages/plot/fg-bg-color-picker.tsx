@@ -18,13 +18,13 @@ export interface IProps extends IClassProps {
  * @returns
  */
 export function FgBgColorPicker({
-  fgColor,
+  fgColor = COLOR_TRANSPARENT,
   bgColor = COLOR_TRANSPARENT,
   onFgColorChange,
   onBgColorChange,
-  defaultFgColor,
-  defaultBgColor,
-  onCancel,
+  defaultFgColor = COLOR_TRANSPARENT,
+  defaultBgColor = COLOR_TRANSPARENT,
+  onCancel = () => {},
   allowNoColor = false,
 }: IProps) {
   //console.log(fgColor, bgColor)

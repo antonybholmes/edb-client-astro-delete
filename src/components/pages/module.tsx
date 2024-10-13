@@ -26,7 +26,7 @@ function ModulePage({ title = 'Index' }: { title?: string }) {
             if (module.abbr) {
               abbr = module.abbr
             } else {
-              abbr = `${module.name[0].toUpperCase()}${module.name[1].toLowerCase()}`
+              abbr = `${module.name[0]!.toUpperCase()}${module.name[1]!.toLowerCase()}`
             }
 
             return (
@@ -45,8 +45,8 @@ function ModulePage({ title = 'Index' }: { title?: string }) {
                       backgroundColor: module.color ?? 'lightslategray',
                     }}
                   >
-                    <span className="font-bold">{abbr[0].toUpperCase()}</span>
-                    <span>{abbr[1].toLowerCase()}</span>
+                    <span className="font-bold">{abbr[0]!.toUpperCase()}</span>
+                    <span>{abbr[1]!.toLowerCase()}</span>
                   </span>
                   <BaseCol>
                     <p className="font-semibold">{module.name}</p>

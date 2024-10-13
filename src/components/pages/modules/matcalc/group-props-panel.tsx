@@ -14,7 +14,7 @@ import { PropsPanel } from '@components/props-panel'
 import { Button } from '@components/shadcn/ui/themed/button'
 import { SelectionRangeContext } from '@components/table/use-selection-range'
 import { VCenterRow } from '@components/v-center-row'
-import { TEXT_OK } from '@consts'
+import { TEXT_CLEAR, TEXT_OK } from '@consts'
 import { cn } from '@lib/class-names'
 import {
   getColIdxFromGroup,
@@ -248,7 +248,7 @@ export const GroupPropsPanel = forwardRef(function GroupPropsPanel(
       return
     }
 
-    const file = files[0]
+    const file: File = files[0]!
 
     //setFile(files[0])
     //setShowLoadingDialog(true)
@@ -285,10 +285,10 @@ export const GroupPropsPanel = forwardRef(function GroupPropsPanel(
 
     let group: IBaseClusterGroup | undefined = undefined
 
-    if (selection.start.c !== -1) {
+    if (selection.start.col !== -1) {
       group = {
         name: '',
-        search: range(selection.start.c, selection.end.c + 1).map(i =>
+        search: range(selection.start.col, selection.end.col + 1).map(i =>
           df.getColName(i)
         ),
         color: '',
@@ -296,7 +296,7 @@ export const GroupPropsPanel = forwardRef(function GroupPropsPanel(
     }
 
     setOpenGroupDialog({
-      group,
+      ...(group ? { group } : {}),
       callback: (name: string, search: string[], color: string) => {
         const g = { name, search, color }
 
@@ -363,7 +363,7 @@ export const GroupPropsPanel = forwardRef(function GroupPropsPanel(
 
     const groupMap = Object.fromEntries(
       order
-        .map(i => groups[i])
+        .map(i => groups[i]!)
         .map(group => {
           return getColIdxFromGroup(df, group).map(col => [col, group.name])
         })
@@ -394,7 +394,7 @@ export const GroupPropsPanel = forwardRef(function GroupPropsPanel(
     <>
       {openGroupDialog?.callback && (
         <GroupDialog
-          group={openGroupDialog?.group}
+          group={openGroupDialog?.group!}
           callback={openGroupDialog?.callback}
           onCancel={() => setOpenGroupDialog(undefined)}
         />
@@ -487,51 +487,61 @@ export const GroupPropsPanel = forwardRef(function GroupPropsPanel(
       )}
 
       <PropsPanel className="gap-y-2">
-        <VCenterRow className="justify-start">
-          <Button
-            variant="accent"
-            multiProps="icon"
-            //rounded="full"
-            ripple={false}
-            onClick={() => setOpen(makeRandId('open'))}
-            title="Open groups"
-            //className="fill-foreground/50 hover:fill-foreground"
-          >
-            <OpenIcon />
-          </Button>
-
-          <Button
-            variant="accent"
-            multiProps="icon"
-            //rounded="full"
-            ripple={false}
-            onClick={() => setShowSaveDialog(true)}
-            title="Save groups"
-          >
-            <SaveIcon className="rotate-180" />
-          </Button>
-
-          <Button
-            variant="accent"
-            multiProps="icon"
-            //rounded="full"
-            ripple={false}
-            onClick={() => addGroup()}
-            title="Add group"
-          >
-            <PlusIcon fill="stroke-foreground" />
-          </Button>
-
-          {groups.length > 0 && (
+        <VCenterRow className="justify-between">
+          <VCenterRow>
             <Button
               variant="accent"
               multiProps="icon"
               //rounded="full"
               ripple={false}
+              onClick={() => setOpen(makeRandId('open'))}
+              title="Open groups"
+              //className="fill-foreground/50 hover:fill-foreground"
+            >
+              <OpenIcon />
+            </Button>
+
+            <Button
+              variant="accent"
+              multiProps="icon"
+              //rounded="full"
+              ripple={false}
+              onClick={() => setShowSaveDialog(true)}
+              title="Save groups"
+            >
+              <SaveIcon className="rotate-180" />
+            </Button>
+
+            <Button
+              variant="accent"
+              multiProps="icon"
+              //rounded="full"
+              ripple={false}
+              onClick={() => addGroup()}
+              title="Add group"
+            >
+              <PlusIcon fill="stroke-foreground" />
+            </Button>
+          </VCenterRow>
+          {groups.length > 0 && (
+            // <Button
+            //   variant="accent"
+            //   multiProps="icon"
+            //   ripple={false}
+            //   onClick={() => setConfirmClear(true)}
+            //   title="Clear all groups"
+            // >
+            //   <TrashIcon />
+            // </Button>
+
+            <Button
+              multiProps="link"
+              //rounded="full"
+              //ripple={false}
               onClick={() => setConfirmClear(true)}
               title="Clear all groups"
             >
-              <TrashIcon />
+              {TEXT_CLEAR}
             </Button>
           )}
         </VCenterRow>

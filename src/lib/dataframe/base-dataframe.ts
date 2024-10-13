@@ -30,7 +30,7 @@ export class BaseDataFrame {
     return this._name
   }
 
-  setName(name: string, inplace: boolean = true): BaseDataFrame {
+  setName(_name: string, _inplace: boolean = true): BaseDataFrame {
     return this
   }
 
@@ -55,15 +55,18 @@ export class BaseDataFrame {
   // }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  col(col: IndexType): BaseSeries {
+  col(_col: IndexType): BaseSeries {
     return EMPTY_SERIES
   }
 
-  setCol(col: IndexType = -1, data: BaseSeries | SeriesType[]): BaseDataFrame {
+  setCol(
+    _col: IndexType = -1,
+    _data: BaseSeries | SeriesType[]
+  ): BaseDataFrame {
     return this
   }
 
-  get(row: number, col: number): SeriesType {
+  get(_row: number, _col: number): SeriesType {
     return NaN
   }
 
@@ -134,7 +137,7 @@ export class BaseDataFrame {
     return range(0, this.shape[1]).map(c => this.getColName(c))
   }
 
-  setColNames(index: IndexFromType, inplace: boolean = false): BaseDataFrame {
+  setColNames(_index: IndexFromType, _inplace: boolean = false): BaseDataFrame {
     return this
   }
 
@@ -149,28 +152,30 @@ export class BaseDataFrame {
 
   apply(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    f: (v: SeriesType, row: number, col: number) => SeriesType
+    _f: (v: SeriesType, row: number, col: number) => SeriesType
   ): BaseDataFrame {
     return this
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  map<T>(f: (v: SeriesType, row: number, col: number) => T): T[][] {
+  map<T>(_f: (v: SeriesType, row: number, col: number) => T): T[][] {
     return []
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  rowApply(f: (row: SeriesType[], index: number) => SeriesType): BaseDataFrame {
+  rowApply(
+    _f: (row: SeriesType[], index: number) => SeriesType
+  ): BaseDataFrame {
     return this
   }
 
   /**
    * Apply a function to each row to transform them.
    *
-   * @param f
+   * @param _f
    * @returns a list of T the size of the number of rows.
    */
-  rowMap<T>(f: (row: SeriesType[], index: number) => T): T[] {
+  rowMap<T>(_f: (row: SeriesType[], index: number) => T): T[] {
     return []
   }
 
@@ -187,16 +192,16 @@ export class BaseDataFrame {
   /**
    * Apply a function to each column to transform them.
    *
-   * @param f
+   * @param _f
    * @returns
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  colMap<T>(f: (col: SeriesType[], index: number) => T): T[] {
+  colMap<T>(_f: (col: SeriesType[], index: number) => T): T[] {
     return []
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  iloc(rows: LocType = ':', cols: LocType = ':'): BaseDataFrame {
+  iloc(_rows: LocType = ':', _cols: LocType = ':'): BaseDataFrame {
     return this
   }
 

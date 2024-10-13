@@ -114,7 +114,7 @@ export const VolcanoPanel = forwardRef(function VolcanoPanel(
 
   const [showSave, setShowSave] = useState(false)
 
-  const df = plot.cf.dataframes[MAIN_CLUSTER_FRAME]
+  const df = plot.cf.dataframes[MAIN_CLUSTER_FRAME]!
 
   // const [displayProps, setDisplayProps] = useState<IVolcanoProps>(() => {
   //   const xdata = getNumCol(df, findCol(df, x))
@@ -247,7 +247,7 @@ export const VolcanoPanel = forwardRef(function VolcanoPanel(
           <div className="custom-scrollbar relative grow overflow-scroll rounded-lg border bg-white mb-1 ml-1">
             <VolcanoPlotSvg
               ref={svgRef}
-              df={plot.cf.dataframes[MAIN_CLUSTER_FRAME]}
+              df={plot.cf.dataframes[MAIN_CLUSTER_FRAME]!}
               displayProps={displayProps}
               x={x}
               y={y}

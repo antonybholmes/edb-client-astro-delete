@@ -226,20 +226,21 @@ export const ScatterPlotSvg = forwardRef<SVGElement, IProps>(
           <g transform={`translate(${margin.left}, ${margin.top})`}>
             {xdata.map((x, xi) => {
               const x1 = xax!.domainToRange(x)
-              const y1 = yax!.domainToRange(ydata[xi])
+              const y1 = yax!.domainToRange(ydata[xi]!)
               const r =
                 sizedata.length > 0
-                  ? sizeFunc(sizedata[xi])
+                  ? sizeFunc(sizedata[xi]!)
                   : _displayProps.dots.size
-              const color = huedata.length > 0 ? cmap.get(huedata[xi]) : 'black'
+              const color =
+                huedata.length > 0 ? cmap.get(huedata[xi]!) : 'black'
               return <circle cx={x1} cy={y1} r={r} fill={color} key={xi} />
             })}
           </g>
 
           <g transform={`translate(${margin.left}, ${margin.top})`}>
             {labelIdx.map(i => {
-              const x1 = xax!.domainToRange(xdata[i])
-              const y1 = yax!.domainToRange(ydata[i])
+              const x1 = xax!.domainToRange(xdata[i]!)
+              const y1 = yax!.domainToRange(ydata[i]!)
 
               return (
                 <text x={x1} y={y1} key={i}>

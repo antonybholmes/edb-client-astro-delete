@@ -89,7 +89,7 @@ export const DataPanel = forwardRef(function DataPanel(
         let format = 'txt'
 
         if (message.text.includes(':')) {
-          format = message.text.split(':')[1]
+          format = message.text.split(':')[1]!
         }
 
         setShowSave(format)

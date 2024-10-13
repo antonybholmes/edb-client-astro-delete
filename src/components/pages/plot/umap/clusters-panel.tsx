@@ -58,7 +58,7 @@ export function ClustersPanel({
       return
     }
 
-    const file = files[0]
+    const file = files[0]!
 
     //setFile(files[0])
     //setShowLoadingDialog(true)

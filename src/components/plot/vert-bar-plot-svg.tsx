@@ -151,7 +151,7 @@ export const VertBarPlotSvg = forwardRef<SVGElement, IProps>(
           <g transform={`translate(${margin.left}, ${margin.top})`}>
             {ydata.map((_, yi) => {
               const y1 = yax.domainToRange(yi + 0.5)
-              const x1 = xax.domainToRange(xdata[yi])
+              const x1 = xax.domainToRange(xdata[yi]!)
 
               const color = huedata[yi]
               return (

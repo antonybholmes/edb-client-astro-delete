@@ -116,9 +116,9 @@ export function parseLocation(
     throw new Error('invalid location')
   }
 
-  const chr = matcher[1]
-  const start = parseInt(matcher[2])
-  const end = parseInt(matcher[3])
+  const chr = matcher[1]!
+  const start = parseInt(matcher[2]!)
+  const end = parseInt(matcher[3]!)
 
   return new GenomicLocation(chr, start - padding5p, end + padding3p)
 }
@@ -154,23 +154,23 @@ export function overlapFraction(
 export function parseLoc(loc: string): GenomicLocation | null {
   const tokens = loc.trim().replace(':', '-').split('-')
 
-  if (tokens.length < 3 || !isChr(tokens[0])) {
+  if (tokens.length < 3 || !isChr(tokens[0]!)) {
     return null
   }
 
-  const start = parseInt(tokens[1].replaceAll(/,/g, ''), 10)
+  const start = parseInt(tokens[1]!.replaceAll(/,/g, ''), 10)
 
   if (isNaN(start)) {
     return null
   }
 
-  const end = parseInt(tokens[2].replaceAll(/,/g, ''), 10)
+  const end = parseInt(tokens[2]!.replaceAll(/,/g, ''), 10)
 
   if (isNaN(end)) {
     return null
   }
 
-  return new GenomicLocation(tokens[0], start, end)
+  return new GenomicLocation(tokens[0]!, start, end)
 }
 
 export function parseLocations(lines: string[]): GenomicLocation[] {
@@ -180,13 +180,15 @@ export function parseLocations(lines: string[]): GenomicLocation[] {
   lines.forEach((line: string) => {
     const tokens = line.trim().split('\t')
 
-    if (isLocation(tokens[0])) {
-      location = parseLocation(tokens[0])!
-    } else if (isChr(tokens[0])) {
+    const l: string = tokens[0]!
+
+    if (isLocation(l)) {
+      location = parseLocation(l)!
+    } else if (isChr(l)) {
       location = new GenomicLocation(
-        tokens[0],
-        parseInt(tokens[1].replaceAll(/,/g, '')),
-        parseInt(tokens[2].replaceAll(/,/g, ''))
+        l,
+        parseInt(tokens[1]!.replaceAll(/,/g, '')),
+        parseInt(tokens[2]!.replaceAll(/,/g, ''))
       )
     } else {
       return
@@ -207,11 +209,11 @@ export function convertDFToILocationFile(df: BaseDataFrame): ILocationFile {
   }
 
   df.values.forEach(row => {
-    const c1 = cellStr(row[0])
+    const c1 = cellStr(row[0]!)
     if (isLocation(c1)) {
       location = parseLocation(c1)!
     } else if (isChr(c1)) {
-      location = new GenomicLocation(c1, cellNum(row[1]), cellNum(row[2]))
+      location = new GenomicLocation(c1, cellNum(row[1]!), cellNum(row[2]!))
     } else {
       return
     }

@@ -100,7 +100,7 @@ export const VolcanoPropsPanel = forwardRef(function HeatmapPropsPanel(
     const ydata = getNumCol(df, findCol(df, y))
 
     const idx = new Set(
-      range(0, df.shape[0]).filter(i => getShouldLabel(xdata[i], ydata[i]))
+      range(0, df.shape[0]).filter(i => getShouldLabel(xdata[i]!, ydata[i]!))
     )
 
     const values = df.index.values

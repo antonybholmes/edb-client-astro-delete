@@ -24,10 +24,10 @@ export const SlidebarContext = createContext<ISlidebarContext>(
 interface IProps extends ISlidebarContext, IElementProps {}
 
 export function SlidebarProvider({
-  title,
+  title = '',
   side = 'left',
   open = true,
-  onOpenChange,
+  onOpenChange = () => {},
   position = 80,
   limits = [5, 85],
   mainContent,

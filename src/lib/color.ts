@@ -16,7 +16,7 @@ export function randomHexColor(): string {
 }
 
 export function randomRGBAColor(): IRGBA {
-  return [...range(0, 3).map(i => Math.floor(Math.random() * 256)), 1] as IRGBA
+  return [...range(0, 3).map(() => Math.floor(Math.random() * 256)), 1] as IRGBA
 }
 
 export type IRGBA = [number, number, number, number]
@@ -30,7 +30,7 @@ export function rgb2hex(rgba: IRGBA): string {
   let hex = '#'
 
   for (let i = 0; i < 3; ++i) {
-    dig = rgba[i].toString(16)
+    dig = rgba[i]!.toString(16)
     hex += ('00' + dig).substring(dig.length)
   }
 
@@ -52,12 +52,12 @@ export function hexToRgb(hex: string): {
   const ret = { r: 0, g: 0, b: 0, a: 1 }
 
   if (result) {
-    ;(ret.r = parseInt(result[1], 16)),
-      (ret.g = parseInt(result[2], 16)),
-      (ret.b = parseInt(result[3], 16))
+    ;(ret.r = parseInt(result[1]!, 16)),
+      (ret.g = parseInt(result[2]!, 16)),
+      (ret.b = parseInt(result[3]!, 16))
 
     if (result.length > 3) {
-      ret.a = parseInt(result[4], 16) / 255
+      ret.a = parseInt(result[4]!, 16) / 255
     }
   }
 

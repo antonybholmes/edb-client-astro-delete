@@ -72,12 +72,12 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 export const Input3 = forwardRef<HTMLInputElement, InputProps>(
   (
     {
-      id,
-      placeholder,
-      value,
-      defaultValue,
+      id = '',
+      placeholder = '',
+      value = '',
+      defaultValue = '',
       type,
-      disabled,
+      disabled = false,
       error = false,
       rightChildren,
       className,

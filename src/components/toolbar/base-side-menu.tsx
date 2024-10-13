@@ -16,7 +16,7 @@ export interface IProps extends IElementProps {
 
 export function BaseSideMenu({
   open = false,
-  onOpenChange,
+  onOpenChange = () => {},
   side = 'left',
   className,
   children,

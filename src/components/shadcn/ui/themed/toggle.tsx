@@ -47,19 +47,31 @@ const Toggle = forwardRef<
   ElementRef<typeof TogglePrimitive.Root>,
   ComponentPropsWithoutRef<typeof TogglePrimitive.Root> &
     VariantProps<typeof toggleVariants>
->(({ pressed, variant, size, className, children, ...props }, ref) => (
-  <TogglePrimitive.Root
-    pressed={pressed}
-    ref={ref}
-    className={toggleVariants({ variant, size, className })}
-    {...props}
-  >
-    ss
-    {pressed}
-    {pressed && <span>c</span>}
-    {children}
-  </TogglePrimitive.Root>
-))
+>(
+  (
+    {
+      pressed = false,
+      variant = 'default',
+      size,
+      className,
+      children,
+      ...props
+    },
+    ref
+  ) => (
+    <TogglePrimitive.Root
+      pressed={pressed}
+      ref={ref}
+      className={toggleVariants({ variant, size, className })}
+      {...props}
+    >
+      ss
+      {pressed}
+      {pressed && <span>c</span>}
+      {children}
+    </TogglePrimitive.Root>
+  )
+)
 
 Toggle.displayName = TogglePrimitive.Root.displayName
 

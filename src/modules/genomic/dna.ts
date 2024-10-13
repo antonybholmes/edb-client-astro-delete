@@ -56,7 +56,7 @@ export function formatChr(chr: string | number): string {
 
 export function humanChrToNum(chr: string): number {
   if (chr in CHR_INDEX_MAP) {
-    return CHR_INDEX_MAP[chr]
+    return CHR_INDEX_MAP[chr]!
   }
 
   return 1000

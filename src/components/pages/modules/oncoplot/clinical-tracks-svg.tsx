@@ -18,7 +18,7 @@ function numberTrackSvg(
     .setRange([0, displayProps.clinical.height])
 
   const color =
-    displayProps.legend.clinical.tracks[trackIndex].colorMap.get(track.name) ??
+    displayProps.legend.clinical.tracks[trackIndex]!.colorMap.get(track.name) ??
     displayProps.legend.mutations.noAlterationColor
 
   return (
@@ -98,7 +98,7 @@ function labelTrackSvg(
         {samples.map((sample, si) => {
           const event = track.getEvents(sample).maxEvent[0]
           const color =
-            displayProps.legend.clinical.tracks[trackIndex].colorMap.get(event)
+            displayProps.legend.clinical.tracks[trackIndex]!.colorMap.get(event)
 
           if (color) {
             return (
@@ -179,19 +179,20 @@ function distTrackSvg(
           const coords = [0]
 
           categories.map((_, ci) => {
-            coords.push(coords[coords.length - 1] + dist[ci][1])
+            coords.push(coords[coords.length - 1]! + dist[ci]![1]!)
           })
 
           const x = si * (blockSize.w + spacing.x)
 
           return categories.map((c, ci) => {
             const h =
-              yax.domainToRange(coords[ci]) - yax.domainToRange(coords[ci + 1])
+              yax.domainToRange(coords[ci]!) -
+              yax.domainToRange(coords[ci + 1]!)
 
             // only render if there was a count associated with the event
             if (h > 0) {
               const color =
-                displayProps.legend.clinical.tracks[trackIndex].colorMap.get(
+                displayProps.legend.clinical.tracks[trackIndex]!.colorMap.get(
                   c
                 ) ?? displayProps.legend.mutations.noAlterationColor
 
@@ -199,7 +200,7 @@ function distTrackSvg(
                 <rect
                   key={ci}
                   x={x}
-                  y={yax.domainToRange(coords[ci + 1])}
+                  y={yax.domainToRange(coords[ci + 1]!)}
                   width={blockSize.w}
                   height={h}
                   //stroke={color}
@@ -235,7 +236,7 @@ export function clinicalTracksSvg(
     <g>
       {clinicalTracks
         .map((track, ti) => [ti, track] as [number, ClinicalDataTrack])
-        .filter(track => displayProps.legend.clinical.tracks[track[0]].show)
+        .filter(track => displayProps.legend.clinical.tracks[track[0]!]!.show)
         .map((track, ti) => {
           let node: ReactNode = null
 
@@ -335,7 +336,7 @@ export function clinicalLegendSvg(
 
       {track.categoriesInUse.map((c, ci) => {
         const fill: string =
-          displayProps.legend.clinical.tracks[trackIndex].colorMap.get(c) ??
+          displayProps.legend.clinical.tracks[trackIndex]!.colorMap.get(c) ??
           displayProps.legend.mutations.noAlterationColor
 
         return (
@@ -379,7 +380,7 @@ export function clinicalLegendSvgs(
         .filter(
           track =>
             track[1].type === 'dist' &&
-            displayProps.legend.clinical.tracks[track[0]].show
+            displayProps.legend.clinical.tracks[track[0]]!.show
         )
         .map((track, ti) => {
           return (

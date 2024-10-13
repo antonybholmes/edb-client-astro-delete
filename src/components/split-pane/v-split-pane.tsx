@@ -62,7 +62,7 @@ export function VSplitPane({
     const rcp = sticky.filter(x => Math.abs(cp - x) < STICKY_SENSITIVITY)
 
     if (rcp.length > 0) {
-      cp = rcp[0]
+      cp = rcp[0]!
     }
 
     cp =

@@ -58,7 +58,7 @@ export class ColorMap {
   get(v: number): string {
     const p = Math.max(0, Math.min(1, v))
     //console.log(p, Math.floor(p * this._n), this._n)
-    return this._cmap[Math.floor(p * this._n)]
+    return this._cmap[Math.floor(p * this._n)]!
   }
 }
 
@@ -73,7 +73,7 @@ export function createColorMap(props: IProps = {}): ColorMap {
    */
 
   const { cmap, nshades } = {
-    cmap: COLORMAPS['viridis'],
+    cmap: COLORMAPS['viridis']!,
     nshades: 255,
     ...props,
   }
@@ -97,30 +97,30 @@ export function createColorMap(props: IProps = {}): ColorMap {
    */
   const colors: IRGBA[] = []
   range(0, indicies.length - 1).map(i => {
-    const nsteps = indicies[i + 1] - indicies[i]
-    const fromrgba = steps[i]
-    const torgba = steps[i + 1]
+    const nsteps = indicies[i + 1]! - indicies[i]!
+    const fromrgba = steps[i]!
+    const torgba = steps[i + 1]!
 
     for (let j = 0; j < nsteps; j++) {
       const amt = j / nsteps
       colors.push([
-        Math.round(lerp(fromrgba[0], torgba[0], amt)),
-        Math.round(lerp(fromrgba[1], torgba[1], amt)),
-        Math.round(lerp(fromrgba[2], torgba[2], amt)),
-        lerp(fromrgba[3], torgba[3], amt),
+        Math.round(lerp(fromrgba[0]!, torgba[0]!, amt)),
+        Math.round(lerp(fromrgba[1]!, torgba[1]!, amt)),
+        Math.round(lerp(fromrgba[2]!, torgba[2]!, amt)),
+        lerp(fromrgba[3]!, torgba[3]!, amt),
       ])
     }
   })
 
   //add 1 step as last value
-  colors.push(cmap[cmap.length - 1].rgba)
+  colors.push(cmap[cmap.length - 1]!.rgba)
 
   return new ColorMap(colors.map(c => rgb2hex(c))) //.map(rgb2float))
 }
 
-export const BWR_CMAP = createColorMap({ cmap: COLORMAPS['bwr'] })
-export const JET_CMAP = createColorMap({ cmap: COLORMAPS['jet'] })
-export const VIRIDIS_CMAP = createColorMap({ cmap: COLORMAPS['viridis'] })
+export const BWR_CMAP = createColorMap({ cmap: COLORMAPS['bwr']! })
+export const JET_CMAP = createColorMap({ cmap: COLORMAPS['jet']! })
+export const VIRIDIS_CMAP = createColorMap({ cmap: COLORMAPS['viridis']! })
 export const BLUES_CMAP = createColorMap({
   cmap: [
     { index: 0, rgba: [255, 255, 255, 1] },

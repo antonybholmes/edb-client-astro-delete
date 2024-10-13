@@ -27,15 +27,15 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 export const DoubleNumericalInput = forwardRef<HTMLDivElement, InputProps>(
   (
     {
-      v1,
-      v2,
-      onNumChanged1,
-      onNumChanged2,
+      v1 = 1,
+      v2 = 1,
+      onNumChanged1 = () => {},
+      onNumChanged2 = () => {},
       type,
       inputCls = 'w-16 rounded-md',
       limit = [1, 100],
       inc = 1,
-      dp,
+      dp = 3,
       leftChildren,
       children,
     },

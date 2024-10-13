@@ -119,7 +119,7 @@ export function singleLinkage(
   distFunc: IDistFunc = pearsond,
   dcache: Map<number, Map<number, number>>
 ): number {
-  return _linkage(df, c1, c2, distFunc, (d: number[]) => d.sort()[0], dcache)
+  return _linkage(df, c1, c2, distFunc, (d: number[]) => d.sort()[0]!, dcache)
 }
 
 export function completeLinkage(
@@ -134,7 +134,7 @@ export function completeLinkage(
     c1,
     c2,
     distFunc,
-    (d: number[]) => d.sort().toReversed()[0],
+    (d: number[]) => d.sort().toReversed()[0]!,
     dcache
   )
 }
@@ -193,8 +193,8 @@ export class HCluster {
       const clusterPairs = squareMatrixPairs(clusters.length)
 
       clusterPairs.forEach(pair => {
-        const c1 = clusters[pair[0]]
-        const c2 = clusters[pair[1]]
+        const c1 = clusters[pair[0]]!
+        const c2 = clusters[pair[1]]!
 
         pair[2] = this._linkage(df, c1, c2, this._distFunc, dcache)
 
@@ -241,10 +241,10 @@ export class HCluster {
         id: n + i,
         //name: "",
         height: nearestPair[2],
-        indices: clusters[nearestPair[0]].indices
-          .concat(clusters[nearestPair[1]].indices)
-          .sort(),
-        children: [clusters[nearestPair[0]], clusters[nearestPair[1]]],
+        indices: clusters[nearestPair[0]]!.indices.concat(
+          clusters[nearestPair[1]]!.indices
+        ).sort(),
+        children: [clusters[nearestPair[0]]!, clusters[nearestPair[1]]!],
       }
 
       // remove merged nodes and push new node
@@ -253,13 +253,13 @@ export class HCluster {
       clusters.push(newCluster)
     })
 
-    const cluster = clusters[0]
+    const cluster = clusters[0]!
 
     const leaves = getLeaves(cluster)
 
     const tree: IClusterTree = {
       cluster,
-      coords: clusterToCoords(df, clusters[0], leaves),
+      coords: clusterToCoords(df, cluster, leaves),
       leaves,
     }
 
@@ -319,15 +319,15 @@ export function clusterToCoords(
     const c = stack.pop()
 
     if (c && c.children.length > 0) {
-      const x1 = _getNodeX(c.children[0], leafMap, xMap) / maxX
-      const x2 = _getNodeX(c.children[1], leafMap, xMap) / maxX
+      const x1 = _getNodeX(c.children[0]!, leafMap, xMap) / maxX
+      const x2 = _getNodeX(c.children[1]!, leafMap, xMap) / maxX
       const y = c.height / maxH
 
       coords.push([
-        [x1, c.children[0].height / maxH],
+        [x1, c.children[0]!.height / maxH],
         [x1, y],
         [x2, y],
-        [x2, c.children[1].height / maxH],
+        [x2, c.children[1]!.height / maxH],
       ])
 
       // depth first left tree first
@@ -345,19 +345,19 @@ export function _getNodeX(
 ): number {
   // use cached coordinate if we already have it
   if (cluster.id in xMap) {
-    return xMap[cluster.id]
+    return xMap[cluster.id]!
   }
 
   if (cluster.children.length === 0) {
-    xMap[cluster.id] = leafMap[cluster.id]
+    xMap[cluster.id] = leafMap[cluster.id]!
   } else {
     xMap[cluster.id] =
-      (_getNodeX(cluster.children[0], leafMap, xMap) +
-        _getNodeX(cluster.children[1], leafMap, xMap)) /
+      (_getNodeX(cluster.children[0]!, leafMap, xMap) +
+        _getNodeX(cluster.children[1]!, leafMap, xMap)) /
       2
   }
 
-  return xMap[cluster.id]
+  return xMap[cluster.id]!
 }
 
 /**
@@ -367,16 +367,16 @@ export function _getNodeX(
  * @returns
  */
 export function getClusterOrderedDataFrame(cf: ClusterFrame): BaseDataFrame {
-  const df = cf.dataframes[MAIN_CLUSTER_FRAME]
+  const df = cf.dataframes[MAIN_CLUSTER_FRAME]!
   const rowLeaves = cf.rowTree ? cf.rowTree.leaves : range(0, df.shape[0])
   const colLeaves = cf.colTree ? cf.colTree.leaves : range(0, df.shape[1])
 
   const data = df.values
 
   const ret = new DataFrame({
-    data: rowLeaves.map(r => colLeaves.map(c => data[r][c])),
-    columns: colLeaves.map(c => df.colNames[c]),
-    index: rowLeaves.map(r => df.rowNames[r]),
+    data: rowLeaves.map(r => colLeaves.map(c => data[r]![c]!)),
+    columns: colLeaves.map(c => df.colNames[c]!),
+    index: rowLeaves.map(r => df.rowNames[r]!),
     name: df.name,
   })
 

@@ -96,8 +96,8 @@ export const GexBoxWhiskerPlotSvg = forwardRef<SVGElement, IProps>(
       // how big is the canvas
       //
       const plotWidth =
-        plot.genes[0].datasets.length * displayProps.plot.bar.width +
-        (plot.genes[0].datasets.length - 1) * displayProps.plot.gap
+        plot.genes[0]!.datasets.length * displayProps.plot.bar.width +
+        (plot.genes[0]!.datasets.length - 1) * displayProps.plot.gap
 
       const innerWidth = plotWidth * cols + displayProps.page.gap.x * (cols - 1)
       const innerHeight =
@@ -150,7 +150,7 @@ export const GexBoxWhiskerPlotSvg = forwardRef<SVGElement, IProps>(
             // get the min/max height
 
             const geneStats: IGexStats[] =
-              allStats.length >= ri ? allStats[ri] : []
+              allStats.length >= ri ? allStats[ri]! : []
 
             const allValues: number[][] = result.datasets.map(dataset =>
               dataset.values
@@ -201,7 +201,7 @@ export const GexBoxWhiskerPlotSvg = forwardRef<SVGElement, IProps>(
               return xs
             })
 
-            let yTitle: string | undefined = undefined
+            let yTitle: string = ''
 
             if (gexValueType) {
               if (gexValueType.name === 'TPM') {
@@ -280,13 +280,13 @@ export const GexBoxWhiskerPlotSvg = forwardRef<SVGElement, IProps>(
                           transform={`translate(${0.5 * displayProps.plot.bar.width}, 0)`}
                         >
                           <ViolinPlotSvg
-                            data={allValues[di]}
-                            xsmooth={xsmoothed[di]}
+                            data={allValues[di]!}
+                            xsmooth={xsmoothed[di]!}
                             ysmooth={ysmoothed}
                             xmax={
                               displayProps.violin.globalNorm
                                 ? global_xsmoothed_max
-                                : undefined
+                                : 1
                             }
                             yax={yax}
                             width={displayProps.plot.bar.width}
@@ -311,10 +311,10 @@ export const GexBoxWhiskerPlotSvg = forwardRef<SVGElement, IProps>(
                           transform={`translate(${(displayProps.plot.bar.width - plotProps.box.width) / 2}, 0)`}
                         >
                           <BoxWhiskerPlotSvg
-                            data={allValues[di]}
-                            q1={q1s[di]}
-                            median={medians[di]}
-                            q3={q3s[di]}
+                            data={allValues[di]!}
+                            q1={q1s[di]!}
+                            median={medians[di]!}
+                            q3={q3s[di]!}
                             yax={yax}
                             width={plotProps.box.width}
                             height={displayProps.plot.height}
@@ -340,7 +340,7 @@ export const GexBoxWhiskerPlotSvg = forwardRef<SVGElement, IProps>(
                           transform={`translate(${0.5 * displayProps.plot.bar.width}, 0)`}
                         >
                           <SwarmPlotSvg
-                            data={allValues[di]}
+                            data={allValues[di]!}
                             yax={yax}
                             width={displayProps.plot.bar.width}
                             height={displayProps.plot.height}

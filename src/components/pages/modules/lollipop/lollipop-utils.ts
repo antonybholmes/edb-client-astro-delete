@@ -309,7 +309,7 @@ export class LollipopStats {
       return [NA, -1]
     }
 
-    return this.eventCounts.sort((a, b) => b[1] - a[1])[0]
+    return this.eventCounts.sort((a, b) => b[1] - a[1])[0]!
   }
 
   get sum(): number {
@@ -419,12 +419,12 @@ export function makeLollipopData(
     .map(row => {
       //console.log(mutDf.colNames, columns)
 
-      let sample = mutDf.col(columns.sample).values[row].toString()
+      let sample = mutDf.col(columns.sample).values[row]!.toString()
 
-      let ref = mutDf.col(columns.aa).values[row].toString()
+      let ref = mutDf.col(columns.aa).values[row]!.toString()
 
       let variant = parseVariant(
-        mutDf.col(columns.variant).values[row].toString()
+        mutDf.col(columns.variant).values[row]!.toString()
       )
 
       const aa = ref.replace('p.', '')
@@ -432,9 +432,9 @@ export function makeLollipopData(
       let matchArray = [...aa.matchAll(SUB_REGEX)]
 
       if (matchArray) {
-        const from = matchArray[0][1]
-        const position = Number(matchArray[0][2])
-        const to = matchArray[0][3]
+        const from = matchArray[0]![1]!
+        const position = Number(matchArray[0]![2]!)
+        const to = matchArray[0]![3]!
         return { ref, from, to, position, variant, sample }
       } else {
         // try v2
@@ -442,9 +442,9 @@ export function makeLollipopData(
         matchArray = [...aa.matchAll(SUB_V2_REGEX)]
 
         if (matchArray) {
-          const position = Number(matchArray[0][1])
-          const from = matchArray[0][2]
-          const to = matchArray[0][3]
+          const position = Number(matchArray[0]![1]!)
+          const from = matchArray[0]![2]!
+          const to = matchArray[0]![3]!
 
           return { ref, from, to, position, variant, sample }
         }
@@ -468,7 +468,7 @@ export function makeLollipopData(
   )
 
   aaChanges.forEach(aaChange => {
-    aaStats[aaChange.position - 1].set(aaChange.variant, aaChange.sample)
+    aaStats[aaChange.position - 1]!.set(aaChange.variant, aaChange.sample)
   })
 
   return {

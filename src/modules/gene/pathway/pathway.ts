@@ -170,17 +170,19 @@ export class PathwayOverlap {
       const pvalues: number[] = data.map(row => row[8] as number)
       const idx = argsort(pvalues)
 
-      const q = pvalues[idx[0]] * data.length //this.pathways()
+      const i0: number = idx[0]!
 
-      data[idx[0]][9] = Math.min(1, Math.max(0, q))
+      const q = pvalues[i0]! * data.length //this.pathways()
+
+      data[i0]![9] = Math.min(1, Math.max(0, q))
       //data[idx[0]][12] = 1
 
       range(1, c).forEach(i => {
         const rank = i + 1
-        const q = (pvalues[idx[i]] * data.length) / rank
-        data[idx[i]][9] = Math.min(
+        const q = (pvalues[idx[i]!]! * data.length) / rank
+        data[idx[i]!]![9] = Math.min(
           1,
-          Math.max(0, Math.max(data[idx[i - 1]][9] as number, q))
+          Math.max(0, Math.max(data[idx[i - 1]!]![9] as number, q))
         )
 
         //data[idx[i]][12] = rank
@@ -188,13 +190,13 @@ export class PathwayOverlap {
 
       range(0, data.length).forEach(i => {
         // log10 of q
-        data[i][10] = -Math.log10(<number>data[i][9])
+        data[i]![10] = -Math.log10(<number>data[i]![9])
       })
 
       allData = allData.concat(data)
     })
 
-    console.log(allData[0], allData[0].length, PATHWAY_TABLE_COLS.length)
+    console.log(allData[0], allData[0]!.length, PATHWAY_TABLE_COLS.length)
 
     return [allData, PATHWAY_TABLE_COLS]
   }

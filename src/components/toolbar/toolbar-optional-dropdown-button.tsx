@@ -51,7 +51,6 @@ export function ToolbarOptionalDropdownButton({
           //rounded="none"
           selected={open}
           aria-label={props['aria-label']}
-          tooltip={tooltip}
           className="rounded-r-none"
         >
           {icon}

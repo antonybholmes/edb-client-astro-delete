@@ -333,13 +333,13 @@ function MatcalcPage() {
     if (
       foldersTab.children &&
       foldersTab.children.length > 1 &&
-      foldersTab.children[1].children &&
-      foldersTab.children[1].children.length > 0
+      foldersTab.children[1]!.children &&
+      foldersTab.children[1]!.children.length > 0
     ) {
       setSelectedTab(
-        foldersTab.children[1].children[
-          foldersTab.children[1].children.length - 1
-        ]
+        foldersTab.children[1]!.children[
+          foldersTab.children[1]!.children.length - 1
+        ]!
       )
     } else {
       setSelectedTab(DATA_TAB)
@@ -351,7 +351,7 @@ function MatcalcPage() {
       return
     }
 
-    const file = files[0]
+    const file = files[0]!
     const name = file.name
 
     //setFile(files[0])

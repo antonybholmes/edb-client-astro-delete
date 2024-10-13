@@ -40,7 +40,7 @@ export function Files({
 
     if (files) {
       for (let i = 0; i < files.length; i++) {
-        const file: File = files[i] // OR const file = files.item(i);
+        const file: File = files[i]! // OR const file = files.item(i);
 
         const fileReader = new FileReader()
 

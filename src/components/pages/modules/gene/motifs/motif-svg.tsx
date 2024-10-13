@@ -125,7 +125,7 @@ export const MotifSvg = forwardRef<SVGElement, IProps>(function MotifSvg(
         shapeRendering="crispEdges"
       >
         {state.motifOrder.map((orderedIndex, index) => {
-          const motif = state.motifs[orderedIndex]
+          const motif = state.motifs[orderedIndex]!
 
           // dataframes are n x 4 representations of motifs
 
@@ -170,7 +170,7 @@ export const MotifSvg = forwardRef<SVGElement, IProps>(function MotifSvg(
               key={index}
             >
               {range(0, n).map(r => {
-                const npw = nweights[r]
+                const npw = nweights[r]!
                 const idx = argSort(npw) //dft.row(r)!.values)
 
                 let ic_final = 0
@@ -178,7 +178,7 @@ export const MotifSvg = forwardRef<SVGElement, IProps>(function MotifSvg(
                 if (_displayProps.mode == 'Bits') {
                   // sum of p * log2(p)
                   const U = -idx
-                    .map(c => npw[c])
+                    .map(c => npw[c]!)
                     .filter(p => p > 0)
                     .map(p => p * Math.log2(p))
                     .reduce((a, b) => a + b)
@@ -201,12 +201,16 @@ export const MotifSvg = forwardRef<SVGElement, IProps>(function MotifSvg(
                     key={r}
                   >
                     {idx.map(c => {
-                      const base: string = BASE_IDS[c]
+                      const base: string = BASE_IDS[c]!
                       const color =
                         _displayProps.baseColors[base.toLowerCase() as DNABase]
-                      const p: number = npw[c] //dft.get(r, c) as number
+                      const p: number = npw[c]! //dft.get(r, c) as number
                       const y_scale =
-                        p * 2 * ic_frac * y_scale_factor * Y_SCALE_FACTORS[base]
+                        p *
+                        2 *
+                        ic_frac *
+                        y_scale_factor *
+                        Y_SCALE_FACTORS[base]!
                       const h = p * ic_frac * _displayProps.plotHeight
                       const y3 = y2
                       y2 -= h

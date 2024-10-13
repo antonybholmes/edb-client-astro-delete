@@ -211,7 +211,7 @@ export function PathwayPage() {
       return
     }
 
-    const file: File = files[0] // OR const file = files.item(i);
+    const file: File = files[0]! // OR const file = files.item(i);
 
     const fileReader = new FileReader()
 
@@ -237,7 +237,7 @@ export function PathwayPage() {
       }
     }
 
-    fileReader.readAsText(files[0])
+    fileReader.readAsText(file)
   }
 
   async function loadTestData() {
@@ -743,9 +743,9 @@ export function PathwayPage() {
                             <li key={di}>
                               <Checkbox
                                 aria-label={`Use dataset ${dataset.name}`}
-                                checked={datasetsForUse.get(
-                                  makeDatasetId(dataset)
-                                )}
+                                checked={
+                                  datasetsForUse.get(makeDatasetId(dataset))!
+                                }
                                 onCheckedChange={() => {
                                   setDatasetsForUse(
                                     new Map<string, boolean>([

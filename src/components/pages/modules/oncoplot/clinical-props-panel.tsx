@@ -112,10 +112,10 @@ export const ClinicalPropsPanel = forwardRef(function ClinicalPropsPanel(
             <AccordionContent>
               <SwitchPropRow
                 title="Show"
-                checked={displayProps.legend.clinical.tracks[ti].show}
+                checked={displayProps.legend.clinical.tracks[ti]!.show}
                 onCheckedChange={state => {
                   const tracksProps = [...displayProps.legend.clinical.tracks]
-                  tracksProps[ti].show = state
+                  tracksProps[ti]!.show = state
 
                   plotDispatch({
                     type: 'display',
@@ -137,20 +137,20 @@ export const ClinicalPropsPanel = forwardRef(function ClinicalPropsPanel(
                   <VCenterRow className="gap-x-1" key={ci}>
                     <ColorPickerButton
                       color={
-                        displayProps.legend.clinical.tracks[ti].colorMap.get(
+                        displayProps.legend.clinical.tracks[ti]!.colorMap.get(
                           category
                         ) ?? displayProps.legend.mutations.noAlterationColor
                       }
                       onColorChange={color => {
                         const newColors = new Map<string, string>([
-                          ...displayProps.legend.clinical.tracks[ti].colorMap,
+                          ...displayProps.legend.clinical.tracks[ti]!.colorMap,
                           [category, color],
                         ])
 
                         const tracksProps = [
                           ...displayProps.legend.clinical.tracks,
                         ]
-                        tracksProps[ti].colorMap = newColors
+                        tracksProps[ti]!.colorMap = newColors
 
                         plotDispatch({
                           type: 'display',

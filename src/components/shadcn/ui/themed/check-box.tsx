@@ -31,9 +31,10 @@ export const TICK_CLS = cn(
 export const Checkbox = forwardRef(function Checkbox(
   {
     checked = false,
+    defaultChecked = false,
     gap = 'gap-x-1.5',
-    onCheckedChange,
-    className,
+    onCheckedChange = () => {},
+    className = '',
     children,
     ...props
   }: ICheckboxProps,
@@ -43,6 +44,7 @@ export const Checkbox = forwardRef(function Checkbox(
     <CheckboxPrimitive.Root
       ref={ref}
       checked={checked}
+      defaultChecked={defaultChecked}
       onCheckedChange={state =>
         onCheckedChange?.(state === 'indeterminate' ? false : state)
       }

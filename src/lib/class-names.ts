@@ -1,5 +1,3 @@
-import type { UndefStr } from './text/text'
-
 // export function clean(cn: string) {
 //   // replace multi spaces globally and ignore new lines
 //   return cn.replace(/(\s+|\r\n|\n|\r)/gm, " ").trim()
@@ -73,7 +71,7 @@ function _cn(args: CSSClass, classes: string[], used: Set<string>) {
  * @param args string or array of strings of classnames. Also supports condition c
  * @returns a space separated string of class names.
  */
-export function cn(...args: CSSClass[]): UndefStr {
+export function cn(...args: CSSClass[]): string {
   const classes: string[] = []
   const used: Set<string> = new Set()
 
@@ -86,7 +84,7 @@ export function cn(...args: CSSClass[]): UndefStr {
   if (ret.length > 0) {
     return ret
   } else {
-    return undefined
+    return ''
   }
   // .split(" ")
   // .filter(c => {

@@ -68,9 +68,9 @@ export function toRPN(input: string): ISearchNode[] {
         while (
           o2 !== undefined &&
           o2 !== '(' &&
-          (OPERATORS[o2].prec > OPERATORS[o1].prec ||
-            (OPERATORS[o2].prec === OPERATORS[o1].prec &&
-              OPERATORS[o1].assoc === 'l'))
+          (OPERATORS[o2]!.prec > OPERATORS[o1]!.prec ||
+            (OPERATORS[o2]!.prec === OPERATORS[o1]!.prec &&
+              OPERATORS[o1]!.assoc === 'l'))
         ) {
           output.push({ v: null, op: opStack.pop() ?? 'AND' })
           o2 = peek()

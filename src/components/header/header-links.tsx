@@ -87,7 +87,7 @@ export function HeaderLinks({ onClick, className }: IProps) {
                   if (module.abbr) {
                     abbr = module.abbr
                   } else {
-                    abbr = `${module.name[0].toUpperCase()}${module.name[1].toLowerCase()}`
+                    abbr = `${module.name[0]!.toUpperCase()}${module.name[1]!.toLowerCase()}`
                   }
 
                   return (
@@ -107,9 +107,9 @@ export function HeaderLinks({ onClick, className }: IProps) {
                           }}
                         >
                           <span className="font-bold">
-                            {abbr[0].toUpperCase()}
+                            {abbr[0]!.toUpperCase()}
                           </span>
-                          <span>{abbr[1].toLowerCase()}</span>
+                          <span>{abbr[1]!.toLowerCase()}</span>
                         </div>
 
                         <BaseCol>

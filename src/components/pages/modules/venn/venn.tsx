@@ -186,7 +186,7 @@ function VennPage() {
       return
     }
 
-    const file = files[0]
+    const file = files[0]!
     const name = file.name
 
     //setFile(files[0])
@@ -223,7 +223,7 @@ function VennPage() {
   }
 
   function openFiles(files: IFileOpen[]) {
-    const file = files[0]
+    const file = files[0]!
     const name = file.name
 
     const lines = file.text.split(/[\r\n]+/g).filter(line => line.length > 0)
@@ -1081,9 +1081,9 @@ function VennPage() {
     if (keyPressed === 'Shift') {
       setScale(
         Math.max(
-          ZOOM_SCALES[0],
+          ZOOM_SCALES[0]!,
           Math.min(
-            ZOOM_SCALES[ZOOM_SCALES.length - 1],
+            ZOOM_SCALES[ZOOM_SCALES.length - 1]!,
             scale + (e.deltaY >= 0 ? 0.25 : -0.25)
           )
         )

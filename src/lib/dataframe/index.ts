@@ -15,7 +15,7 @@ export class Index extends BaseIndex {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  get(index: number): IndexType {
+  get(_index: number): IndexType {
     return NaN
   }
 
@@ -38,7 +38,7 @@ export class Index extends BaseIndex {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  filter(idx: number[]): Index {
+  filter(_idx: number[]): Index {
     return this
   }
 
@@ -47,7 +47,7 @@ export class Index extends BaseIndex {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  find(s: IndexType): number[] {
+  find(_s: IndexType): number[] {
     return []
   }
 }
@@ -70,7 +70,7 @@ export class IterIndex extends Index {
     this._length = length
   }
 
-  get size(): number {
+  override get size(): number {
     return this._length
   }
 }
@@ -90,7 +90,7 @@ export class InfNumIndex extends Index {
     super()
   }
 
-  get(index: number): number {
+  override get(index: number): number {
     return index + 1
   }
 }
@@ -100,7 +100,7 @@ export class InfExcelIndex extends Index {
     super()
   }
 
-  get(index: number): string {
+  override get(index: number): string {
     return getExcelColName(index)
   }
 }

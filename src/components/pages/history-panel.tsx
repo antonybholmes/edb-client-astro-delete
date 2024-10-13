@@ -185,7 +185,7 @@ export const HistoryPanel = forwardRef(function HistoryPanel(
                     <span className="font-medium text-left truncate">{`${hi + 1}. ${h.name}`}</span>
 
                     <span className="text-left text-foreground/50 truncate">
-                      {`${getFormattedShape(h.sheets[0])}${h.sheets.length > 1 ? `, ${h.sheets.length - 1} more...` : ''}`}
+                      {`${getFormattedShape(h.sheets[0]!)}${h.sheets.length > 1 ? `, ${h.sheets.length - 1} more...` : ''}`}
                     </span>
                   </button>
 

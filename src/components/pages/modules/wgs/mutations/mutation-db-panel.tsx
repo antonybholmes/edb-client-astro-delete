@@ -27,7 +27,7 @@ export const MutationDBPanel = forwardRef(function MutationDBPanel(
     <BaseCol ref={ref} className="h-full grow gap-y-2 text-xs">
       <h2 className={H2_CLS}>Mutation Databases</h2>
 
-      <RadioGroup defaultValue={databases[0].name} className="gap-y-2">
+      <RadioGroup defaultValue={databases[0]!.name} className="gap-y-2">
         {databases.map((db, dbi) => (
           <VCenterRow key={dbi} className="gap-x-1">
             <RadioGroupItem value={db.name} id={db.publicId} />

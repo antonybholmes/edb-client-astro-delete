@@ -94,7 +94,7 @@ export function EDBSignedIn() {
   let name: string
 
   if (user.firstName) {
-    name = user.firstName.split(' ')[0]
+    name = user.firstName.split(' ')[0]!
   } else {
     name = user.username
   }

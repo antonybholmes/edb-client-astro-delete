@@ -45,7 +45,7 @@ export const FilterPropsPanel = forwardRef(function FilterPropsPanel(
       return
     }
 
-    const file = files[0]
+    const file = files[0]!
 
     //setFile(files[0])
     //setShowLoadingDialog(true)

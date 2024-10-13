@@ -38,11 +38,11 @@ interface IToggleButtonsProps extends IChildrenProps {
 }
 
 export function ToggleButtons({
-  value,
-  tabs,
-  onTabChange,
+  value = '',
+  tabs = [],
+  onTabChange = () => {},
   children,
-  className,
+  className = '',
 }: IToggleButtonsProps) {
   return (
     <TabProvider value={value} onTabChange={onTabChange} tabs={tabs}>
@@ -294,11 +294,11 @@ export function ToggleButtonTriggers({
     }
 
     const x = range(0, selectedTab.index).reduce(
-      (sum, index) => sum + (tabs[index].size ?? defaultWidth + 0.25),
+      (sum, index) => sum + (tabs[index]!.size ?? defaultWidth + 0.25),
       0
     )
 
-    const width = tabs[selectedTab.index].size ?? defaultWidth
+    const width = tabs[selectedTab.index]!.size ?? defaultWidth
 
     setTabPos({ x: `${x}rem`, width: `${width}rem` })
   }, [selectedTab])

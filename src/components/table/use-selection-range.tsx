@@ -9,7 +9,7 @@ export interface ISelectionRange {
   end: ICell
 }
 
-export const NO_SELECTION: ICell = { r: -1, c: -1 }
+export const NO_SELECTION: ICell = { row: -1, col: -1 }
 
 export const NO_SELECTION_RANGE: ISelectionRange = {
   start: NO_SELECTION,

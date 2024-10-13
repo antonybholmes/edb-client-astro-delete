@@ -4,7 +4,7 @@ export function euclidean(a: number[], b: number[]): number {
   return Math.sqrt(
     a
       .map((x, xi) => {
-        const d = x - b[xi]
+        const d = x - b[xi]!
         return d * d
       })
       .reduce((x, y) => x + y)
@@ -12,7 +12,7 @@ export function euclidean(a: number[], b: number[]): number {
 }
 
 export function manhattan(a: number[], b: number[]): number {
-  return a.map((x, xi) => Math.abs(x - b[xi])).reduce((x, y) => x + y)
+  return a.map((x, xi) => Math.abs(x - b[xi]!)).reduce((x, y) => x + y)
 }
 
 export function pearsond(a: number[], b: number[]): number {

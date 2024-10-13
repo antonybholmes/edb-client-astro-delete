@@ -35,8 +35,8 @@ export function mannWhitneyU(
   const ranks = range(1, obs.length + 1)
   const n = obs.length
 
-  let tied: number[] = [ranks[0]]
-  let currentValue: number = obs[0]
+  let tied: number[] = [ranks[0]!]
+  let currentValue: number = obs[0]!
   let ties: number[][] = []
 
   const rankMap: Map<number, number> = new Map<number, number>()
@@ -51,10 +51,10 @@ export function mannWhitneyU(
       ties.push(tied)
 
       tied = []
-      currentValue = obs[i]
+      currentValue = obs[i]!
     }
 
-    tied.push(ranks[i])
+    tied.push(ranks[i]!)
   }
 
   // end case

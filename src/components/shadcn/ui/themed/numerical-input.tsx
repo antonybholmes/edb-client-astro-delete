@@ -16,7 +16,7 @@ interface IProps extends IInputProps {
 }
 
 export function NumericalInput({
-  value,
+  value = 0,
   limit = [1, 100],
   inc = 1,
   dp = 0,

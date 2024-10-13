@@ -14,7 +14,7 @@ export function BasicAlertDialog({
   open = true,
   title,
   buttons = ['OK'],
-  onReponse,
+  onReponse = () => {},
   children,
 }: IProps) {
   // useEffect(() => {

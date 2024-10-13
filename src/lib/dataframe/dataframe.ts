@@ -46,7 +46,7 @@ export class DataFrame extends BaseDataFrame {
     this.setColNames(columns, true)
   }
 
-  setName(name: string, inplace = true): BaseDataFrame {
+  override setName(name: string, inplace = true): BaseDataFrame {
     const df: DataFrame = inplace ? this : (this.copy() as DataFrame)
 
     df._name = name
@@ -54,7 +54,7 @@ export class DataFrame extends BaseDataFrame {
     return df
   }
 
-  setCol(
+  override setCol(
     col: IndexType = -1,
     data: SeriesType[] | BaseSeries,
     inplace = true
@@ -65,10 +65,10 @@ export class DataFrame extends BaseDataFrame {
 
     const colIdx: number[] = _findCol(df, col)
 
-    if (colIdx.length > 0 && colIdx[0] < df.shape[1]) {
+    if (colIdx.length > 0 && colIdx[0]! < df.shape[1]) {
       // existing column so update each value
       d.forEach((v: SeriesType, r: number) => {
-        df._data[r][colIdx[0]] = v
+        df._data[r]![colIdx[0]!]! = v
       })
     } else {
       if (d.length === 0) {
@@ -78,7 +78,7 @@ export class DataFrame extends BaseDataFrame {
         // since matrix is row wise, append new values to
         // end of each row
         d.forEach((v: SeriesType, r: number) => {
-          df._data[r].push(v)
+          df._data[r]!.push(v)
         })
       }
 
@@ -96,17 +96,17 @@ export class DataFrame extends BaseDataFrame {
     return df
   }
 
-  col(c: IndexType): BaseSeries {
+  override col(c: IndexType): BaseSeries {
     const idx = _findCol(this, c)
 
     if (idx.length === 0) {
       throw new Error('invalid column')
     }
 
-    const v = this._data.map(row => row[idx[0]]) //this.colValues(idx)
+    const v = this._data.map(row => row[idx[0]!]!) //this.colValues(idx)
 
     return new Series(v, {
-      name: this._columns.get(idx[0]),
+      name: this._columns.get(idx[0]!),
       index: this._index,
     })
   }
@@ -118,7 +118,7 @@ export class DataFrame extends BaseDataFrame {
       return []
     }
 
-    return this._data.map(row => row[idx[0]])
+    return this._data.map(row => row[idx[0]!]!)
   }
 
   // setCols(cols: Series[]): BaseDataFrame {
@@ -126,28 +126,28 @@ export class DataFrame extends BaseDataFrame {
   //   return this
   // }
 
-  get(row: number, col: number): SeriesType {
+  override get(row: number, col: number): SeriesType {
     return this._data[row]?.[col] ?? NaN
   }
 
-  row(row: IndexType): BaseSeries {
+  override row(row: IndexType): BaseSeries {
     const idx = _findRow(this, row)
 
     if (idx.length === 0) {
       throw new Error('invalid row')
     }
 
-    return new Series(this._data[idx[0]], {
-      name: this.getRowName(idx[0]),
+    return new Series(this._data[idx[0]!]!, {
+      name: this.getRowName(idx[0]!),
       index: this._index,
     })
   }
 
   rowValues(row: number): SeriesType[] {
-    return this._data[row].slice()
+    return this._data[row]!.slice()
   }
 
-  setRow(
+  override setRow(
     row: IndexType = -1,
     data: SeriesType[] | BaseSeries,
     inplace = true
@@ -158,8 +158,8 @@ export class DataFrame extends BaseDataFrame {
 
     const rowIdx: number[] = _findRow(df, row)
 
-    if (rowIdx.length > 0 && rowIdx[0] < df.shape[0]) {
-      df._data[rowIdx[0]] = d
+    if (rowIdx.length > 0 && rowIdx[0]! < df.shape[0]) {
+      df._data[rowIdx[0]!] = d
     } else {
       if (d.length === 0) {
         // empty array so create
@@ -182,12 +182,12 @@ export class DataFrame extends BaseDataFrame {
     return df
   }
 
-  set(row: number, col: number, v: IndexType): BaseDataFrame {
-    this._data[row][col] = makeCell(v)
+  override set(row: number, col: number, v: IndexType): BaseDataFrame {
+    this._data[row]![col]! = makeCell(v)
     return this
   }
 
-  setIndex(index: IndexFromType, inplace = true): BaseDataFrame {
+  override setIndex(index: IndexFromType, inplace = true): BaseDataFrame {
     const df: DataFrame = inplace ? this : (this.copy() as DataFrame)
 
     if (index instanceof Index) {
@@ -215,19 +215,22 @@ export class DataFrame extends BaseDataFrame {
   //   return df
   // }
 
-  get index(): Index {
+  override get index(): Index {
     return this._index
   }
 
-  get columns(): Index {
+  override get columns(): Index {
     return this._columns
   }
 
-  getColName(col: number): string {
+  override getColName(col: number): string {
     return this._columns.get(col).toString()
   }
 
-  setColNames(index: IndexFromType, inplace: boolean = true): BaseDataFrame {
+  override setColNames(
+    index: IndexFromType,
+    inplace: boolean = true
+  ): BaseDataFrame {
     const df: DataFrame = inplace ? this : (this.copy() as DataFrame)
 
     if (index instanceof InfNumIndex || index instanceof InfExcelIndex) {
@@ -247,11 +250,11 @@ export class DataFrame extends BaseDataFrame {
     return df
   }
 
-  get cols(): BaseSeries[] {
+  override get cols(): BaseSeries[] {
     return range(0, this.shape[1]).map(
       (c: number) =>
         new Series(
-          this._data.map(row => row[c]),
+          this._data.map(row => row[c]!),
           {
             name: this._columns.get(c),
           }
@@ -259,20 +262,23 @@ export class DataFrame extends BaseDataFrame {
     )
   }
 
-  get shape(): Shape {
-    return [this._data.length, this._data.length > 0 ? this._data[0].length : 0]
+  override get shape(): Shape {
+    return [
+      this._data.length,
+      this._data.length > 0 ? this._data[0]!.length : 0,
+    ]
   }
 
-  get size(): number {
+  override get size(): number {
     return this.shape[0] * this.shape[1]
   }
 
-  get values(): SeriesType[][] {
+  override get values(): SeriesType[][] {
     // return copy as we want dataframe to be immutable
     return this._data.map(row => row.slice())
   }
 
-  apply(
+  override apply(
     f: (v: SeriesType, row: number, col: number) => SeriesType
   ): BaseDataFrame {
     const data = this.map(f)
@@ -287,15 +293,17 @@ export class DataFrame extends BaseDataFrame {
     return ret
   }
 
-  map<T>(f: (v: SeriesType, row: number, col: number) => T): T[][] {
+  override map<T>(f: (v: SeriesType, row: number, col: number) => T): T[][] {
     return _map(this, f)
   }
 
-  rowApply(f: (row: SeriesType[], index: number) => SeriesType): BaseDataFrame {
+  override rowApply(
+    f: (row: SeriesType[], index: number) => SeriesType
+  ): BaseDataFrame {
     return _rowApply(this, f)
   }
 
-  rowMap<T>(f: (row: SeriesType[], index: number) => T): T[] {
+  override rowMap<T>(f: (row: SeriesType[], index: number) => T): T[] {
     return _rowMap(this, f)
   }
 
@@ -303,19 +311,19 @@ export class DataFrame extends BaseDataFrame {
   //   return _colApply(this, f)
   // }
 
-  colMap<T>(f: (col: SeriesType[], index: number) => T): T[] {
+  override colMap<T>(f: (col: SeriesType[], index: number) => T): T[] {
     return _colMap(this, f)
   }
 
-  iloc(rows: LocType = ':', cols: LocType = ':'): BaseDataFrame {
+  override iloc(rows: LocType = ':', cols: LocType = ':'): BaseDataFrame {
     return _iloc(this, rows, cols)
   }
 
-  isin(rows: LocType = ':', cols: LocType = ':'): BaseDataFrame {
+  override isin(rows: LocType = ':', cols: LocType = ':'): BaseDataFrame {
     return _isin(this, rows, cols)
   }
 
-  t(): BaseDataFrame {
+  override t(): BaseDataFrame {
     const ret = new DataFrame({
       name: this.name,
       data: _t(this._data),
@@ -326,7 +334,7 @@ export class DataFrame extends BaseDataFrame {
     return ret
   }
 
-  copy(): BaseDataFrame {
+  override copy(): BaseDataFrame {
     return new DataFrame({
       name: this.name,
       data: this._data.map(r => [...r]),
@@ -337,7 +345,7 @@ export class DataFrame extends BaseDataFrame {
 }
 
 export function _t(data: SeriesType[][]): SeriesType[][] {
-  return data[0].map((_, ci) => data.map(row => row[ci]))
+  return data[0]!.map((_, ci) => data.map(row => row[ci]!))
 }
 
 // export function apply(
@@ -418,9 +426,9 @@ function _colMap<T>(
   df: DataFrame,
   f: (col: SeriesType[], index: number) => T
 ): T[] {
-  return range(0, df._data[0].length).map(ci => {
+  return range(0, df._data[0]!.length).map(ci => {
     const d = f(
-      df._data.map(rowData => rowData[ci]),
+      df._data.map(rowData => rowData[ci]!),
       ci
     )
 
@@ -473,13 +481,13 @@ function _iloc(
               } else {
                 const indices = df.index.find(s)
                 if (indices.length > 0) {
-                  ei = indices[0]
+                  ei = indices[0]!
                 }
               }
             } else {
               // of the form "<indices>:"
 
-              s = s.split(':')[0]
+              s = s.split(':')[0]!
               const i = Number.parseInt(s)
 
               if (Number.isInteger(s)) {
@@ -487,7 +495,7 @@ function _iloc(
               } else {
                 const indices = df.index.find(s)
                 if (indices.length > 0) {
-                  si = indices[0]
+                  si = indices[0]!
                 }
               }
             }
@@ -543,12 +551,12 @@ function _iloc(
                 // a sloppy manner so we pick a reasonable way of
                 // behaving
                 if (indices.length > 0) {
-                  ei = indices[0]
+                  ei = indices[0]!
                 }
               }
             } else {
               // of the form "<indices>:"
-              s = s.split(':')[0]
+              s = s.split(':')[0]!
               const i = Number.parseInt(s)
 
               if (Number.isInteger(s)) {
@@ -557,7 +565,7 @@ function _iloc(
               } else {
                 const indices = _findCol(df, s)
                 if (indices.length > 0) {
-                  si = indices[0]
+                  si = indices[0]!
                 }
               }
             }
@@ -579,7 +587,7 @@ function _iloc(
     }
   })
 
-  const d = rowIdx.map(r => colIdx.map(c => df._data[r][c]))
+  const d = rowIdx.map(r => colIdx.map(c => df._data[r]![c]!))
 
   const ret = new DataFrame({
     data: d,

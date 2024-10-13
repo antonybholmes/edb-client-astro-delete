@@ -112,8 +112,8 @@ export const BottomBar = forwardRef(function BottomBar(
   )
 
   useEffect(() => {
-    const x = tabUnderlineProps[tabId].x + (_scale === 1 ? padding : 0)
-    const width = tabUnderlineProps[tabId].w - (_scale === 1 ? 2 * padding : 0)
+    const x = tabUnderlineProps[tabId]!.x + (_scale === 1 ? padding : 0)
+    const width = tabUnderlineProps[tabId]!.w - (_scale === 1 ? 2 * padding : 0)
 
     setTabPos({
       x: `${x}rem`,
@@ -260,9 +260,9 @@ export const BottomBar = forwardRef(function BottomBar(
                 const i: number = Math.max(
                   0,
                   tabs
-                    .map((t, ti) => [t, ti] as [ITab, number])
-                    .filter(t => t[0].id === getTabId(selectedTab?.tab))
-                    .map(t => t[1])[0] - 1
+                    .map((t, ti) => [t, ti]! as [ITab, number])
+                    .filter(t => t[0]!.id === getTabId(selectedTab?.tab))
+                    .map(t => t[1])[0]! - 1
                 )
 
                 _onValueChange(getTabId(tabs[i]))
@@ -279,8 +279,8 @@ export const BottomBar = forwardRef(function BottomBar(
                   tabs.length - 1,
                   tabs
                     .map((t, ti) => [t, ti] as [ITab, number])
-                    .filter(t => t[0].id === getTabId(selectedTab?.tab))
-                    .map(t => t[1])[0] + 1
+                    .filter(t => t[0]!.id === getTabId(selectedTab?.tab))
+                    .map(t => t[1]!)[0]! + 1
                 )
 
                 _onValueChange(getTabId(tabs[i]))
@@ -312,7 +312,7 @@ export const BottomBar = forwardRef(function BottomBar(
                     className="relative justify-center truncate"
                     ripple={false}
                     style={{
-                      width: `${tabUnderlineProps[tabId].w}rem`,
+                      width: `${tabUnderlineProps[tabId]!.w}rem`,
                     }}
                     onMouseEnter={() => {
                       if (selected) {

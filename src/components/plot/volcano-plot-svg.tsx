@@ -220,13 +220,13 @@ export const VolcanoPlotSvg = forwardRef<SVGElement, IProps>(
           <g transform={`translate(${MARGIN.left}, ${MARGIN.top})`}>
             {xdata.map((x, xi) => {
               const x1 = xax!.domainToRange(x)
-              const y1 = yax!.domainToRange(ydata[xi])
+              const y1 = yax!.domainToRange(ydata[xi]!)
               const r =
                 sizedata.length > 0
-                  ? sizeFunc(sizedata[xi])
+                  ? sizeFunc(sizedata[xi]!)
                   : displayProps.dots.size
 
-              const color = getColor(x, ydata[xi], displayProps)
+              const color = getColor(x, ydata[xi]!, displayProps)
 
               return (
                 <circle
@@ -244,7 +244,7 @@ export const VolcanoPlotSvg = forwardRef<SVGElement, IProps>(
                         x: x1 + MARGIN.left + TOOLTIP_OFFSET,
                         y: y1 + MARGIN.top + TOOLTIP_OFFSET,
                       },
-                      cell: { r: xi, c: 0 },
+                      cell: { row: xi, col: 0 },
                     })
                   }}
                 />
@@ -254,12 +254,12 @@ export const VolcanoPlotSvg = forwardRef<SVGElement, IProps>(
 
           <g transform={`translate(${MARGIN.left}, ${MARGIN.top})`}>
             {labelIdx.map(i => {
-              const xr = xdata[i]
+              const xr = xdata[i]!
               const x1 = xax!.domainToRange(xr)
-              const y1 = yax!.domainToRange(ydata[i])
+              const y1 = yax!.domainToRange(ydata[i]!)
               const r =
                 sizedata.length > 0
-                  ? sizeFunc(sizedata[i])
+                  ? sizeFunc(sizedata[i]!)
                   : displayProps.dots.size
 
               return (
@@ -527,10 +527,10 @@ export const VolcanoPlotSvg = forwardRef<SVGElement, IProps>(
             }}
           >
             <p className="font-semibold">{`${df.getRowName(
-              toolTipInfo.cell.r
+              toolTipInfo.cell.row
             )}`}</p>
-            <p>{`x: ${cellStr(xdata[toolTipInfo.cell.r])}, y: ${cellStr(
-              ydata[toolTipInfo.cell.r]
+            <p>{`x: ${cellStr(xdata[toolTipInfo.cell.row]!)}, y: ${cellStr(
+              ydata[toolTipInfo.cell.row]!
             )}`}</p>
           </div>
         )}

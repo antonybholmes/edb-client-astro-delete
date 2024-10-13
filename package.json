@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "astro": "astro",
-    "build": "astro check && astro build",
+    "check": "astro check",
+    "build": "astro build",
     "check-module-version": "node scripts/check-module-version.mjs",
     "check-version": "node scripts/check-version.mjs",
     "dev": "astro dev",

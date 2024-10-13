@@ -43,9 +43,9 @@ export const BoxWhiskerPlotSvg = forwardRef<SVGElement, IProps>(
       const q0 = q1 - iqr15
       const q4 = q3 + iqr15
 
-      const w1 = data.filter(x => x >= q0)[0]
+      const w1 = data.filter(x => x >= q0)[0]!
       // reverse copy of array
-      const w2 = data.toReversed().filter(x => x <= q4)[0]
+      const w2 = data.toReversed().filter(x => x <= q4)[0]!
 
       //console.log(maxHeightMap)
 

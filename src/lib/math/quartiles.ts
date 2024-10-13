@@ -14,7 +14,7 @@ export function HLQuartile(p: number, values: number[]): [number, number] {
   }
 
   if (values.length === 1) {
-    return [values[0], 0]
+    return [values[0]!, 0]
   }
 
   if (p === 0.5) {
@@ -33,9 +33,9 @@ export function HLQuartile(p: number, values: number[]): [number, number] {
   //console.log("q", p, q, qi)
 
   if (Number.isInteger(q)) {
-    return [values[qi], qi]
+    return [values[qi]!, qi]
   } else {
-    return [0.5 * (values[qi] + values[Math.min(n, qi + 1)]), qi]
+    return [0.5 * (values[qi]! + values[Math.min(n, qi + 1)]!), qi]
   }
 }
 

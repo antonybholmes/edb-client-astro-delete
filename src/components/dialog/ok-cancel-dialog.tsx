@@ -43,11 +43,10 @@ export interface IOKCancelDialogProps extends IModalProps {
 
 export function OKCancelDialog({
   title = APP_NAME,
-  description,
-
+  description = '',
   open = true,
-  onOpenChange,
-  onReponse,
+  onOpenChange = () => {},
+  onReponse = () => {},
   showClose = true,
   buttons = [TEXT_OK, TEXT_CANCEL],
   buttonOrder = 'auto',
@@ -107,7 +106,7 @@ export function OKCancelDialog({
           >
             <Button
               variant={mainVariant}
-              onClick={() => _resp(buttons[0])}
+              onClick={() => _resp(buttons[0]!)}
               className="w-24"
               size="lg"
             >

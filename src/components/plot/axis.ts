@@ -56,8 +56,8 @@ export function makeTicks(lim: ILim, interval?: number): number[] {
   const ticks = [lim[0]]
 
   // keep adding ticks whilst within the limits
-  while (ticks[ticks.length - 1] + interval <= lim[1]) {
-    ticks.push(ticks[ticks.length - 1] + interval)
+  while (ticks[ticks.length - 1]! + interval <= lim[1]) {
+    ticks.push(ticks[ticks.length - 1]! + interval)
   }
 
   return ticks
@@ -281,12 +281,12 @@ export class Axis {
 }
 
 export class YAxis extends Axis {
-  copy(): Axis {
+  override copy(): Axis {
     const a = new YAxis()
     return this._clone(a)
   }
 
-  domainToRange(x: number): number {
+  override domainToRange(x: number): number {
     return this.range[1] - this.norm(x) * this._rangeDiff
   }
 }

@@ -346,7 +346,7 @@ function OncoplotPage() {
       return
     }
 
-    const file = files[0]
+    const file = files[0]!
     const name = file.name
 
     //setFile(files[0])
@@ -1012,7 +1012,7 @@ function OncoplotPage() {
           sideContent={
             <CollapseTree
               tab={foldersTab}
-              value={tab}
+              value={tab!}
               onValueChange={t => {
                 if (t && t.content) {
                   // only use tabs from the tree that have content, otherwise

@@ -12,12 +12,12 @@ export function histogram(data: number[], k?: number): IHistBin[] {
   }
 
   data = data.sort()
-  const r = data[data.length - 1] - data[0]
+  const r = data[data.length - 1]! - data[0]!
 
   const dx = r / (k - 1)
 
   const bins: IHistBin[] = range(k).map(bi => {
-    const s = data[0] + bi * dx
+    const s = data[0]! + bi * dx
     return {
       index: bi,
       range: [s, s + dx],
@@ -30,11 +30,11 @@ export function histogram(data: number[], k?: number): IHistBin[] {
 
   data.forEach(v => {
     // once a value exceeds the bin range goto the next bin
-    if (v >= bins[bi].range[1]) {
+    if (v >= bins[bi]!.range[1]) {
       ++bi
     }
 
-    bins[bi].values.push(v)
+    bins[bi]!.values.push(v)
   })
 
   return bins

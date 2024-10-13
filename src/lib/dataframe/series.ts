@@ -28,15 +28,18 @@ export class Series extends BaseSeries {
     return this
   }
 
-  get name(): IndexType {
+  override get name(): IndexType {
     return this._name
   }
 
-  get index(): Index {
+  override get index(): Index {
     return this._index
   }
 
-  setIndex(index: IndexFromType, inplace: boolean = false): BaseSeries {
+  override setIndex(
+    index: IndexFromType,
+    inplace: boolean = false
+  ): BaseSeries {
     const series: Series = inplace ? this : (this.copy() as Series)
 
     if (index instanceof Index) {
@@ -50,31 +53,31 @@ export class Series extends BaseSeries {
     return this
   }
 
-  get values(): SeriesType[] {
+  override get values(): SeriesType[] {
     return [...this._data]
   }
 
-  get(index: number): SeriesType {
-    return this._data[index]
+  override get(index: number): SeriesType {
+    return this._data[index]!
   }
 
-  set(index: number, v: SeriesType): BaseSeries {
+  override set(index: number, v: SeriesType): BaseSeries {
     this._data[index] = v
     return this
   }
 
-  get size() {
+  override get size() {
     return this._data.length
   }
 
-  filter(idx: number[]): BaseSeries {
+  override filter(idx: number[]): BaseSeries {
     return new Series(
-      idx.map(i => this._data[i]),
+      idx.map(i => this._data[i]!),
       { name: this._name, index: this._index.filter(idx) }
     )
   }
 
-  copy(): BaseSeries {
+  override copy(): BaseSeries {
     return new Series(this._data, { name: this._name, index: this._index })
   }
 }

@@ -217,7 +217,7 @@ export function GexPage() {
       const defaultPlatforms = platforms.filter(t => t.name.includes('RNA'))
 
       if (defaultPlatforms.length > 0) {
-        setPlatform(defaultPlatforms[0])
+        setPlatform(defaultPlatforms[0]!)
       }
     }
   }, [platforms])
@@ -337,7 +337,7 @@ export function GexPage() {
     const tab: ITab = {
       ...{
         ...makeFoldersRootNode('Datasets'),
-        checked: datasetUseMap.get('all'),
+        checked: datasetUseMap.get('all')!,
       },
       children,
     }
@@ -370,12 +370,12 @@ export function GexPage() {
             ...DEFAULT_GEX_PLOT_DISPLAY_PROPS.box,
             stroke: {
               ...DEFAULT_GEX_PLOT_DISPLAY_PROPS.box.stroke,
-              color: DEFAULT_PALETTE[idx],
+              color: DEFAULT_PALETTE[idx]!,
             },
 
             median: {
               ...DEFAULT_GEX_PLOT_DISPLAY_PROPS.box.median,
-              stroke: DEFAULT_PALETTE[idx],
+              stroke: DEFAULT_PALETTE[idx]!,
             },
           },
           violin: {
@@ -383,7 +383,7 @@ export function GexPage() {
 
             fill: {
               ...DEFAULT_GEX_PLOT_DISPLAY_PROPS.violin.fill,
-              color: DEFAULT_PALETTE[idx],
+              color: DEFAULT_PALETTE[idx]!,
             },
           },
           swarm: {
@@ -391,7 +391,7 @@ export function GexPage() {
 
             stroke: {
               ...DEFAULT_GEX_PLOT_DISPLAY_PROPS.swarm.stroke,
-              color: DEFAULT_PALETTE[idx],
+              color: DEFAULT_PALETTE[idx]!,
             },
           },
         }
@@ -480,7 +480,7 @@ export function GexPage() {
       // for each dataset, make a group so the blocks can be
       // colored
       setGroups(
-        search.genes[0].datasets.map((dataset, di) => {
+        search.genes[0]!.datasets.map((dataset, di) => {
           const ds = datasetMap.get(dataset.id)
 
           const cidx = di % DEFAULT_PALETTE.length
@@ -488,7 +488,7 @@ export function GexPage() {
           const group: IClusterGroup = {
             id: nanoid(),
             name: ds?.name ?? '',
-            color: DEFAULT_PALETTE[cidx],
+            color: DEFAULT_PALETTE[cidx]!,
             search: ds?.samples.map(sample => sample.name) ?? [],
           }
 
@@ -535,7 +535,7 @@ export function GexPage() {
       const datasetStats: IGexStats[] = range(0, values.length)
         .map(i => {
           return range(i + 1, values.length).map(j => {
-            return { idx1: i, idx2: j, ...mannWhitneyU(values[i], values[j]) }
+            return { idx1: i, idx2: j, ...mannWhitneyU(values[i]!, values[j]!) }
           })
         })
         .flat()
@@ -553,7 +553,7 @@ export function GexPage() {
 
     const data: number[][] = searchResults.genes.map(geneResult =>
       geneResult.datasets.map(datasetResult => datasetResult.values).flat()
-    )
+    )!
 
     const df = new DataFrame({
       data,
@@ -561,12 +561,10 @@ export function GexPage() {
         geneResult =>
           `${geneResult.gene.geneSymbol} (${geneResult.gene.geneId})`
       ),
-      columns: searchResults.genes[0].datasets
-        .map(datasetResult =>
-          datasetMap.get(datasetResult.id)!.samples.map(sample => sample.name)
-        )
-        .flat(),
-      name: gexValueType?.name,
+      columns: searchResults.genes[0]!.datasets.map(datasetResult =>
+        datasetMap.get(datasetResult.id)!.samples.map(sample => sample.name)
+      ).flat(),
+      name: gexValueType?.name!,
     })
 
     //   // for heatmap
@@ -651,7 +649,7 @@ export function GexPage() {
 
           <ToolbarTabGroup className="gap-x-2">
             <Select
-              value={gexValueType?.name}
+              value={gexValueType?.name!}
               onValueChange={value => {
                 if (platform) {
                   const matches = platform.gexValueTypes.filter(
@@ -714,7 +712,9 @@ export function GexPage() {
 
             <ToolbarButton
               onClick={() => {
-                if (history.currentStep.sheets[0].name !== DEFAULT_SHEET_NAME) {
+                if (
+                  history.currentStep.sheets[0]!.name !== DEFAULT_SHEET_NAME
+                ) {
                   setShowDialog({ name: 'heatmap' })
                 }
               }}
@@ -851,7 +851,7 @@ export function GexPage() {
 
       {showDialog.name === 'heatmap' && (
         <HeatMapDialog
-          df={history.currentStep.sheets[0]}
+          df={history.currentStep.sheets[0]!}
           onPlot={cf => {
             setShowDialog(NO_DIALOG)
 
@@ -999,7 +999,7 @@ export function GexPage() {
                             plot={searchResults}
                             datasetMap={datasetMap}
                             //displayProps={displayProps}
-                            gexValueType={gexValueType}
+                            gexValueType={gexValueType!}
                             allStats={stats}
                           />
                         )}

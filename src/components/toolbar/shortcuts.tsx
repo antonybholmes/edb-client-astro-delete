@@ -14,9 +14,9 @@ interface IShortcutProps extends IToolbarProps {
 }
 
 export function Shortcuts({
-  value,
-  onTabChange,
-  tabs,
+  value = '',
+  onTabChange = () => {},
+  tabs = [],
   defaultWidth = 2.5,
 }: IShortcutProps) {
   return (
@@ -50,11 +50,11 @@ export function ShortcutContent({
     }
 
     const x = range(0, selectedTab.index).reduce(
-      (sum, index) => sum + (tabs[index].size ?? defaultWidth),
+      (sum, index) => sum + (tabs[index]!.size ?? defaultWidth),
       0
     )
 
-    const width = tabs[selectedTab.index].size ?? defaultWidth
+    const width = tabs[selectedTab.index]!.size ?? defaultWidth
 
     setTabPos({ y: `${x + 0.25}rem`, height: `${width - 0.5}rem` })
   }, [selectedTab.index])

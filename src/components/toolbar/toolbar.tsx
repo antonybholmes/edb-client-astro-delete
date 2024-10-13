@@ -20,7 +20,7 @@ import {
   BaseTabsTrigger,
   Tabs,
 } from '@components/shadcn/ui/themed/tabs'
-import type { IModuleInfo } from '@interfaces/module-info'
+import { NO_MODULE_INFO, type IModuleInfo } from '@interfaces/module-info'
 
 import type { IChildrenProps } from '@interfaces/children-props'
 import type { TabsProps } from '@radix-ui/react-tabs'
@@ -178,7 +178,7 @@ export function ToolbarMenu({
 
   fileMenuTabs = [],
 
-  info,
+  info = NO_MODULE_INFO,
   leftShortcuts,
   rightShortcuts,
   //tabShortcutMenu,

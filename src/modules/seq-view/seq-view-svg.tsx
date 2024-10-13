@@ -228,8 +228,8 @@ export const SeqViewSvg = forwardRef<SVGElement, IProps>(function SeqViewSvg(
                       if (
                         displayProps.base.mismatches &&
                         f.seq[si] !== '-' &&
-                        f.seq[si].toLowerCase() !==
-                          seqFiles[0].seq[si].toLowerCase()
+                        f.seq[si]!.toLowerCase() !==
+                          seqFiles[0]!.seq[si]!.toLowerCase()
                       ) {
                         fill = displayProps.colorMode
                           ? // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -367,7 +367,7 @@ export const SeqViewSvg = forwardRef<SVGElement, IProps>(function SeqViewSvg(
     highlightCol > -1 && highlightRow > -1 && highlightRow < seqFiles.length
 
   const base: string = inBlock
-    ? BASE_MAP[seqFiles[toolTipInfo.seqIndex].seq.charAt(toolTipInfo.pos)]
+    ? BASE_MAP[seqFiles[toolTipInfo.seqIndex]!.seq.charAt(toolTipInfo.pos)]!
     : 'N'
 
   return (
@@ -389,7 +389,7 @@ export const SeqViewSvg = forwardRef<SVGElement, IProps>(function SeqViewSvg(
       >
         <p className="font-semibold">
           {toolTipInfo.seqIndex in seqFiles
-            ? seqFiles[toolTipInfo.seqIndex].name
+            ? seqFiles[toolTipInfo.seqIndex]!.name
             : ''}
         </p>
         <p>Base: {base}</p>

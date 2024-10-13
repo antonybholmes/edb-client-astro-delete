@@ -6,7 +6,7 @@ export function mean(values: number[]): number {
   }
 
   if (values.length === 1) {
-    return values[0]
+    return values[0]!
   }
 
   //console.log("mean", sum(values), values.length)

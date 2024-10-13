@@ -12,7 +12,7 @@ function getStepIndex(step: SheetId, steps: HistoryStep[]): number {
       .map(s => s[1])
 
     if (steps.length > 0) {
-      step = ms[0]
+      step = ms[0]!
     } else {
       step = -1
     }
@@ -36,7 +36,7 @@ function getSheetIndex(sheet: SheetId, dataframes: BaseDataFrame[]): number {
       .map(d => d[1])
 
     if (steps.length > 0) {
-      sheet = steps[0]
+      sheet = steps[0]!
     } else {
       sheet = -1
     }
@@ -91,11 +91,11 @@ export class HistoryStep {
    * Returns the current dataframe in the current history step.
    */
   get currentSheet(): BaseDataFrame {
-    return this._sheets[this._sheetIndex]
+    return this._sheets[this._sheetIndex]!
   }
 
   get lastSheet(): BaseDataFrame {
-    return this._sheets[this._sheets.length - 1]
+    return this._sheets[this._sheets.length - 1]!
   }
 
   getSheet(id: SheetId): BaseDataFrame {
@@ -105,7 +105,7 @@ export class HistoryStep {
       throw new Error(`${id} is an invalid sheet id.`)
     }
 
-    return this._sheets[idx]
+    return this._sheets[idx]!
   }
 }
 
@@ -142,11 +142,11 @@ export class HistoryState {
    * Returns the current history step
    */
   get currentStep(): HistoryStep {
-    return this._steps[this._stepIndex]
+    return this._steps[this._stepIndex]!
   }
 
   get last(): HistoryStep {
-    return this._steps[this._steps.length - 1]
+    return this._steps[this._steps.length - 1]!
   }
 }
 
@@ -227,7 +227,7 @@ export function historyReducer(
     // ahead of the current point
     const stepIndex = state.currentStepIndex
 
-    const sheetIndex = getSheetIndex(sheetId, state.steps[stepIndex].sheets)
+    const sheetIndex = getSheetIndex(sheetId, state.steps[stepIndex]!.sheets)
 
     if (sheetIndex === -1) {
       return state
@@ -238,8 +238,8 @@ export function historyReducer(
 
     steps[stepIndex] = new HistoryStep(
       state.currentStepIndex,
-      steps[stepIndex].name,
-      steps[stepIndex].sheets,
+      steps[stepIndex]!.name,
+      steps[stepIndex]!.sheets,
       sheetIndex
     )
 

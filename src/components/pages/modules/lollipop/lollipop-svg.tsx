@@ -76,7 +76,7 @@ function colGraphs(
                 cy={y1 - 0.5 * blockSize.w}
                 r={0.5 * blockSize.w}
                 fill={
-                  displayProps.legend.mutations.colorMap.get(mutType) ??
+                  displayProps.legend.mutations.colorMap.get(mutType!) ??
                   DEFAULT_MUTATION_COLOR
                 }
                 stroke={displayProps.mutations.graph.border.color}
@@ -530,7 +530,7 @@ export const LollipopSvg = forwardRef<SVGElement>(function LollipopSvg(
           x: (marginLeft + c * (blockSize.w + spacing.x)) * displayProps.scale,
           y: (top + r * (blockSize.h + spacing.y)) * displayProps.scale,
         },
-        cell: { r, c },
+        cell: { row: r, col: c },
       })
     }
   }
@@ -556,8 +556,8 @@ export const LollipopSvg = forwardRef<SVGElement>(function LollipopSvg(
             {/* <p className="font-semibold">{stats!.position}</p>
             <p>{stats!.gene}</p>
             <p>{getEventLabel(stats!, oncoProps, displayProps.multi)}</p> */}
-            <p>{`row: ${toolTipInfo.cell.r + 1}, col: ${
-              toolTipInfo.cell.c + 1
+            <p>{`row: ${toolTipInfo.cell.row + 1}, col: ${
+              toolTipInfo.cell.col + 1
             }`}</p>
           </div>
 

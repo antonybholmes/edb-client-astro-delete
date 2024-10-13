@@ -95,7 +95,7 @@ export function MessagesProvider({ children }: IChildrenProps) {
 
 export function messageFileFormat(message: IMessage, format: string = 'txt') {
   if (message.text.includes(':')) {
-    format = message.text.split(':')[1]
+    format = message.text.split(':')[1]!
   }
 
   return format

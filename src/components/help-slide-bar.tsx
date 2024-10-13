@@ -13,12 +13,12 @@ interface IProps extends IDivProps {
 
 export const HelpSlideBar = forwardRef(function HelpSlideBar(
   {
-    open,
-    onOpenChange,
-    helpUrl,
+    open = false,
+    onOpenChange = () => {},
+    helpUrl = '',
     position = 80,
     limits = [5, 85],
-    className,
+    className = '',
     children,
   }: IProps,
   _ref: ForwardedRef<HTMLDivElement>

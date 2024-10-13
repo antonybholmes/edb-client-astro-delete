@@ -29,7 +29,7 @@ export function OpenDialog({ files, openFiles, onCancel }: IProps) {
   const [sep, setSep] = useState('<tab>')
 
   useEffect(() => {
-    setSep(getSep(files.length > 0 ? files[0] : null))
+    setSep(getSep(files.length > 0 ? files[0]! : null))
   }, [files])
 
   return (

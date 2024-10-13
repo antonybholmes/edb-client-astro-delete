@@ -164,7 +164,7 @@ export function MotifsPage() {
 
   useEffect(() => {
     const dataframes: BaseDataFrame[] = state.motifOrder.map(i => {
-      const motif = state.motifs[i]
+      const motif = state.motifs[i]!
 
       const df = new DataFrame({
         name: motif.motifName,

@@ -45,9 +45,9 @@ export function cv(
 
     // add user add hoc variants
     for (const [key, value] of Object.entries(variants)) {
-      if (!used.has(key) && key in _cvMap && value && value in _cvMap[key]) {
-        if (_cvMap[key][value]) {
-          ret.push(_cvMap[key][value])
+      if (!used.has(key) && key in _cvMap && value && value in _cvMap[key]!) {
+        if (_cvMap[key]![value]) {
+          ret.push(_cvMap[key]![value])
         }
         used.add(key)
       }
@@ -59,19 +59,19 @@ export function cv(
         key = key.trim()
 
         if (key in _mvMap) {
-          for (const [multiKey, multiValue] of Object.entries(_mvMap[key])) {
+          for (const [multiKey, multiValue] of Object.entries(_mvMap[key]!)) {
             // the multi key represents a variant and the multivalue the variant type
 
             if (
               !used.has(multiKey) &&
               multiKey in _cvMap &&
-              multiValue in _cvMap[multiKey]
+              multiValue in _cvMap[multiKey]!
             ) {
               // Some variants are empty strings, i.e. no classes.
               // We don't add empty strings to our class lists, but
               // we log that the key has been used
-              if (_cvMap[multiKey][multiValue]) {
-                ret.push(_cvMap[multiKey][multiValue])
+              if (_cvMap[multiKey]![multiValue]) {
+                ret.push(_cvMap[multiKey]![multiValue])
               }
 
               used.add(multiKey)
@@ -87,9 +87,9 @@ export function cv(
       // only add default key if not specified by user
       //console.log("default", key, value, !(key in variants), variants)
 
-      if (!used.has(key) && value && key in _cvMap && value in _cvMap[key]) {
-        if (_cvMap[key][value]) {
-          ret.push(_cvMap[key][value])
+      if (!used.has(key) && value && key in _cvMap && value in _cvMap[key]!) {
+        if (_cvMap[key]![value]) {
+          ret.push(_cvMap[key]![value])
         }
 
         used.add(key)

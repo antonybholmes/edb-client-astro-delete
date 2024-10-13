@@ -189,7 +189,7 @@ export function UMAPPage() {
       return
     }
 
-    const file = files[0]
+    const file = files[0]!
     const name = file.name
 
     //setFile(files[0])
@@ -230,7 +230,7 @@ export function UMAPPage() {
       return
     }
 
-    const file = files[0]
+    const file = files[0]!
     const name = file.name
 
     const { indexCols, colNames } = options
@@ -283,7 +283,7 @@ export function UMAPPage() {
     let df = getCurrentDataFrame()
 
     if (!df) {
-      return null
+      return
     }
 
     const clusters = df.col('Cluster')!.values

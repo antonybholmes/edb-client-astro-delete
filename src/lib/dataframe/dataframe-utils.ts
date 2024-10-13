@@ -279,13 +279,13 @@ export function filterNA(data: SeriesType[]): number[] {
 }
 
 export function subset(data: SeriesType[], idx: number[]): SeriesType[] {
-  return idx.map(i => data[i])
+  return idx.map(i => data[i]!)
 }
 
 export function zip(...cols: SeriesType[][]): SeriesType[][] {
   const colIdx = range(0, cols.length)
 
-  return range(0, cols[0].length).map(i => colIdx.map(j => cols[j][i]))
+  return range(0, cols[0]!.length).map(i => colIdx.map(j => cols[j]![i]!))
 }
 
 /**
@@ -307,7 +307,7 @@ export function rowSums(df: BaseDataFrame): number[] {
 
 export function rowDiv(df: BaseDataFrame, values: number[]): BaseDataFrame {
   const data = df.map(
-    (v: SeriesType, row: number) => (v as number) / values[row]
+    (v: SeriesType, row: number) => (v as number) / values[row]!
   )
 
   return new DataFrame({
@@ -445,7 +445,7 @@ export function filterColsById(
         const lid = caseSensitive ? id : id.toLowerCase()
 
         if (lid in colMap) {
-          return colMap[lid]
+          return colMap[lid]!
         } else {
           return -1
         }
@@ -501,7 +501,7 @@ export function filterRowsById(
         const lid = caseSensitive ? id : id.toLowerCase()
 
         if (lid in rowMap) {
-          return rowMap[lid]
+          return rowMap[lid]!
         } else {
           return -1
         }
@@ -553,13 +553,13 @@ export function findCol(df: BaseDataFrame, ids: SheetId | SheetId[]): number {
     const idx = findCols(df, id.toString())
 
     if (idx.length > 0) {
-      ret.push(idx[0])
+      ret.push(idx[0]!)
       break
     }
   }
 
   if (ret.length > 0) {
-    return ret[0]
+    return ret[0]!
   }
 
   return -1
@@ -606,7 +606,7 @@ export function rowJoinDataFrames(dataFrames: DataFrame[]): DataFrame {
   )
 
   // get the ids in order from first table
-  const orderedIds = dataFrames[0].colNames.filter(c => ids.has(c))
+  const orderedIds = dataFrames[0]!.colNames.filter(c => ids.has(c))
 
   // sort other tables using these ids
   dataFrames = dataFrames.map(df => {
@@ -614,14 +614,14 @@ export function rowJoinDataFrames(dataFrames: DataFrame[]): DataFrame {
       df.colNames.map((colId, ci) => [colId, ci])
     )
 
-    const indices = orderedIds.map(id => indexMap[id])
+    const indices = orderedIds.map(id => indexMap[id]!)
 
     return df.iloc(':', indices) as DataFrame
   })
 
   return new DataFrame({
     data: dataFrames.map(df => df._data).flat(),
-    columns: dataFrames[0].columns,
+    columns: dataFrames[0]!.columns,
     index: new DataIndex(dataFrames.map(df => df._index.values).flat()),
   })
 }
@@ -642,7 +642,7 @@ export function colJoinDataFrames(dataFrames: DataFrame[]): DataFrame {
   )
 
   // get the ids in order from first table
-  const orderedIds = dataFrames[0].rowNames.filter(rowId => ids.has(rowId))
+  const orderedIds = dataFrames[0]!.rowNames.filter(rowId => ids.has(rowId))
 
   // sort other tables using these ids
   dataFrames = dataFrames.map(df => {
@@ -650,16 +650,16 @@ export function colJoinDataFrames(dataFrames: DataFrame[]): DataFrame {
       df.rowNames.map((rowId, rowi) => [rowId, rowi])
     )
 
-    const indices = orderedIds.map(id => indexMap[id])
+    const indices = orderedIds.map(id => indexMap[id]!)
 
     return df.iloc(indices, ':') as DataFrame //filterRows(df, indices)
   })
 
   return new DataFrame({
-    data: range(0, dataFrames[0].shape[0]).map(r =>
-      dataFrames.map(df => df._data[r]).flat()
+    data: range(0, dataFrames[0]!.shape[0]).map(r =>
+      dataFrames.map(df => df._data[r]!).flat()
     ),
-    index: dataFrames[0].index,
+    index: dataFrames[0]!.index,
     columns: new DataIndex(dataFrames.map(df => df.colNames).flat()),
   })
 }
@@ -828,8 +828,8 @@ export function dataframeToD3(df: BaseDataFrame): ID3Item[] {
     .map((row, ri) =>
       row.map((value, ci) => ({
         cell: [ri, ci] as [number, number],
-        group: groups[ci],
-        variable: variables[ri],
+        group: groups[ci]!,
+        variable: variables[ri]!,
         value: value as number,
       }))
     )

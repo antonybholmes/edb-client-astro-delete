@@ -157,7 +157,7 @@ function _mcr(
         })
       } else {
         if (!allocated.has(uid1)) {
-          locationCoreMap.get(overlapLocation)?.set(sid1, uid1)
+          locationCoreMap.get(overlapLocation)?.set(sid1!, uid1)
           allocated.add(uid1)
         }
 
@@ -297,7 +297,7 @@ export function createOverlapTable(dataFrames: BaseDataFrame[]): DataFrame {
       const start = Math.min(...locs.map(loc => loc.start)) //[loc.start for loc in locs])
       const end = Math.max(...locs.map(loc => loc.end))
 
-      const region = new GenomicLocation(locs[0].chr, start, end)
+      const region = new GenomicLocation(locs[0]!.chr, start, end)
 
       row.push(makeCell(region.loc))
 

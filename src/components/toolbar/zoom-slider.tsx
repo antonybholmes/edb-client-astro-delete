@@ -44,7 +44,7 @@ export function ZoomSlider({ scale = 1, onZoomChange, className }: IProps) {
       <ToolbarFooterButton
         className="w-12 justify-center"
         aria-label="Show zoom levels"
-        onClick={() => _setValue(Math.max(ZOOM_SCALES[0], scale - 0.25))}
+        onClick={() => _setValue(Math.max(ZOOM_SCALES[0]!, scale - 0.25))}
         size="icon-sm"
       >
         <MinusIcon w="w-3.5" className="stroke-foreground/50" />
@@ -53,14 +53,14 @@ export function ZoomSlider({ scale = 1, onZoomChange, className }: IProps) {
       <Slider
         value={[
           Math.max(
-            ZOOM_SCALES[0],
-            Math.min(scale, ZOOM_SCALES[ZOOM_SCALES.length - 1])
+            ZOOM_SCALES[0]!,
+            Math.min(scale, ZOOM_SCALES[ZOOM_SCALES.length - 1]!)
           ),
         ]} //[Math.max(0, Math.min(scaleIndex, ZOOM_SCALES.length))]}
         defaultValue={[1]}
-        min={ZOOM_SCALES[0]}
-        max={ZOOM_SCALES[ZOOM_SCALES.length - 1]}
-        onValueChange={(values: number[]) => _setValue(values[0])}
+        min={ZOOM_SCALES[0]!}
+        max={ZOOM_SCALES[ZOOM_SCALES.length - 1]!}
+        onValueChange={(values: number[]) => _setValue(values[0]!)}
         step={1}
         className="w-24"
       />
@@ -69,7 +69,9 @@ export function ZoomSlider({ scale = 1, onZoomChange, className }: IProps) {
         className="w-12 justify-center"
         aria-label="Show zoom levels"
         onClick={() =>
-          _setValue(Math.min(ZOOM_SCALES[ZOOM_SCALES.length - 1], scale + 0.25))
+          _setValue(
+            Math.min(ZOOM_SCALES[ZOOM_SCALES.length - 1]!, scale + 0.25)
+          )
         }
         size="icon-sm"
       >
@@ -98,8 +100,8 @@ export function ZoomSlider({ scale = 1, onZoomChange, className }: IProps) {
             {range(0, ZOOM_SCALES.length)
               .toReversed()
               .map(i => (
-                <SelectItem value={ZOOM_SCALES[i].toString()} key={i}>
-                  {formatZoom(ZOOM_SCALES[i])}
+                <SelectItem value={ZOOM_SCALES[i]!.toString()} key={i}>
+                  {formatZoom(ZOOM_SCALES[i]!)}
                 </SelectItem>
               ))}
           </SelectGroup>

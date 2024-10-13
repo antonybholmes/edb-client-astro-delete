@@ -447,7 +447,7 @@ function GetDNAPage() {
           //onOpenChange={() => setShowDialog(NO_DIALOG)}
           onFileChange={(_, files) =>
             onFileChange(files, files => {
-              setText(files[0].text)
+              setText(files[0]!.text)
             })
           }
           fileTypes={['fasta']}

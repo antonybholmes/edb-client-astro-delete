@@ -178,10 +178,10 @@ interface ISelectListProps extends IElementProps {
 }
 
 export function SelectList({
-  value,
-  defaultValue,
-  onValueChange,
-  className,
+  value = '',
+  defaultValue = '',
+  onValueChange = () => {},
+  className = '',
   children,
 }: ISelectListProps) {
   const [open, setOpen] = useState(false)

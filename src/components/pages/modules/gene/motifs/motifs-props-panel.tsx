@@ -41,7 +41,7 @@ export function MotifsPropsPanel() {
   // it preserves the order of the items even though items were removed.
   const items = useMemo(() => {
     return state.motifOrder.map(i => {
-      const motif = state.motifs[i]
+      const motif = state.motifs[i]!
 
       return (
         <VCenterRow
@@ -101,7 +101,7 @@ export function MotifsPropsPanel() {
               {[...datasets.keys()].sort().map((dataset, dbi: number) => (
                 <Checkbox
                   key={dbi}
-                  checked={datasets.get(dataset)}
+                  checked={datasets.get(dataset)!}
                   onCheckedChange={state => {
                     setDatasets(
                       new Map<string, boolean>({

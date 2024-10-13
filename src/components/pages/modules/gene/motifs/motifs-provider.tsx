@@ -66,7 +66,7 @@ export function motifReducer(
         .map(([i, _]) => i)
 
       return {
-        motifs: orderedIds.sort().map(i => state.motifs[i]),
+        motifs: orderedIds.sort().map(i => state.motifs[i]!),
         motifOrder: orderedIds,
       }
     default:

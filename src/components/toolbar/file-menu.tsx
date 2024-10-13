@@ -28,7 +28,7 @@ import {
 
 import { Button, type IButtonProps } from '@components/shadcn/ui/themed/button'
 
-import type { IModuleInfo } from '@interfaces/module-info'
+import { NO_MODULE_INFO, type IModuleInfo } from '@interfaces/module-info'
 import { nanoid } from '@lib/utils'
 
 import type { ITab, TabChange } from '@components/tab-provider'
@@ -220,9 +220,9 @@ interface IFileMenu extends IElementProps, IOpenChange {
 
 export function FileMenu({
   open = false,
-  onOpenChange,
+  onOpenChange = () => {},
   tabs = [],
-  info,
+  info = NO_MODULE_INFO,
 }: IFileMenu) {
   const [selectedTab, setSelectedTab] = useState(0)
 
@@ -379,7 +379,7 @@ export function FileMenu({
           />
         </BaseCol>
         <div className="grow">
-          {selectedTab !== -1 && _tabs[selectedTab].content}
+          {selectedTab !== -1 && _tabs[selectedTab]!.content}
         </div>
       </BaseRow>
     </BaseSideMenu>

@@ -75,9 +75,9 @@ function drawScatter(
       {
         xdata.map((x, xi) => {
           const x1 = xax.domainToRange(x)
-          const y1 = yax.domainToRange(ydata[xi])
-          const r = sizedata.length > 0 ? sizeFunc(sizedata[xi]) : 1
-          const color = huedata.length > 0 ? cmap.get(huedata[xi]) : 'black'
+          const y1 = yax.domainToRange(ydata[xi]!)
+          const r = sizedata.length > 0 ? sizeFunc(sizedata[xi]!) : 1
+          const color = huedata.length > 0 ? cmap.get(huedata[xi]!) : 'black'
 
           ctx.beginPath()
           ctx.arc(x1, y1, r, 0, 2 * Math.PI)

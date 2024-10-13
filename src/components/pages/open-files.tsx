@@ -121,7 +121,7 @@ export function onFileChange(
     return
   }
 
-  const file = files[0]
+  const file = files[0]!
   const name = file.name
 
   //setFile(files[0])
@@ -163,7 +163,7 @@ export function filesToDataFrames(
     return
   }
 
-  const file = files[0]
+  const file = files[0]!
   const name = file.name
 
   const { indexCols, colNames, keepDefaultNA } = options

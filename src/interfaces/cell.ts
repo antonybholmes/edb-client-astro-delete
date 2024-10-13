@@ -1,6 +1,6 @@
 export interface ICell {
-  r: number
-  c: number
+  row: number
+  col: number
 }
 
-export const NO_CELL: ICell = { r: -1, c: -1 }
+export const NO_CELL: ICell = { row: -1, col: -1 }

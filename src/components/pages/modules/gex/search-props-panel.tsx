@@ -131,7 +131,7 @@ export const SearchPropsPanel = forwardRef(function SearchPropsPanel(
           >
             <CollapseTree
               tab={foldersTab}
-              value={tab}
+              value={tab!}
               //asChild={true}
 
               onValueChange={t => {

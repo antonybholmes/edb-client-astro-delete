@@ -8,7 +8,7 @@ export class DefaultMap<K, V> extends HashMap<K, V> {
     this._default = defaultFunction
   }
 
-  get(key: K) {
+  override get(key: K) {
     if (!this.has(key)) {
       this.set(key, this._default())
     }

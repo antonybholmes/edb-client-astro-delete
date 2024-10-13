@@ -96,13 +96,13 @@ function makeMatrix(
               const coords = [0]
 
               dist.map((_, di) => {
-                coords.push(coords[coords.length - 1] + dist[di][1])
+                coords.push(coords[coords.length - 1]! + dist[di]![1])
               })
 
               return dist.map((d, di) => {
                 const h =
-                  yax.domainToRange(coords[di]) -
-                  yax.domainToRange(coords[di + 1])
+                  yax.domainToRange(coords[di]!) -
+                  yax.domainToRange(coords[di + 1]!)
 
                 // only render if there was a count associated with the event
                 if (h > 0) {
@@ -114,7 +114,7 @@ function makeMatrix(
                     <rect
                       key={`${ri}:${ci}:${di}`}
                       x={x}
-                      y={y + yax.domainToRange(coords[di + 1])}
+                      y={y + yax.domainToRange(coords[di + 1]!)}
                       width={blockSize.w}
                       height={h}
                       //stroke={color}
@@ -319,18 +319,19 @@ function colGraphs(
           )
 
           names.map(name => {
-            coords.push(coords[coords.length - 1] + stats.countMap.get(name)!)
+            coords.push(coords[coords.length - 1]! + stats.countMap.get(name)!)
           })
 
           return names.map((name, mi) => {
             const h =
-              yax.domainToRange(coords[mi]) - yax.domainToRange(coords[mi + 1])
+              yax.domainToRange(coords[mi]!) -
+              yax.domainToRange(coords[mi + 1]!)
 
             return (
               <rect
                 key={mi}
                 x={ci * (blockSize.w + spacing.x)}
-                y={yax.domainToRange(coords[mi + 1])}
+                y={yax.domainToRange(coords[mi + 1]!)}
                 width={blockSize.w}
                 height={h}
                 fill={
@@ -414,18 +415,19 @@ function rowGraphs(
           const counts = stats.countDist(names)
 
           counts.map(count => {
-            coords.push(coords[coords.length - 1] + count[1])
+            coords.push(coords[coords.length - 1]! + count[1])
           })
 
           return counts.map((count, li) => {
             const w =
-              xax.domainToRange(coords[li + 1]) - xax.domainToRange(coords[li])
+              xax.domainToRange(coords[li + 1]!) -
+              xax.domainToRange(coords[li]!)
 
             return (
               <rect
                 key={li}
                 y={ri * (blockSize.h + spacing.y)}
-                x={xax.domainToRange(coords[li])}
+                x={xax.domainToRange(coords[li]!)}
                 width={w}
                 height={blockSize.h}
                 fill={
@@ -575,7 +577,7 @@ export const OncoplotSvg = forwardRef<SVGElement, IProps>(function OncoplotSvg(
         : 0) +
       (displayProps.clinical.show
         ? clinicalTracks.filter(
-            (_, ti) => displayProps.legend.clinical.tracks[ti].show
+            (_, ti) => displayProps.legend.clinical.tracks[ti]!.show
           ).length *
             (displayProps.clinical.height + displayProps.clinical.gap) +
           displayProps.plotGap
@@ -770,7 +772,7 @@ export const OncoplotSvg = forwardRef<SVGElement, IProps>(function OncoplotSvg(
           x: (marginLeft + c * (blockSize.w + spacing.x)) * displayProps.scale,
           y: (top + r * (blockSize.h + spacing.y)) * displayProps.scale,
         },
-        cell: { r, c },
+        cell: { row: r, col: c },
       })
     }
   }
@@ -778,7 +780,7 @@ export const OncoplotSvg = forwardRef<SVGElement, IProps>(function OncoplotSvg(
   //const inBlock = highlightCol[0] > -1 && highlightCol[1] > -1
 
   const stats = toolTipInfo
-    ? mf.data(toolTipInfo.cell.r, toolTipInfo.cell.c)
+    ? mf.data(toolTipInfo.cell.row, toolTipInfo.cell.col)
     : null
 
   return (
@@ -798,8 +800,8 @@ export const OncoplotSvg = forwardRef<SVGElement, IProps>(function OncoplotSvg(
             <p className="font-semibold">{stats!.sample}</p>
             <p>{stats!.gene}</p>
             <p>{getEventLabel(stats!, oncoProps, displayProps.multi)}</p>
-            <p>{`row: ${toolTipInfo.cell.r + 1}, col: ${
-              toolTipInfo.cell.c + 1
+            <p>{`row: ${toolTipInfo.cell.row + 1}, col: ${
+              toolTipInfo.cell.col + 1
             }`}</p>
           </div>
 

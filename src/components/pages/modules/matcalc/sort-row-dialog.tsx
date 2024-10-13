@@ -41,12 +41,12 @@ export function SortRowDialog({
   const [, historyDispatch] = useContext(HistoryContext)
 
   useEffect(() => {
-    if (df && selection.start.r > -1) {
+    if (df && selection.start.row > -1) {
       updateSettings({
         ...settings,
         sortByRow: {
           ...settings.sortByRow,
-          text: range(selection.start.r, selection.end.r + 1)
+          text: range(selection.start.row, selection.end.row + 1)
             .map(i => df.index.getName(i))
             .join(', '),
         },
@@ -94,7 +94,7 @@ export function SortRowDialog({
           let sortedColIdx = argSort(mean)
 
           // need to map sortedcolidx back to original idx from full table
-          sortedColIdx = sortedColIdx.map(i => idx[i])
+          sortedColIdx = sortedColIdx.map(i => idx[i]!)
 
           return sortedColIdx
         })

@@ -18,7 +18,7 @@ export function createCrumbs(url: string | null): ICrumb[] {
     // strip date from slug then attempt to convert
     // to more readable form by capitalizing and
     // changing dashes to spaces.
-    const name = _formatName(segments[i])
+    const name = _formatName(segments[i]!)
 
     const path = `/${segments.slice(0, i + 1).join('/')}`
     if (!EXCLUDE.includes(name) && name.search(/^\d+$/) === -1) {

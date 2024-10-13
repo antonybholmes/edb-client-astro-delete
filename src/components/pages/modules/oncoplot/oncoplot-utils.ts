@@ -301,7 +301,7 @@ export class EventCountMap {
       return [NA, -1]
     }
 
-    return [...this._countMap.entries()].sort((a, b) => b[1] - a[1])[0]
+    return [...this._countMap.entries()].sort((a, b) => b[1] - a[1])[0]!
   }
 
   get sum(): number {
@@ -491,15 +491,15 @@ export class OncoplotMutationFrame {
   // }
 
   data(gene: number, sample: number): OncoCellStats {
-    return this._data[this._geneOrder[gene]][this._sampleOrder[sample]]
+    return this._data[this._geneOrder[gene]!]![this._sampleOrder[sample]!]!
   }
 
   get geneStats(): OncoCellStats[] {
-    return this._geneOrder.map(i => this._geneStats[i])
+    return this._geneOrder.map(i => this._geneStats[i]!)
   }
 
   get sampleStats(): OncoCellStats[] {
-    return this._sampleOrder.map(i => this._sampleStats[i])
+    return this._sampleOrder.map(i => this._sampleStats[i]!)
   }
 
   // get sampleOrder(): number[] {
@@ -532,25 +532,25 @@ function createMarginals(
   multi: MultiMode
 ) {
   range(0, oncotable.length).forEach(geneIndex => {
-    range(0, oncotable[0].length).forEach(sampleIndex => {
-      const stats = oncotable[geneIndex][sampleIndex]
+    range(0, oncotable[0]!.length).forEach(sampleIndex => {
+      const stats = oncotable[geneIndex]![sampleIndex]!
 
       if (multi === 'multi' && stats.events.length > 1) {
         // we only use multi mode if there are multiple events
-        featureStats[geneIndex].set(MULTI_MUTATION)
-        sampleStats[sampleIndex].set(MULTI_MUTATION)
+        featureStats[geneIndex]!.set(MULTI_MUTATION)
+        sampleStats[sampleIndex]!.set(MULTI_MUTATION)
       } else if (multi === 'equalbar') {
         const f = 1 / stats.events.length
 
         stats.events.forEach(event => {
-          featureStats[geneIndex].set(event[0], f)
-          sampleStats[sampleIndex].set(event[0], f)
+          featureStats[geneIndex]!.set(event[0], f)
+          sampleStats[sampleIndex]!.set(event[0], f)
         })
       } else {
         stats.events.forEach(event => {
           const f = event[1] / stats.sum
-          featureStats[geneIndex].set(event[0], f)
-          sampleStats[sampleIndex].set(event[0], f)
+          featureStats[geneIndex]!.set(event[0], f)
+          sampleStats[sampleIndex]!.set(event[0], f)
         })
 
         /* default:
@@ -623,10 +623,10 @@ export function makeLocationOncoPlot(
   let mutType: string
 
   range(0, mutDf.shape[0]).forEach(row => {
-    sample = mutDf.col(columns.sample).values[row].toString()
+    sample = mutDf.col(columns.sample).values[row]!.toString()
     sampleIndex = sampleIndexMap.get(sample)!
 
-    chr = formatChr(mutDf.col(columns.chr).values[row].toString())
+    chr = formatChr(mutDf.col(columns.chr).values[row]!.toString())
 
     start = mutDf.col(columns.start).values[row] as number
     end = mutDf.col(columns.end).values[row] as number
@@ -635,8 +635,8 @@ export function makeLocationOncoPlot(
 
     mutType = 'SNP'
 
-    ref = mutDf.col(columns.ref).values[row].toString()
-    tum = mutDf.col(columns.tum).values[row].toString()
+    ref = mutDf.col(columns.ref).values[row]!.toString()
+    tum = mutDf.col(columns.tum).values[row]!.toString()
 
     if (ref === '-') {
       mutType = 'INS'
@@ -654,7 +654,7 @@ export function makeLocationOncoPlot(
       overlapLocId = l.toString()
       locIndex = locIndexMap.get(overlapLocId)!
 
-      oncotable[locIndex][sampleIndex].set(mutType)
+      oncotable[locIndex]![sampleIndex]!.set(mutType)
     })
   })
 
@@ -696,7 +696,7 @@ export function makeLocationOncoPlot(
 
     const keepSamples = new Set<number>(
       range(0, samples.length).filter(si => {
-        return sampleStats[si].sum > 0
+        return sampleStats[si]!.sum > 0
       })
     )
 
@@ -726,14 +726,14 @@ export function makeLocationOncoPlot(
   // list of mutations that are shown on the legend
 
   range(0, features.length).forEach(featureIndex => {
-    stats = featureStats[featureIndex]
+    stats = featureStats[featureIndex]!
 
     Array.from(stats.countMap.keys()).forEach(event =>
       allEventsInUse.add(event)
     )
 
     range(0, samples.length).forEach(sampleIndex => {
-      stats = oncotable[featureIndex][sampleIndex]
+      stats = oncotable[featureIndex]![sampleIndex]!
 
       Array.from(stats.countMap.keys()).forEach(event =>
         allEventsInUse.add(event)
@@ -742,7 +742,7 @@ export function makeLocationOncoPlot(
   })
 
   range(0, samples.length).forEach(sampleIndex => {
-    stats = sampleStats[sampleIndex]
+    stats = sampleStats[sampleIndex]!
 
     Array.from(stats.countMap.keys()).forEach(event =>
       allEventsInUse.add(event)
@@ -826,16 +826,16 @@ export function makeOncoPlot(
   let mutType: string
 
   range(0, df.shape[0]).forEach(row => {
-    sample = df.col(columns.sample)?.values[row].toString()
+    sample = df.col(columns.sample)?.values[row]!.toString()
     sampleIndex = sampleIndexMap.get(sample)!
 
-    gene = df.col(columns.gene).values[row].toString()
+    gene = df.col(columns.gene).values[row]!.toString()
     geneIndex = geneIndexMap.get(gene)
 
     if (geneIndex) {
-      mutType = df.col(columns.type).values[row].toString()
+      mutType = df.col(columns.type).values[row]!.toString()
 
-      oncotable[geneIndex][sampleIndex].set(mutType)
+      oncotable[geneIndex]![sampleIndex]!.set(mutType)
     }
     // what locations do we overlap
   })
@@ -891,7 +891,7 @@ export function makeOncoPlot(
 
     const keepSamples = new Set<number>(
       range(0, samples.length).filter(si => {
-        return sampleStats[si].sum > 0
+        return sampleStats[si]!.sum > 0
       })
     )
 
@@ -921,14 +921,14 @@ export function makeOncoPlot(
   // list of mutations that are shown on the legend
 
   range(0, genes.length).forEach(geneIndex => {
-    stats = geneStats[geneIndex]
+    stats = geneStats[geneIndex]!
 
     Array.from(stats.countMap.keys()).forEach(event =>
       allEventsInUse.add(event)
     )
 
     range(0, samples.length).forEach(sampleIndex => {
-      stats = oncotable[geneIndex][sampleIndex]
+      stats = oncotable[geneIndex]![sampleIndex]!
 
       Array.from(stats.countMap.keys()).forEach(event =>
         allEventsInUse.add(event)
@@ -937,7 +937,7 @@ export function makeOncoPlot(
   })
 
   range(0, samples.length).forEach(sampleIndex => {
-    stats = sampleStats[sampleIndex]
+    stats = sampleStats[sampleIndex]!
 
     Array.from(stats.countMap.keys()).forEach(event =>
       allEventsInUse.add(event)
@@ -961,8 +961,8 @@ export function memoSort(df: OncoplotMutationFrame): [number[], number[]] {
   // descending
   const geneOrder = df.geneStats
     .map((stats, si) => [si, stats.sum])
-    .sort((a, b) => b[1] - a[1])
-    .map(x => x[0])
+    .sort((a, b) => b[1]! - a[1]!)
+    .map(x => x[0]!)
 
   // sort rows first
   // let newTable: OncoplotDataframe = {
@@ -988,8 +988,8 @@ export function memoSort(df: OncoplotMutationFrame): [number[], number[]] {
     // the comb sort is not granular enough since it looks nicer
     // if multiple samples are kept together.
     let score: number = geneOrder
-      .map((row, ri) => ({ originalIndex: row, index: ri }))
-      .filter(row => df._data[row.originalIndex][col].sum > 0)
+      .map((row, ri) => ({ originalIndex: row!, index: ri })!)
+      .filter(row => df._data[row.originalIndex]![col]!.sum > 0)
       .map(row => {
         //const stats = df._data[row][col]
 
@@ -1007,8 +1007,8 @@ export function memoSort(df: OncoplotMutationFrame): [number[], number[]] {
 
   const sampleOrder = sampleScores
     .map((score, si) => [si, score])
-    .sort((a, b) => b[1] - a[1])
-    .map(x => x[0])
+    .sort((a, b) => b[1]! - a[1]!)
+    .map(x => x[0]!)
 
   // newTable = {
   //   data: newTable.data.map(row => sampleOrder.map(c => row[c])),
@@ -1016,7 +1016,7 @@ export function memoSort(df: OncoplotMutationFrame): [number[], number[]] {
   //   colStats: sampleOrder.map(c => newTable.sampleStats[c]),
   // }
 
-  return [geneOrder, sampleOrder]
+  return [geneOrder, sampleOrder]!
 
   // scoreCol <- function(x) {
   // 	score <- 0;

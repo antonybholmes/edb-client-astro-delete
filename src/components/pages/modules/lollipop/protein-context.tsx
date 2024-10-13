@@ -60,13 +60,13 @@ export function proteinReducer(
       return {
         ...state,
         search: { ...action.search },
-        protein: action.search.results[action.index ?? 0],
+        protein: action.search.results[action.index ?? 0]!,
       }
 
     case 'selected':
       return {
         ...state,
-        protein: state.search.results[action.index],
+        protein: state.search.results[action.index]!,
       }
     case 'update':
       return {

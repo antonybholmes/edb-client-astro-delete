@@ -139,8 +139,8 @@ export function HeatMapDialog({
       return
     }
 
-    const linkageFunc: ILinkage = LINKAGE_MAP[settings.heatmap.linkage]
-    const distFunc: IDistFunc = DISTANCE_METRIC_MAP[settings.heatmap.distance]
+    const linkageFunc: ILinkage = LINKAGE_MAP[settings.heatmap.linkage]!
+    const distFunc: IDistFunc = DISTANCE_METRIC_MAP[settings.heatmap.distance]!
 
     //console.log(distanceMetric, distFunc)
 

@@ -63,7 +63,7 @@ export function HeaderLinks({ onClick, className }: IHeaderLinksProps) {
       if (module.abbr) {
         abbr = module.abbr
       } else {
-        abbr = `${module.name[0].toUpperCase()}${module.name[1].toLowerCase()}`
+        abbr = `${module.name[0]!.toUpperCase()}${module.name[1]!.toLowerCase()}`
       }
 
       return (
@@ -83,8 +83,8 @@ export function HeaderLinks({ onClick, className }: IHeaderLinksProps) {
                 backgroundColor: module.color ?? 'lightslategray',
               }}
             >
-              <span className="font-bold">{abbr[0].toUpperCase()}</span>
-              <span>{abbr[1].toLowerCase()}</span>
+              <span className="font-bold">{abbr[0]!.toUpperCase()}</span>
+              <span>{abbr[1]!.toLowerCase()}</span>
             </div>
 
             <p className="text-xs text-center truncate">{module.name}</p>
@@ -112,7 +112,7 @@ interface IFileMenu extends IElementProps {
   tab?: string
 }
 
-export function HeaderMenu({ tab }: IFileMenu) {
+export function HeaderMenu({ tab = '' }: IFileMenu) {
   const [open, setOpen] = useState(false)
 
   const windowSize = useWindowSize()

@@ -211,7 +211,7 @@ const DropdownMenuAnchorItem = forwardRef<
 const DropdownMenuCheckboxItem = forwardRef<
   ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
   ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>
->(({ className, children, checked, ...props }, ref) => {
+>(({ className = '', children, checked = false, ...props }, ref) => {
   const c = Children.toArray(children)
 
   return (
