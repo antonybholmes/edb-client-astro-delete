@@ -25,7 +25,7 @@ import { HistoryContext } from '@providers/history-provider'
 
 import { DataFrame } from '@lib/dataframe/dataframe'
 import { filterNA, findCols, subset, zip } from '@lib/dataframe/dataframe-utils'
-import { MAIN_CLUSTER_FRAME, type ClusterFrame } from '@lib/math/hcluster'
+import { type ClusterFrame } from '@lib/math/hcluster'
 import { range } from '@lib/math/range'
 
 import type { SeriesType } from '@lib/dataframe/dataframe-types'
@@ -168,7 +168,7 @@ export function VolcanoDialog({ open = true, df, onPlot, onCancel }: IProps) {
     const cf: ClusterFrame = {
       rowTree: null,
       colTree: null,
-      dataframes: { [MAIN_CLUSTER_FRAME]: vdf },
+      df: vdf,
     }
 
     updateSettings({

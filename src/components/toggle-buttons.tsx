@@ -42,7 +42,7 @@ export function ToggleButtons({
   tabs = [],
   onTabChange = () => {},
   children,
-  className = '',
+  className,
 }: IToggleButtonsProps) {
   return (
     <TabProvider value={value} onTabChange={onTabChange} tabs={tabs}>

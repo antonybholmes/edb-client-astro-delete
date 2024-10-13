@@ -34,7 +34,7 @@ export const Checkbox = forwardRef(function Checkbox(
     defaultChecked = false,
     gap = 'gap-x-1.5',
     onCheckedChange = () => {},
-    className = '',
+    className,
     children,
     ...props
   }: ICheckboxProps,

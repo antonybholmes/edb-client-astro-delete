@@ -43,7 +43,7 @@ import { FileLinesIcon } from '@components/icons/file-lines-icon'
 import { SaveIcon } from '@components/icons/save-icon'
 
 import { ToolbarTabButton } from '@components/toolbar/toolbar-tab-button'
-import { MAIN_CLUSTER_FRAME, type ClusterFrame } from '@lib/math/hcluster'
+import { type ClusterFrame } from '@lib/math/hcluster'
 import { HistoryContext } from '@providers/history-provider'
 
 import { useContext, useEffect, useMemo, useRef, useState } from 'react'
@@ -288,11 +288,7 @@ function MatcalcPage() {
         .map(plot => {
           const props =
             plot.style === 'Volcano Plot'
-              ? makeDefaultVolcanoProps(
-                  plot.cf.dataframes[MAIN_CLUSTER_FRAME]!,
-                  VOLCANO_X,
-                  VOLCANO_Y
-                )
+              ? makeDefaultVolcanoProps(plot.cf.df, VOLCANO_X, VOLCANO_Y)
               : makeDefaultHeatmapProps(plot.style)
 
           return {
@@ -968,21 +964,21 @@ function MatcalcPage() {
                 <ToolbarTabButton
                   onClick={() => loadZTestData()}
                   role="button"
-                  tooltip="Load test data to use features."
+                  title="Load test data to use features."
                 >
                   Plot test
                 </ToolbarTabButton>
                 <ToolbarTabButton
                   onClick={() => loadDeseqTestData()}
                   role="button"
-                  tooltip="Load test data to use features."
+                  title="Load test data to use features."
                 >
                   Deseq test
                 </ToolbarTabButton>
                 <ToolbarTabButton
                   onClick={() => loadGeneTestData()}
                   role="button"
-                  tooltip="Load genes to convert."
+                  title="Load genes to convert."
                 >
                   Gene test
                 </ToolbarTabButton>

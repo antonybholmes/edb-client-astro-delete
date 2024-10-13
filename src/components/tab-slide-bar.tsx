@@ -39,7 +39,7 @@ export const TabSlideBar = forwardRef(function TabSlideBar(
     limits = [5, 85],
     side = 'left',
 
-    className = '',
+    className,
     children,
   }: IProps,
   ref: ForwardedRef<HTMLDivElement>

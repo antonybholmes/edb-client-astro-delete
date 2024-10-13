@@ -165,8 +165,9 @@ export const D3HeatMapSvg = forwardRef<SVGElement, IProps>(
         ? _displayProps.colorbar.width + _displayProps.padding
         : 0)
 
-    const innerWidth = cf.dataframes['main']!.shape[1] * blockSize.w
-    const innerHeight = cf.dataframes['main']!.shape[0] * blockSize.h
+    const dfMain = cf.df
+    const innerWidth = dfMain.shape[1] * blockSize.w
+    const innerHeight = dfMain.shape[0] * blockSize.h
     const width = innerWidth + marginLeft + marginRight
     const height = innerHeight + marginTop + marginBottom
 
@@ -175,15 +176,15 @@ export const D3HeatMapSvg = forwardRef<SVGElement, IProps>(
         return
       }
 
-      const data = dataframeToD3(cf.dataframes['main']!)
+      const data = dataframeToD3(dfMain)
 
       const svg = d3.select('#svg-plot')!
 
-      const width = cf.dataframes['main']!.shape[1] * blockSize.w
-      const height = cf.dataframes['main']!.shape[0] * blockSize.h
+      const width = dfMain.shape[1] * blockSize.w
+      const height = dfMain.shape[0] * blockSize.h
 
-      const myGroups = cf.dataframes['main']!.colNames //Array.from(new Set(data.map(d => d.group)))
-      const myVars = cf.dataframes['main']!.rowNames //Array.from(new Set(data.map(d => d.variable)))
+      const myGroups = dfMain.colNames //Array.from(new Set(data.map(d => d.group)))
+      const myVars = dfMain.rowNames //Array.from(new Set(data.map(d => d.variable)))
       console.log(myGroups, width, height)
 
       // Build X scales and axis:
@@ -323,8 +324,8 @@ export const D3HeatMapSvg = forwardRef<SVGElement, IProps>(
       //   .domain([_displayProps.range[0], 0, _displayProps.range[1]])
       //   // @ts-ignore
       //   .range(["blue", "white", "red"])
-      const dfMain = cf.dataframes['main']!
-      const dfPercent = cf.dataframes['percent']!
+
+      const dfPercent = cf.dfs!['percent']!
 
       const s = dfMain.shape
 
@@ -527,7 +528,7 @@ export const D3HeatMapSvg = forwardRef<SVGElement, IProps>(
                     dominantBaseline="central"
                     fontSize="smaller"
                   >
-                    {cf.dataframes['main']!.rowNames[ri]}
+                    {dfMain.rowNames[ri]}
                   </text>
                 )
               })}
@@ -587,7 +588,7 @@ export const D3HeatMapSvg = forwardRef<SVGElement, IProps>(
                   : 0)
               })`}
             >
-              {cf.dataframes['main']!.colNames.map((index, ri) => {
+              {dfMain.colNames.map((index, ri) => {
                 return (
                   <text
                     key={ri}
@@ -623,7 +624,7 @@ export const D3HeatMapSvg = forwardRef<SVGElement, IProps>(
                     textAnchor="end"
                     fontSize="smaller"
                   >
-                    {cf.dataframes['main']!.getColName(ci)}
+                    {dfMain.getColName(ci)}
                   </text>
                 )
               })}
@@ -1051,15 +1052,10 @@ export const D3HeatMapSvg = forwardRef<SVGElement, IProps>(
           {inBlock && (
             <>
               <p className="font-semibold">
-                {cf.dataframes['main']!.getColName(toolTipInfo.pos)}
+                {dfMain.getColName(toolTipInfo.pos)}
               </p>
               <p>
-                {cellStr(
-                  cf.dataframes['main']!.get(
-                    toolTipInfo.seqIndex,
-                    toolTipInfo.pos
-                  )
-                )}
+                {cellStr(dfMain.get(toolTipInfo.seqIndex, toolTipInfo.pos))}
               </p>
               <p>
                 x: {toolTipInfo.pos + 1}, y: {toolTipInfo.seqIndex + 1}

@@ -26,7 +26,7 @@ interface IProps extends ISlidebarContext, IElementProps {}
 export function SlidebarProvider({
   title = '',
   side = 'left',
-  open = true,
+  open = undefined,
   onOpenChange = () => {},
   position = 80,
   limits = [5, 85],

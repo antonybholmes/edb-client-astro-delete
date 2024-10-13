@@ -181,7 +181,7 @@ export function SelectList({
   value = '',
   defaultValue = '',
   onValueChange = () => {},
-  className = '',
+  className,
   children,
 }: ISelectListProps) {
   const [open, setOpen] = useState(false)

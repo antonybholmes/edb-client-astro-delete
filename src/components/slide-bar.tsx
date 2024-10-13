@@ -17,7 +17,6 @@ import { BaseCol } from '@components/base-col'
 import { type IButtonProps } from '@components/shadcn/ui/themed/button'
 
 import type { IChildrenProps } from '@interfaces/children-props'
-import type { IClassProps } from '@interfaces/class-props'
 import type { IElementProps } from '@interfaces/element-props'
 import { motion } from 'framer-motion'
 import { HCenterRow } from './h-center-row'
@@ -125,7 +124,7 @@ export const SlideBar = forwardRef(function SlideBar(
   )
 })
 
-interface ISlideBarContentProps extends IClassProps {
+interface ISlideBarContentProps extends IElementProps {
   lineClassName?: string
 }
 

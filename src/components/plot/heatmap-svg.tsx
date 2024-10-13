@@ -7,7 +7,7 @@ import { type IElementProps } from '@interfaces/element-props'
 import { type IPos } from '@interfaces/pos'
 import { getColIdxFromGroup, type IClusterGroup } from '@lib/cluster-group'
 import { BWR_CMAP, ColorMap } from '@lib/colormap'
-import { MAIN_CLUSTER_FRAME, type ClusterFrame } from '@lib/math/hcluster'
+import { type ClusterFrame } from '@lib/math/hcluster'
 
 import type { IDim } from '@interfaces/dim'
 import { range } from '@lib/math/range'
@@ -186,14 +186,14 @@ export const HeatMapSvg = forwardRef<SVGElement, IProps>(function HeatMapSvg(
       ? _displayProps.colorbar.width + _displayProps.padding
       : 0)
 
-  const innerWidth = cf.dataframes[MAIN_CLUSTER_FRAME]!.shape[1] * blockSize.w
-  const innerHeight = cf.dataframes[MAIN_CLUSTER_FRAME]!.shape[0] * blockSize.h
+  const dfMain = cf.df
+  const innerWidth = dfMain.shape[1] * blockSize.w
+  const innerHeight = dfMain.shape[0] * blockSize.h
   const width = innerWidth + marginLeft + marginRight
   const height =
     Math.max(MIN_INNER_HEIGHT, innerHeight) + marginTop + marginBottom
 
-  const dfMain = cf.dataframes[MAIN_CLUSTER_FRAME]!
-  const dfPercent = cf.dataframes['percent']
+  const dfPercent = cf.dfs!['percent']
 
   // const NO_TOOLTIP = {
   //   pos: {...ZERO_POS},
@@ -417,7 +417,7 @@ export const HeatMapSvg = forwardRef<SVGElement, IProps>(function HeatMapSvg(
                   fontSize="smaller"
                   textAnchor="end"
                 >
-                  {cf.dataframes['main']!.rowNames[row]}
+                  {dfMain.rowNames[row]}
                 </text>
               )
             })}
@@ -440,7 +440,7 @@ export const HeatMapSvg = forwardRef<SVGElement, IProps>(function HeatMapSvg(
                   dominantBaseline="central"
                   fontSize="smaller"
                 >
-                  {cf.dataframes['main']!.rowNames[row]}
+                  {dfMain.rowNames[row]}
                 </text>
               )
             })}
@@ -559,7 +559,7 @@ export const HeatMapSvg = forwardRef<SVGElement, IProps>(function HeatMapSvg(
                   dominantBaseline="central"
                   fontSize="smaller"
                 >
-                  {cf.dataframes['main']!.getColName(col)}
+                  {dfMain.getColName(col)}
                 </text>
               )
             })}
@@ -588,7 +588,7 @@ export const HeatMapSvg = forwardRef<SVGElement, IProps>(function HeatMapSvg(
                   textAnchor="end"
                   fontSize="smaller"
                 >
-                  {cf.dataframes['main']!.getColName(col)}
+                  {dfMain.getColName(col)}
                 </text>
               )
             })}

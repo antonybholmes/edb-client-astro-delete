@@ -13,11 +13,11 @@ export const PROPS_TITLE_CLS = cn(H2_CLS, 'py-2')
 export const SwitchPropRow = forwardRef(function SwitchPropRow(
   {
     title = '',
-    labelClassName = '',
+    labelClassName,
     checked = false,
     onCheckedChange = () => {},
     disabled = false,
-    className = '',
+    className,
     children,
   }: ICheckboxProps & { title: string; labelClassName?: string },
   ref: ForwardedRef<HTMLDivElement>

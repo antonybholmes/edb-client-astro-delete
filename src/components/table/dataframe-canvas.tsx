@@ -23,7 +23,6 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useImperativeHandle,
   useRef,
   useState,
   type KeyboardEvent,
@@ -181,7 +180,7 @@ export interface IDataFrameCanvasProps extends IElementProps {
   editable?: boolean
 }
 
-export const DataFrameCanvas = forwardRef(function DataFrameCanvas(
+export function DataFrameCanvas(
   {
     df,
     cellSize = DEFAULT_CELL_SIZE,
@@ -189,9 +188,7 @@ export const DataFrameCanvas = forwardRef(function DataFrameCanvas(
     scale = 1,
     editable = false,
     className,
-  }: IDataFrameCanvasProps,
-  outerRef: ForwardedRef<HTMLDivElement>
-) {
+  }: IDataFrameCanvasProps) {
   // determines which cell is selected. Setting one dimension to -1
   // allows either a row or col to be highlighed
 
@@ -217,7 +214,7 @@ export const DataFrameCanvas = forwardRef(function DataFrameCanvas(
   // can change even when the selected cell does not
   const [focusCell, setFocusCell] = useState<ICell>(NO_SELECTION)
 
-  useImperativeHandle(outerRef, () => ref.current!, [])
+  //useImperativeHandle(outerRef, () => ref.current!, [])
 
   const isMouseDown = useRef('')
   //const mouseDown = useRef([-1, -1])
@@ -237,9 +234,9 @@ export const DataFrameCanvas = forwardRef(function DataFrameCanvas(
   const bgCanvasRef = useRef<HTMLCanvasElement>(null)
   const rightScrollRef = useRef<HTMLDivElement>(null)
   const bottomScrollRef = useRef<HTMLDivElement>(null)
-  //const gridCanvasRef = useRef<HTMLCanvasElement >(null)
+  //const gridCanvasRef = useRef<HTMLCanvasElement >()
   const tableCanvasRef = useRef<HTMLCanvasElement>(null)
-  //const selectionCanvasRef = useRef<HTMLCanvasElement | null>(null)
+  //const selectionCanvasRef = useRef<HTMLCanvasElement>()
 
   //const frameID = useRef<number | undefined>(undefined)
 
@@ -1371,9 +1368,9 @@ export const DataFrameCanvas = forwardRef(function DataFrameCanvas(
 
       setSelectedCellRefText(
         `${
-          Math.abs(selection.current.end.row - selection.current.start.row) + 1
+          selection.current.start.row + 1
         }R x ${
-          Math.abs(selection.current.end.col - selection.current.start.col) + 1
+           selection.current.start.col  + 1
         }C`
       )
     } else {
@@ -1764,14 +1761,6 @@ export const DataFrameCanvas = forwardRef(function DataFrameCanvas(
 
       let canvas: HTMLCanvasElement | null
 
-      canvas = bgCanvasRef.current
-
-      if (canvas) {
-        canvas.style.width = `${w}px`
-        canvas.style.height = `${h}px`
-        setupCanvas(canvas, scale)
-      }
-
       canvas = tableCanvasRef.current
 
       if (canvas) {
@@ -1780,13 +1769,19 @@ export const DataFrameCanvas = forwardRef(function DataFrameCanvas(
         setupCanvas(canvas, scale)
       }
 
-      if (!bgCanvasRef.current) {
+      canvas = bgCanvasRef.current
+
+      if (!canvas) {
         return
       }
 
+      canvas.style.width = `${w}px`
+      canvas.style.height = `${h}px`
+      setupCanvas(canvas, scale)
+
       const [, , normLeft, normTop] = getScrollProps(lastScroll.current)
 
-      const ctx = bgCanvasRef.current.getContext('2d')
+      const ctx = canvas.getContext('2d')
 
       if (!ctx) {
         return
@@ -1903,9 +1898,10 @@ export const DataFrameCanvas = forwardRef(function DataFrameCanvas(
   //const { events } = useDraggable(containerRef as MutableRefObject<HTMLElement>)
 
   return (
-    <BaseCol ref={ref} className={cn('grow gap-y-2', className)}>
+    <BaseCol ref={ref} className={cn('grow gap-y-3', className)}>
       <VCenterRow className="gap-x-3 text-sm">
         <Input
+          id="cell-location"
           value={selText}
           className="w-24 rounded-md"
           readOnly
@@ -1938,9 +1934,9 @@ export const DataFrameCanvas = forwardRef(function DataFrameCanvas(
             onMouseMove={onHeaderMouseMove}
             onMouseUp={onMouseUp}
             onWheel={onHeaderWheel}
-            ref={outerRef}
+            ref={ref}
             className={cn(
-              'relative z-50 grow overflow-hidden border border-border rounded-md bg-muted',
+              'relative grow overflow-hidden border border-border rounded-md bg-muted',
               FOCUS_RING_CLS
             )}
             style={{
@@ -1952,7 +1948,7 @@ export const DataFrameCanvas = forwardRef(function DataFrameCanvas(
             <div
               ref={scrollRef}
               //className="relative z-50 overflow-scroll border border-orange-400"
-              className="custom-scrollbar relative z-50 grow overflow-hidden"
+              className="relative z-50 grow overflow-hidden"
               //onMouseMove={onMouseMove}
               onClick={onClick}
               onScroll={onScroll}
@@ -1962,7 +1958,7 @@ export const DataFrameCanvas = forwardRef(function DataFrameCanvas(
               //onMouseMove={scrollOnEdgesMouseMove}
             >
               {/* Used to create scroll bars */}
-              <div
+              {/* <div
                 className="invisible absolute left-0 top-0"
                 style={{
                   width: dfProps.maxScaledDim[0],
@@ -1976,7 +1972,7 @@ export const DataFrameCanvas = forwardRef(function DataFrameCanvas(
                   width: 1,
                   height: dfProps.maxScaledDim[1],
                 }}
-              />
+              /> */}
 
               {editable && editCell.row !== -1 && (
                 <VCenterRow
@@ -2035,4 +2031,4 @@ export const DataFrameCanvas = forwardRef(function DataFrameCanvas(
       </BaseCol>
     </BaseCol>
   )
-})
+}

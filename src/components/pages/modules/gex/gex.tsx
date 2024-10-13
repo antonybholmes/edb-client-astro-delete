@@ -928,7 +928,7 @@ export function GexPage() {
                 id="gex"
               >
                 <ResizablePanel
-                  id="list"
+                  id="tables"
                   defaultSize={50}
                   minSize={10}
                   collapsible={true}
@@ -970,6 +970,7 @@ export function GexPage() {
                 <ThinVResizeHandle lineClassName="bg-border" />
 
                 <ResizablePanel
+                  id="plot"
                   defaultSize={50}
                   minSize={10}
                   className="flex flex-col" // bg-white border border-border rounded-md overflow-hidden"

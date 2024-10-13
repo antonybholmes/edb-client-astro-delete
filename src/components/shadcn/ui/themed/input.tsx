@@ -20,7 +20,7 @@ export const inputVariants = cva(PLACEHOLDER_CLS, {
   variants: {
     variant: {
       default: cn(
-        'px-2 h-10 hover:border-ring',
+        'px-2 hover:border-ring',
         'data-[enabled=true]:data-[focus=true]:border-ring',
         'data-[enabled=true]:data-[focus=true]:ring-1',
         'border border-border'
@@ -28,9 +28,14 @@ export const inputVariants = cva(PLACEHOLDER_CLS, {
       plain: '',
       translucent: 'bg-white/20 hover:bg-white/25 text-white',
     },
+    h: {
+      sm: 'h-8',
+      base: 'h-9'
+    }
   },
   defaultVariants: {
     variant: 'default',
+    h: 'base'
   },
 })
 
@@ -64,6 +69,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       type,
       inputCls,
       variant = 'default',
+      h = 'base',
       className = 'rounded-md',
       disabled,
       ...props
@@ -76,6 +82,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       <VCenterRow
         className={inputVariants({
           variant,
+          h,
           className: cn(PLACEHOLDER_CLS, className),
         })}
         data-enabled={!disabled}

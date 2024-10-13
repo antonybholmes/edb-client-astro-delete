@@ -18,7 +18,7 @@ export const HelpSlideBar = forwardRef(function HelpSlideBar(
     helpUrl = '',
     position = 80,
     limits = [5, 85],
-    className = '',
+    className,
     children,
   }: IProps,
   _ref: ForwardedRef<HTMLDivElement>

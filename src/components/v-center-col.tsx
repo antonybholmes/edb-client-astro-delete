@@ -4,7 +4,7 @@ import { forwardRef, type ForwardedRef } from 'react'
 import { BaseCol } from './base-col'
 
 export const VCenterCol = forwardRef(function VCenterCol(
-  { className = '', children, ...props }: IDivProps,
+  { className, children, ...props }: IDivProps,
   ref: ForwardedRef<HTMLDivElement>
 ) {
   return (

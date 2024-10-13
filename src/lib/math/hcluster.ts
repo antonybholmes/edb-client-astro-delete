@@ -24,10 +24,11 @@ export interface IClusterTree {
   leaves: number[]
 }
 
-export const MAIN_CLUSTER_FRAME = 'main'
+//export const MAIN_CLUSTER_FRAME = 'main'
 
 export interface ClusterFrame {
-  dataframes: { [key: string]: BaseDataFrame }
+  df: BaseDataFrame
+  dfs?: { [key: string]: BaseDataFrame }
   rowTree?: IClusterTree | null
   colTree?: IClusterTree | null
 }
@@ -367,7 +368,7 @@ export function _getNodeX(
  * @returns
  */
 export function getClusterOrderedDataFrame(cf: ClusterFrame): BaseDataFrame {
-  const df = cf.dataframes[MAIN_CLUSTER_FRAME]!
+  const df = cf.df
   const rowLeaves = cf.rowTree ? cf.rowTree.leaves : range(0, df.shape[0])
   const colLeaves = cf.colTree ? cf.colTree.leaves : range(0, df.shape[1])
 

@@ -21,11 +21,5 @@ export function CloseIcon({
       <path d="M 1,1 L 15,15 M 15,1 L 1,15" />
     </svg>
   )
-
-  {
-    /* <div className={cn(ICON_CLS, w, className)} style={style}>
-<span className={cn(lineCls, "-rotate-45")}  />
-<span className={cn(lineCls, "rotate-45")}/>
-</div> */
-  }
+ 
 }

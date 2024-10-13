@@ -149,8 +149,9 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
       ? _displayProps.colorbar.width + _displayProps.padding
       : 0)
 
-  const innerWidth = cf.dataframes['main']!.shape[1] * blockSize.w
-  const innerHeight = cf.dataframes['main']!.shape[0] * blockSize.h
+  const dfMain = cf.df
+  const innerWidth = dfMain.shape[1] * blockSize.w
+  const innerHeight = dfMain.shape[0] * blockSize.h
   const width = innerWidth + marginLeft + marginRight
   const height = innerHeight + marginTop + marginBottom
 
@@ -183,10 +184,9 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
     //   // @ts-ignore
     //   .range(["blue", "white", "red"])
 
-    const dfMain = cf.dataframes['main']!
-    const dfPercent = cf.dataframes['percent']!
+    const dfPercent = cf.dfs!['percent']!
 
-    const s = cf.dataframes['main']!.shape
+    const s = dfMain.shape
 
     const rowLeaves = cf.rowTree ? cf.rowTree.leaves : range(0, s[0])
     const colLeaves = cf.colTree ? cf.colTree.leaves : range(0, s[1])
@@ -194,10 +194,7 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
     const colColorMap = Object.fromEntries(
       groups
         .map(group =>
-          getColIdxFromGroup(cf.dataframes['main']!, group).map(c => [
-            c,
-            group.color,
-          ])
+          getColIdxFromGroup(dfMain, group).map(c => [c, group.color])
         )
         .flat()
     )
@@ -333,7 +330,7 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
                 : margin.left
             }, ${marginTop})`}
           >
-            {cf.dataframes['main']!.rowNames.map((index, ri) => {
+            {dfMain.rowNames.map((index, ri) => {
               return (
                 <text
                   key={ri}
@@ -366,7 +363,7 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
                   dominantBaseline="central"
                   fontSize="smaller"
                 >
-                  {cf.dataframes['main']!.rowNames[ri]}
+                  {dfMain.rowNames[ri]}
                 </text>
               )
             })}
@@ -447,7 +444,7 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
                 : 0)
             })`}
           >
-            {cf.dataframes['main']!.colNames.map((index, ri) => {
+            {dfMain.colNames.map((index, ri) => {
               return (
                 <text
                   key={ri}
@@ -483,7 +480,7 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
                   textAnchor="end"
                   fontSize="smaller"
                 >
-                  {cf.dataframes['main']!.getColName(ci)}
+                  {dfMain.getColName(ci)}
                 </text>
               )
             })}
@@ -608,7 +605,7 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
         (blockSize.w * _displayProps.scale)
     )
 
-    if (c < 0 || c > cf.dataframes['main']!.shape[1]! - 1) {
+    if (c < 0 || c > dfMain.shape[1]! - 1) {
       c = -1
     }
 
@@ -622,7 +619,7 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
         (blockSize.h * _displayProps.scale)
     )
 
-    if (r < 0 || r > cf.dataframes['main']!.shape[0] - 1) {
+    if (r < 0 || r > dfMain.shape[0] - 1) {
       r = -1
     }
 
@@ -657,16 +654,9 @@ export const DotPlotSvg = forwardRef<SVGElement, IProps>(function DotPlotSvg(
         {inBlock && (
           <>
             <p className="font-semibold">
-              {cf.dataframes['main']!.getColName(toolTipInfo.pos)}
+              {dfMain.getColName(toolTipInfo.pos)}
             </p>
-            <p>
-              {cellStr(
-                cf.dataframes['main']!.get(
-                  toolTipInfo.seqIndex,
-                  toolTipInfo.pos
-                )
-              )}
-            </p>
+            <p>{cellStr(dfMain.get(toolTipInfo.seqIndex, toolTipInfo.pos))}</p>
             <p>
               x: {toolTipInfo.pos + 1}, y: {toolTipInfo.seqIndex + 1}
             </p>

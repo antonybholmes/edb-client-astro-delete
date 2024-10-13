@@ -15,7 +15,6 @@ import { TEXT_CANCEL } from '@consts'
 import { type BaseDataFrame } from '@lib/dataframe/base-dataframe'
 import {
   HCluster,
-  MAIN_CLUSTER_FRAME,
   averageLinkage,
   singleLinkage,
   type ClusterFrame,
@@ -160,7 +159,7 @@ export function HeatMapDialog({
     const cf: ClusterFrame = {
       rowTree: rowC,
       colTree: colC,
-      dataframes: { [MAIN_CLUSTER_FRAME]: df },
+      df,
     }
 
     onPlot(cf)

@@ -3,9 +3,10 @@ import { cn } from '@lib/class-names'
 import { type ReactNode } from 'react'
 
 import { APP_NAME } from '@consts'
-import type { IChildrenProps } from '@interfaces/children-props'
+ 
 import { EDBSignedIn } from '@modules/edb-signedin'
 import { HeaderMenu } from './header-menu'
+import type { IElementProps } from '@interfaces/element-props'
 
 export interface IHeaderChildrenProps {
   headerLeftChildren?: ReactNode
@@ -13,10 +14,7 @@ export interface IHeaderChildrenProps {
   headerRightChildren?: ReactNode
 }
 
-export interface IHeaderProps extends IHeaderChildrenProps, IChildrenProps {
-  name?: string
-  tab?: string
-}
+export interface IHeaderProps extends IHeaderChildrenProps, IElementProps {}
 
 export function Header({
   className = 'bg-gradient-to-r from-blue-500 to-indigo-500',
@@ -24,25 +22,8 @@ export function Header({
   headerRightChildren,
   children,
 }: IHeaderProps) {
-  //const [, setScrollY] = useState(0)
-  //const [showMenu, setShowMenu] = useState(false)
-
-  // const handleScroll = () => {
-  //   setScrollY(window.scrollY)
-  // }
-
-  //useWindowScrollListener(handleScroll)
-
-  // useWindowResize(({ width, height }) => {
-  //   // If larger than medium, auto close menu
-  //   if (width > 800) {
-  //     setShowMenu(false)
-  //   }
-  // })
-
-  // function onClick() {
-  //   setShowMenu(!showMenu) //toggleHeight()
-  // }
+   className = className?className:'bg-gradient-to-r from-blue-500 to-indigo-500'
+  console.log(className, 'Asdasdasd ssssss')
 
   return (
     <header className={cn('text-white grid grid-cols-3 h-12', className)}>
