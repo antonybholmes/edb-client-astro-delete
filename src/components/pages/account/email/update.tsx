@@ -4,7 +4,7 @@ import {
   makeAlertFromAxiosError,
   makeInfoAlert,
 } from '@components/alerts/alerts-provider'
-import { PrimaryButton } from '@components/button/primary-button'
+ 
 import {
   Card,
   CardContent,
@@ -44,6 +44,7 @@ import { CoreProviders } from '@providers/core-providers'
 import { useQueryClient } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
+import { Button } from '@components/shadcn/ui/themed/button'
 
 interface IFormInput {
   email1: string
@@ -185,12 +186,12 @@ function UpdateEmailPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center w-full">
                 <div></div>
                 <div className="col-span-2">
-                  <PrimaryButton
+                  <Button
                     size="lg"
                     onClick={() => btnRef.current?.click()}
                   >
                     {TEXT_CONFIRM}
-                  </PrimaryButton>
+                  </Button>
                 </div>
               </div>
             </CardFooter>

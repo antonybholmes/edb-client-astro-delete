@@ -6,7 +6,7 @@ import {
   makeInfoAlert,
 } from '@components/alerts/alerts-provider'
 import { BaseCol } from '@components/base-col'
-import { PrimaryButton } from '@components/button/primary-button'
+ 
 import { HCenterRow } from '@components/h-center-row'
 import {
   Card,
@@ -57,6 +57,7 @@ import {
   TEXT_MIN_PASSWORD_LENGTH,
   TEXT_PASSWORD_DESCRIPTION,
 } from '../password-dialog'
+import { Button } from '@components/shadcn/ui/button'
 
 interface IFormInput {
   userId: string
@@ -402,13 +403,13 @@ function UpdatePasswordPage() {
                 </Form>
               </CardContent>
               <CardFooter>
-                <PrimaryButton
+                <Button
                   size="lg"
                   onClick={() => btnRef.current?.click()}
                   className="w-full"
                 >
                   {hasErrors ? 'Re-send reset link' : TEXT_CONTINUE}
-                </PrimaryButton>
+                </Button>
               </CardFooter>
             </Card>
             <SignInLink />
